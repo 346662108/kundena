@@ -1,0 +1,8 @@
+/* pages/article/list/list.wxss */
+
+/* 文章列表 */
+
+.ar-list {
+  padding-top: 84rpx;
+  padding-bottom: 130rpx;
+}

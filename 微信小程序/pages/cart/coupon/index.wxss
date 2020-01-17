@@ -1,0 +1,151 @@
+/* pages/cart/coupon/index.wxss */
+
+page {
+  background: #e8e8ed;
+}
+
+.coupon {
+  background: #fff;
+}
+
+.coupon__title {
+  padding: 20rpx 25rpx;
+  display: flex;
+  border-bottom: 1rpx solid #eee;
+  font-size: 28rpx;
+}
+
+.coupon__title .name {
+  flex: 1;
+}
+
+.coupon__title .price {
+  color: #e0187b;
+  font-size: 24rpx;
+}
+
+.coupon__li {
+  margin-left: 25rpx;
+  padding: 20rpx 25rpx 20rpx 0;
+  border-top: 1rpx solid #eee;
+  display: flex;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.coupon__li:nth-child(1) {
+  border: 0;
+}
+
+.coupon__li .radio {
+  width: 30rpx;
+  height: 30rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 100%;
+  flex: none;
+}
+
+.coupon__li.select .radio {
+  position: relative;
+  border-color: #e0187b;
+}
+
+.coupon__li.select .radio text {
+  position: absolute;
+  left: 12rpx;
+  top: 4rpx;
+  width: 8rpx;
+  height: 18rpx;
+  border: 0;
+  border-right: 1rpx solid #e0187b;
+  border-bottom: 1rpx solid #e0187b;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+
+.coupon__li.Noselect .radio {
+  position: relative;
+  border: 2rpx solid #666;
+  width: 28rpx;
+  height: 28rpx;
+  overflow: hidden;
+}
+
+.coupon__li.Noselect .radio text {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 30rpx;
+  border: 0;
+  border-bottom: 2rpx solid #666;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+
+.coupon__li .info {
+  width: 100%;
+  margin: -6rpx 0 0 20rpx;
+}
+
+.coupon__li view {
+  margin-top: 6rpx;
+}
+
+.coupon__li .info__name {
+  font-size: 28rpx;
+  color: #000;
+}
+
+.coupon__li.select .info__name {
+  color: #e0187b;
+}
+
+.coupon__li.Noselect .info__name {
+  color: #999;
+}
+
+.coupon__li .info__range {
+  display: flex;
+}
+
+.coupon__li .info__range text:nth-child(1) {
+  flex: 1;
+  height: 34rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.coupon__li .info__range text:nth-child(2) {
+  margin-left: 40rpx;
+  color: #2af;
+}
+
+.coupon__li.Noselect .info__range text:nth-child(2) {
+  color: #999;
+}
+
+.footer__btn {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+.confirm__btn {
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  background: #fff;
+  color: #e0187b;
+  letter-spacing: 2px;
+  font-size: 36rpx;
+}

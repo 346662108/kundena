@@ -1,0 +1,271 @@
+<!--pages/my/group_orderitem/group_orderitem.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container">
+  <!--主体开始-->
+  <view class="confirm">
+    <view class="statusbox">
+      <!--等支付-->
+      <view class="status" wx:if="{{OrderItem.Team_Status==0}}">
+        <view class="status_text">
+          <text>等待买家付款</text>
+          <text>逾期未付款，订单将自动取消</text>
+        </view>
+        <view class="status_icon">
+          <image src="../../../images/status_icon1.png" />
+        </view>
+      </view>
+      <!--待成团-->
+      <view class="status" wx:if="{{OrderItem.Team_Status==1}}">
+        <view class="status_text">
+          <text>拼团进行中</text>
+          <text>让小伙伴们都来拼团吧~</text>
+        </view>
+        <view class="status_icon">
+          <image src="../../../images/status_icon2.png" />
+        </view>
+      </view>
+      <!--拼团成功--普通团-->
+      <view class="status" wx:if="{{OrderItem.Team_Status==2&&OrderItem.Team_IsLottery==0}}">
+        <view class="status_text">
+          <text>拼团成功</text>
+        </view>
+        <view class="status_icon">
+          <image src="../../../images/status_icon3.png" />
+        </view>
+      </view>
+
+      <block wx:if="{{OrderItem.Team_Status==2&&OrderItem.Team_IsLottery!=0}}">
+        <!--拼团成功--待开奖-->
+        <view class="status" wx:if="{{OrderItem.Team_Lottery_Status==0}}">
+          <view class="status_text">
+            <text>拼团成功 ,等待抽奖中</text>
+            <text>等待商家开奖结果</text>
+          </view>
+          <view class="status_icon">
+            <image src="../../../images/status_icon3.png" />
+          </view>
+        </view>
+        <!--拼团成功--已中奖一等奖-->
+        <view class="status" wx:elif="{{OrderItem.Team_Lottery_Status==1}}">
+          <view class="status_text">
+            <text>一等奖，等待商家发货</text>
+            <text>48小时内发货</text>
+          </view>
+          <view class="status_icon">
+            <image src="../../../images/status_icon5.png" />
+          </view>
+        </view>
+        <!--拼团成功--未中奖二等奖-->
+        <view class="status" wx:elif="{{OrderItem.Team_Lottery_Status==2}}">
+          <view class="status_text">
+            <text wx:if="{{OrderItem.CouponIsSong==0}}">二等奖</text>
+            <text wx:elif="{{OrderItem.CouponIsSong==1}}">二等奖，已送劵达</text>
+            <text>很遗憾，这次运气稍微差了点~~</text>
+          </view>
+          <view class="status_icon">
+            <image src="../../../images/status_icon5.png" />
+          </view>
+        </view>
+        <!--拼团成功--开奖失败-->
+        <view class="status" wx:if="{{OrderItem.Team_Lottery_Status==3}}">
+          <view class="status_text">
+            <text>拼团成功,未达到抽奖条件</text>
+            <text wx:if="{{OrderItem.Refund_Status==1}}">等待退款，请耐心等待</text>
+            <text wx:elif="{{OrderItem.Refund_Status==2}}">退款成功，原路退回</text>
+            <text wx:elif="{{OrderItem.Refund_Status==3}}">退款失败，请耐心等待</text>
+          </view>
+          <view class="status_icon">
+            <image src="../../../images/status_icon3.png" />
+          </view>
+        </view>
+      </block>
+
+      <!--拼团失败-->
+      <view class="status" wx:if="{{OrderItem.Team_Status==3}}">
+        <view class="status_text">
+          <text wx:if="{{OrderItem.Refund_Status==1}}">未成团，等待退款，请耐心等待</text>
+          <text wx:elif="{{OrderItem.Refund_Status==2}}">未成团，退款成功</text>
+          <text wx:elif="{{OrderItem.Refund_Status==3}}">未成团，退款失败</text>
+          <text wx:if="{{OrderItem.Team_Error}}">{{OrderItem.Team_Error}}</text>
+          <text>期待您的下次参与~</text>
+        </view>
+        <view class="status_icon">
+          <image src="../../../images/status_icon6.png" />
+        </view>
+      </view>
+      <!--订单取消-->
+      <view class="status" wx:if="{{OrderItem.Team_Status==4}}">
+        <view class="status_text">
+          <text>订单已取消</text>
+          <text>对感兴趣的商品重新下单~</text>
+        </view>
+        <view class="status_icon">
+          <image src="../../../images/status_icon6.png" />
+        </view>
+      </view>
+    </view>
+    <!--配送信息-->
+    <view class="orderItem_box">
+      <view class="info">
+        <view>收货人：</view>
+        <view>{{OrderItem.ReceiverName}}　{{OrderItem.ReceiverMobile}}</view>
+      </view>
+      <view class="info">
+        <view>收货地址：</view>
+        <view>{{OrderItem.RegionPath}}{{OrderItem.ReceiverAddress}}</view>
+      </view>
+    </view>
+
+    <!--商品信息-->
+    <view class="nav_section_items mtop10">
+      <view class="confirm_tit">
+        <text class="num">商品信息</text>
+        <text class="way" wx:if="{{OrderItem.Refund_Status==2||OrderItem.Refund_Status==3}}">{{OrderItem.Team_StatusStr}}{{OrderItem.Refund_Status==2?',退款成功':',退款失败'}}</text>
+        <text class="way" wx:else>{{OrderItem.Team_StatusStr}}</text>
+      </view>
+      <view class="confirm_list">
+        <view class="gorup_md" data-tpid="{{OrderItem.Team_Product_Id}}" bindtap="urlProitem">
+          <view>
+            <image src="{{OrderItem.PicPath}}"></image>
+          </view>
+          <view class="info">
+            <view class="info_box">
+              <view class="title">{{OrderItem.ProductTitle}}</view>
+              <view class="color">{{OrderItem.SkuPropertiesName}}</view>
+              <view class="btmtxt">
+                <view class="price">￥{{OrderItem.Price}}</view>
+                <view class="num">×{{OrderItem.BuyNum}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="gorup_dd">
+        <view class="btn main" bindtap="urlWinitem" data-tpid="{{OrderItem.Team_Product_Id}}" wx:if="{{OrderItem.Team_IsLottery!=0&&OrderItem.Team_Lottery_Status>0}}">中奖详情</view>
+        <view class="btn auxi" bindtap="gotoMyOrder" data-oid="{{OrderItem.Order_Id}}" wx:if="{{OrderItem.Team_Status==2&&OrderItem.ToOrder==1}}">查看订单</view>
+        <view class="btn auxi" bindtap="urlGroupitem" data-toid="{{OrderItem.Id}}">查看团详情</view>
+      </view>
+    </view>
+    <!--付款信息-->
+    <view class="confirm_msg total">
+      <view class="confirm_msg_txt">
+        <text class="confirm_msg_h1">商品金额</text>
+        <view class="confirm_msg_r">￥{{OrderItem.TotalFee}}</view>
+      </view>
+      <view class="confirm_msg_txt" wx:if="{{OrderItem.PostFee>0}}">
+        <text class="confirm_msg_h1">运费</text>
+        <view class="confirm_msg_r">+￥{{OrderItem.PostFee}}</view>
+      </view>
+      <view class="confirm_msg_txt" wx:if="{{OrderItem.DiscountFee>0}}">
+        <text class="confirm_msg_h1">优惠</text>
+        <view class="confirm_msg_r">-￥{{OrderItem.DiscountFee}}</view>
+      </view>
+      <view class="confirm_msg_txt">
+        <text class="confirm_msg_h1">实付金额</text>
+        <view class="confirm_msg_r rose">￥{{OrderItem.Payment}}</view>
+      </view>
+    </view>
+  </view>
+  <!--客服-->
+  <view class="service linetop2">
+    <view class="service__li">
+      <button open-type="contact">
+        <view>
+          <image src="../../../images/icon_service.png" />
+        </view>
+        <text>联系商家</text>
+      </button>
+    </view>
+    <view class="service__line"></view>
+    <view class="service__li">
+      <button bindtap="callmeTap">
+        <view>
+          <image src="../../../images/icon_phone.png" />
+        </view>
+        <text>拨打电话</text>
+      </button>
+    </view>
+  </view>
+  <!--基本信息-->
+  <view class="orderItem_box mtop10">
+
+    <view class="info">
+      <view>订单编号：</view>
+      <view>{{OrderItem.TradeNo}}</view>
+    </view>
+    <view class="info" wx:if="{{OrderItem.PaymentMethodSystemName}}">
+      <view>支付方式：</view>
+      <view>{{OrderItem.PaymentMethodSystemName}}</view>
+    </view>
+    <view class="info">
+      <view>下单时间：</view>
+      <view>{{OrderItem.Created}}</view>
+    </view>
+    <view class="info" wx:if="{{OrderItem.PayStatus==1}}">
+      <view>付款时间：</view>
+      <view>{{OrderItem.PayTime}}</view>
+    </view>
+    <view class="info" wx:if="{{OrderItem.Team_Status==2}}">
+      <view>成团时间：</view>
+      <view>{{OrderItem.Team_GroupTime}}</view>
+    </view>
+
+    <view class="info" wx:if="{{OrderItem.Team_Status==3&&OrderItem.Refund_Status>0}}">
+      <view>退款状态：</view>
+      <view wx:if="{{OrderItem.Refund_Status==1}}">等待退款</view>
+      <view wx:elif="{{OrderItem.Refund_Status==2}}">退款成功</view>
+      <view wx:elif="{{OrderItem.Refund_Status==3}}">退款失败</view>
+    </view>
+    <view class="info" wx:if="{{OrderItem.Refund_Time}}">
+      <view>退款时间：</view>
+      <view>{{OrderItem.Refund_Time}}</view>
+    </view>
+
+  </view>
+
+  <!--操作按钮-->
+  <view class="footer">
+    <view class="footer_btn">
+      <form bindsubmit="gotoPayment" data-toid="{{OrderItem.Id}}" report-submit="true">
+        <button class="btn rosebg" form-type="submit" wx:if="{{OrderItem.Team_Status==0}}">去支付</button>
+      </form>
+      <view class="btn auxi" bindtap="closeOrder" data-toid="{{OrderItem.Id}}" wx:if="{{OrderItem.Team_Status==0}}">取消订单</view>
+      <view class="btn auxi" bindtap="gotoMyOrder" data-oid="{{OrderItem.Order_Id}}" wx:if="{{OrderItem.Team_Status==2&&OrderItem.ToOrder==1}}">查看物流</view>
+    </view>
+    <!-- <view class="footer_btn">
+      <view class="btn rosebg" bindtap="gotoConfimOrder">确认收货</view>
+      <view class="btn rosebg" bindtap="gotoPayment">去支付</view>
+      <view class="btn auxi" bindtap="gateLogistics" data-status="1">查看物流</view>
+      <view class="btn auxi" bindtap="closeOrder">取消订单</view>
+    </view> -->
+  </view>
+  <!--如何查看物流弹窗  -->
+  <!-- <view class="black_layer" animation="{{animationBlack}}" bindtap="gateLogistics" data-status="0" wx:if="{{showgateLogistics}}"></view>
+  <view class="layer layer_2 Logistics" animation="{{animationData}}" wx:if="{{showgateLogistics}}">
+    <view class="close_icon" bindtap="gateLogistics" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_title">物流信息</view>
+    <view class="layer_content">
+      <view class="Logistics_ul">
+        <view class="Logistics_li">
+          <text class="title">物流公司:</text>
+          <text class="text">顺丰快递</text>
+        </view>
+        <view class="Logistics_li">
+          <text class="title">运单编号:</text>
+          <text class="num" selectable="true">611012909107421</text>
+        </view>
+        <view class="Logistics_li">
+          <text class="title"></text>
+          <text class="prompt">长按运单号复制↑↑↑</text>
+        </view>
+      </view>
+      <view class="Logistics_prompt">
+        <text>将运单号复制到快递100或承运方网站后即可查看最新物流信息</text>
+        <text>快递100和承运方网站需在浏览器打开，支持电脑端和移动端</text>
+      </view>
+    </view>
+  </view> -->
+  <!--主体结束-->
+</view>

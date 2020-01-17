@@ -1,0 +1,48 @@
+<!--pages/product/classify/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<!--search-->
+<view class="header">
+  <view class="flex inner">
+    <view class="search flex align-center">
+      <view class="flex align-center search-box">
+        <input class="search-ipt" name="search" type='text' confirm-type="search" bindconfirm="wxSearchFn" focus='{{focus}}' bindinput='bindKeyInput'  placeholder="搜你喜欢的商品" placeholder-style="color:#ccc" >搜你喜欢的商品</input>
+        <button class="flex justify-center align-center button search-btn" bindtap="wxSearchFn">
+          <text class="cuIcon-search"></text>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="nav-classify mt-100" wx:if="{{rootCate.length>0}}">
+  <scroll-view scroll-y="true" style="height:{{screenHeight}}px" class="nav-left">
+    <!-- 1级类别循环 -->
+    <block wx:for="{{rootCate}}" wx:key="cid">
+      <view class="nav-left-items flex justify-center align-center {{selCid == item.cid ? 'active' : ''}} {{index==thisindex-1?'prevActive':''}} {{index==thisindex+1?'nextActive':''}}" bindtap="switchRightTab" data-index="{{index}}" data-cid="{{item.cid}}"
+        data-cname="{{item.cname}}">
+        {{item.cname}}
+      </view>
+    </block>
+  </scroll-view>
+  <scroll-view scroll-y="true" style="height:{{screenHeight}}px" class="nav-right">
+    <view class="nav-right-title">
+      <text>{{text}}</text>
+    </view>
+    <view class="nav-right-box">
+      <!-- 2级类别循环 -->
+      <block wx:for="{{bCate}}" wx:key="cid">
+        <view class="nav-right-items" bindtap="navigateList" data-cid="{{item.cid}}">
+          <view wx:if="{{item.logo.length>0}}">
+            <image src="{{item.logo}}"></image>
+          </view>
+          <view wx:else>
+            <image src="../../../images/Nopicjpg.jpg"></image>
+          </view>
+          <text class="text-cut">{{item.cname}}{{item.cname}}{{item.cname}}{{item.cname}}</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>
+<view wx:else>
+  <view class="nothing pt500">------- 暂无数据 -------</view>
+</view>

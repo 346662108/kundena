@@ -1,0 +1,51 @@
+<!--pages/cart/address_added/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在保存</loading>
+<view class="submitForm">
+	<form bindsubmit="submitForm" bindreset="onaddresslist">
+		<view class='form-group-sm bg-white flex align-center justify-between padding-lr solid-top'>
+			<text class="title gray">收货人</text>
+			<input class="content flex-sub margin-left" type="text" name="Receiver" value="{{addr.Receiver}}" placeholder="请填写收货人姓名" maxlength="15">请填写收货人姓名</input>
+		</view>
+		<view class='form-group-sm bg-white flex align-center justify-between padding-lr solid-top'>
+			<text class="title gray">手机号码</text>
+			<input class="content flex-sub margin-left" type="number" name="Tel" value="{{addr.Tel}}" placeholder="请填写收货人手机号" bindblur="bindMobile" maxlength="11">请填写收货人手机号</input>
+		</view>
+		<view class="form-group-sm bg-white flex align-center justify-between padding-lr solid-top">
+			<view class="title gray">所在地区</view>
+			<picker class="content flex-sub margin-left" bindchange="bindProvinceChange" name="ProvinceIndex" value="{{provinceIndex}}" range="{{provinceArray}}">
+				<view class="flex align-center">
+					<view class="picker padding-tb" wx:if="{{provinceIndex>=0}}">{{provinceArray[provinceIndex]}}</view>
+					<view class="default padding-tb" wx:else>省份</view>
+					<view class="cuIcon-unfold margin-left-xs gray font-size16 padding-tb"></view>
+				</view>
+			</picker>
+			<picker class="content flex-sub margin-left" bindchange="bindCityChange" name="CityIndex" value="{{cityIndex}}" range="{{cityArray}}">
+				<view class="flex align-center">
+					<text class="picker padding-tb" wx:if="{{cityIndex>=0}}">{{cityArray[cityIndex]}}</text>
+					<text class="default padding-tb" wx:else>城市</text>
+					<text class="cuIcon-unfold margin-left-xs gray font-size16 padding-tb"></text>
+				</view>
+			</picker>
+			<picker class="content flex-sub margin-left" bindchange="bindCountyChange" name="DistrictIndex" value="{{countyIndex}}" range="{{countyArray}}">
+				<view class="flex align-center">
+					<text class="picker padding-tb" wx:if="{{countyIndex>=0}}">{{countyArray[countyIndex]}}</text>
+					<text class="default padding-tb" wx:else>县区</text>
+					<text class="cuIcon-unfold margin-left-xs gray font-size16 padding-tb"></text>
+				</view>
+			</picker>
+		</view>
+		<view class='form-group-lg bg-white flex justify-between padding solid-top'>
+			<text class="title gray">详细地址</text>
+			<textarea class="content flex-sub margin-left" maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="街道、楼牌号等" name="Address" value="{{addr.Address}}"></textarea>
+		</view>
+		<view class='form-group-sm bg-white flex align-center justify-between padding-lr solid-top'>
+			<text class="title gray" >设为默认</text>
+			<switch class="sm" bindchange="SetShadow" checked='{{IsDefault}}' name="IsDefault" value="{{IsDefault}}"></switch>
+		</view>
+		<view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}">
+			<button class="btns flex-sub bg-gray radius darkGray font-size13 margin-right-xs" data-addrid="{{addr.Id}}" wx:if="{{addr}}" bindtap="delAddrtap">删除地址</button>
+			<button class="btns flex-sub bg-red radius font-size13" formType="submit">确认保存</button>
+		</view>
+		<toast hidden="{{saveToastHidden}}" bindchange="hideToast">保存成功</toast>
+	</form>
+</view>

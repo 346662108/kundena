@@ -1,0 +1,186 @@
+<!--pages/my/refund/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<loading hidden="{{hiddenSaveLoading}}">正在保存</loading>
+<form bindsubmit="submitForm">
+	<view class="return bg-white padding solid-top">
+		<view class="return-items">
+			<view class="flex align-center justify-between">
+				<view class="darkGray">退款商品</view>
+				<button class="flex align-center justify-center blue" open-type="contact">
+					<text class="cuIcon-comment font-size16"></text>
+					<text class="margin-left-xs">在线客服</text>
+				</button>
+			</view>
+			<view class="goods-sm flex margin-top-xs" bindtap="navigateDetail" data-pid="{{orderInfo.pid}}">
+				<image class="items-pic" src="{{orderInfo.img}}" mode="aspectFill"></image>
+				<view class="items-desc flex-sub margin-left-sm">
+					<view class="desc-name text-cut2 font-size14">{{orderInfo.title}}</view>
+					<view class="desc-sku text-cut1 font-size12 gray margin-top-xs">{{orderInfo.color}}</view>
+					<view class="price font-size10 margin-top-sm">￥
+						<text class="font-size14">{{orderInfo.price}}</text>
+						<text class="num gray font-size14 margin-left-sm">×{{orderInfo.num}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="return-items margin-top">
+			<view class="flex align-center justify-between text-black">
+				<view class="darkGray">服务类型
+					<text class="red">*</text>
+				</view>
+			</view>
+			<block wx:if="{{orderInfo.sendstatus==1}}">
+				<view class="flex align-center radius margin-top-xs cuIcon-right form">
+					<picker class="flex-sub padding-lr-sm black" name="RefundType" bindchange="bindServiceChange" value="{{serviceIndex}}" range="{{service}}">
+						<view class="picker">
+							{{service[serviceIndex]}}
+						</view>
+					</picker>
+				</view>
+			</block>
+			<block wx:else>
+				<view class="form flex align-center radius bg-ghostWhite margin-top-xs">
+					<input class="flex-sub padding-lr-sm black" value="仅退款（未发货）" type="digit" disabled />
+					<input name="RefundType" value="2" hidden="true" />
+				</view>
+			</block>
+		</view>
+		<view wx:if="{{!isChangePro}}">
+			<view class="return-items margin-top" wx:if="{{isReturnMoney}}">
+				<view class="darkGray">收货状态
+					<text class="red">*</text>
+				</view>
+				<block wx:if="{{orderInfo.sendstatus==1}}">
+					<view class="form flex align-center radius bg-ghostWhite margin-top-xs cuIcon-right">
+						<picker class="flex-sub padding-lr-sm black" name="GoodStatus" bindchange="bindReceiptChange" value="{{receiptIndex}}" range="{{receipt}}">
+							<view class="picker">
+								{{receipt[receiptIndex]}}
+							</view>
+						</picker>
+					</view>
+				</block>
+				<block wx:else>
+					<view class="form flex align-center radius bg-ghostWhite margin-top-xs">
+						<input class="flex-sub padding-lr-sm black" value="未收到货" type="digit" disabled />
+					</view>
+				</block>
+			</view>
+
+
+			<view class="return-items margin-top" wx:if="{{!isReturnMoney}}">
+				<view class="darkGray">退货原因
+					<text class="red">*</text>
+				</view>
+				<view class="form flex align-center radius bg-ghostWhite margin-top-xs cuIcon-right">
+					<picker class="flex-sub padding-lr-sm black" name="Reason_Product" bindchange="bindBackGoodsChange" value="{{BackGoodsIndex}}" range="{{BackGoods}}">
+						<view class="picker">
+							{{BackGoods[BackGoodsIndex]}}
+						</view>
+					</picker>
+				</view>
+			</view>
+
+			<view class="return-items margin-top" wx:if="{{isReturnMoney}}">
+				<view class="darkGray">退款原因
+					<text class="red">*</text>
+				</view>
+				<view class="form flex align-center radius bg-ghostWhite margin-top-xs cuIcon-right">
+					<picker class="flex-sub padding-lr-sm black" name="Reason_Money" bindchange="bindBackMoneyChange" value="{{BackMoneyIndex}}" range="{{BackMoney}}">
+						<view class="picker">
+							{{BackMoney[BackMoneyIndex]}}
+						</view>
+					</picker>
+				</view>
+			</view>
+
+
+			<view class="return-items margin-top">
+				<view class="darkGray">退货数量
+					<text class="red">(最多退{{orderInfo.num}}件)</text>
+					<text class="red">*</text>
+				</view>
+				<view class="form flex align-center radius bg-ghostWhite margin-top-xs">
+					<input class="flex-sub padding-lr-sm black" name="RefundNum" bindblur="ordernum" type="digit" value="{{num}}" placeholder="请输入退货数量" />
+					<text class="padding-right-sm black">件</text>
+				</view>
+			</view>
+
+			<view class="return-items margin-top">
+				<view class="darkGray">退款总额
+					<text class="red">(最多退￥{{refundFee}}元)</text>
+					<text class="red">*</text>
+				</view>
+				<view class="form flex align-center radius bg-ghostWhite margin-top-xs">
+					<input class="flex-sub padding-lr-sm black" name="refundFee" bindblur="bindRefundFeeBlur" type="digit" value="{{refundFee}}" placeholder="请输入退款金额" />
+					<text class="padding-right-sm black">元</text>
+				</view>
+			</view>
+
+			<view class="return-items margin-top">
+				<view class="darkGray">退款方式
+					<text class="red">(原路返回）</text>
+				</view>
+				<view class="form flex align-center radius bg-ghostWhite margin-top-xs">
+					<block wx:if="{{orderInfo.PayType==1}}">
+						<input class="flex-sub padding-lr-sm black" type="digit" value="微信支付原返到零钱或付款行" disabled />
+					</block>
+					<block wx:else>
+						<input class="flex-sub padding-lr-sm black" type="digit" value="对公转账原返到{{orderInfo.invoiceAccount?orderInfo.invoiceAccount:'转账账号'}}的银行账号" disabled />
+					</block>
+					<!-- 对公转账原返到XXXXXXXXXXXXXXXXXXXX的银行账号 -->
+				</view>
+			</view>
+			<view class="return-items margin-top">
+				<view class="darkGray">退款说明</view>
+				<view class="textarea flex radius bg-ghostWhite margin-top-xs">
+					<textarea class="flex-sub padding-lr-sm padding-tb-xs black" name="DescMsg" placeholder="请输入退款说明" placeholder-class="gray" maxlength="200" disable-default-padding="true" />
+					</view>
+      </view>
+      <view class="return-images margin-top">
+        <view class="darkGray">上传凭证
+          <text class="red">(限制1张)</text>
+        </view>
+        <view class="grid col-4 grid-square flex-sub margin-top-xs">
+          <view class="bg-img" wx:for="{{imgPath}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgPath[index]}}">
+            <image src='{{imgPath[index]}}' mode='aspectFill'></image>
+            <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+              <text class="cuIcon-close"></text>
+            </view>
+          </view>
+          <view class="solids" bindtap="ChooseImage" wx:if="{{imgPath.length<1}}">
+            <text class="cuIcon-cameraadd"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="margin-top return-xchange" wx:if="{{isChangePro}}">
+      <view class="darkGray">换货流程</view>
+      <view class="radius padding margin-top-xs text">
+        <view>
+          <view class="text-black text-bold margin-bottom-xs">1.告知我们你的换货需求：</view>
+          <view>你可以通过以下两种方式，将您的换货需求告知我们的售后客服专员：拨打
+            <text class="dial text-blue" bindtap="phone">400-696-0618</text>
+          </view>
+        </view>
+        <view class="margin-top-sm">
+          <view class="text-black text-bold margin-bottom-xs">2.将商品退货给我们：</view>
+          <view>收货人：张燕红</view>
+          <view>地址：福建省泉州市惠安县惠东工业区家世比</view>
+          <view>电话：
+            <text class="dial text-blue" bindtap="mobile">180-6552-1958</text>
+          </view>
+        </view>
+        <view class="margin-top-sm">
+          <view class="text-black text-bold margin-bottom-xs">3.收到退货后：</view>
+          <view>a.检查退回来的商品是否影响二次销售</view>
+          <view>b.符合换货条件，我们将按照你电话提供的换货需求发货，并提供运单号</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="spacing-bottom {{isIphoneX?'iphoneX':''}}"></view>  
+
+	<cover-view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}" wx:if="{{!isChangePro}}">
+		<button class="button-sm bg-blue radius font-size13" formType="submit">提交申请</button>
+	</cover-view>
+</form>

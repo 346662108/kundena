@@ -1,0 +1,64 @@
+<!--pages/product/list/index.wxml-->
+<!--header-->
+<view class="header bg-white">
+	<view class="inner flex align-center padding-top-sm padding-lr-lg">
+		<!--header-search-->
+		<view class="search flex-sub flex radius">
+			<input class="search-ipt flex-sub padding-left-sm font-size13" name="search" type='text' confirm-type="search" bindconfirm="wxSearchFn" focus='{{focus}}' bindinput='bindKeyInput' placeholder="搜索你感兴趣的" placeholder-style="color:#ccc"></input>
+			<button class="flex justify-center align-center button search-btn font-size15" bindtap="wxSearchFn">
+				<text class="cuIcon-search"></text>
+			</button>
+		</view>
+	</view>
+	<!--header-nav-->
+	<scroll-view scroll-x class='swiper-nav' scroll-left='{{swiperNav.x}}' scroll-with-animation='true' bindtap='swiperNav'>
+		<text class='item-nav text-center font-size15'  bindtap='linkIndex'>推荐</text>
+		<text wx:for='{{swiperNav.arr}}' wx:key='{{index}}' class='item-nav {{item.cid==cid ? "active" : ""}} text-center font-size15' data-i='{{index}}' data-cid="{{item.cid}}"  bindtap='urlProlist'>{{item.txt}}</text>
+	</scroll-view>
+	<!--header-filter-->
+	<view class="filter flex padding-lr-lg padding-tb-sm">
+		<view class="filter-item flex justify-center align-center round {{filterId==1? 'active red': 'darkGray'}} " data-tid="1 " bindtap="tapFilter">综合</view>
+		<view class="filter-item flex justify-center align-center round margin-left-xs {{filterId==2? 'red': 'darkGray'}} " data-tid="2 " bindtap="tapFilter">销量</view>
+		<view class="filter-item flex justify-center align-center round margin-left-xs {{filterId==3? 'red': 'darkGray'}} " data-tid="3 " bindtap="tapFilter">新品</view>
+		<!--arrow-first默认,arrow-down低到高,arrow-up高到低,-->
+		<view class="filter-item flex justify-center align-center round margin-left-xs {{priceFilter==2? 'arrow-up':(priceFilter==1? 'arrow-down': 'arrow-first')}} {{priceFilter>0?'red':'darkGray'}}" data-tid="{{priceFilter}}" bindtap="tapPriceFilter">价格
+			<icon class="icon"></icon>
+		</view>
+	</view>
+</view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{pageProList.length>0}}">
+	<view class="nav-section-list flex flex-wrap">
+		<block wx:for="{{pageProList}}" wx:key="pid">
+			<view class="nav-section-items bg-white margin-bottom-xs" bindtap="navigateDetail" data-pid="{{item.pid}}">
+				<!--image-->
+				<view class="section-image">
+					<image src="{{item.pic}}" mode="aspectFill"></image>
+				</view>
+				<!--content-->
+				<view class="section-cont padding-sm">
+					<view class="section-cont-sub text-cut2 font-size14">{{item.name}}</view>
+					<view class="section-cont-price red margin-top-xs">
+						<text class="font-size12">￥</text>
+						<text class="price font-size17">{{item.price}}</text>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view class="font-size10  text-center gray padding-tb" hidden="{{hiddenbuttomMsg}}">已经到底了~~</view>
+	<view class="loading" hidden="{{hiddenLoading}}">
+		<view class="loader"></view>
+		<text>加载中</text>
+	</view>
+</block>
+<block wx:else>
+	<view class="no-data text-center">
+		<view class="icon cuIcon-similar grey"></view>
+		<view class="text margin-top-xs grey">{{cid==0?"搜索不到指定商品~":"此类目还没有商品哦~~"}}</view>
+		<view class="link flex justify-center margin-top-xl">
+			<button class="bg-grey light shadow radius font-size13" bindtap="gotoIndex">回首页</button>
+		</view>
+	</view>
+</block>
+<!--<view bindtap="backclassify" class="weui-returnButton">返回分类</view>-->

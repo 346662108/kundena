@@ -1,0 +1,6 @@
+/* pages/cart/cart_list/index.wxss */
+
+.car-settlement .delsku {
+  width: 50rpx;
+  height: 50rpx;
+}

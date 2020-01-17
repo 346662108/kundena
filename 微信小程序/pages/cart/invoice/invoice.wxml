@@ -1,0 +1,77 @@
+<!--pages/cart/invoice/invoice.wxml-->
+<view class="invoice-form bg-white padding solid-top">
+	<view class="type-title text-bold">发票类型</view>
+	<view class="type-inner flex flex-wrap margin-top-sm">
+		<view class="items cu-btn radius {{(item.id==id)?'bg-red':'bg-ghostWhite darkGray'}} " wx:for="{{objectArray}}" wx:for-index="ind">
+			<text data-ind='{{item.id}}' data-index='{{item.id}}' bindtap="invoiceLink">{{item.name}}</text>
+		</view>
+	</view>
+</view>
+<form bindsubmit="submitForm">
+	<block wx:if="{{index>0}}">
+		<!-- 纸质普通发票 -->
+		<view class="invoice-form bg-white padding margin-top-sm">
+			<view>
+				<view class="type-title text-black text-bold ">发票抬头</view>
+				<block wx:if="{{id==1}}">
+					<view class="type-inner flex flex-wrap margin-top-sm padding-bottom-xs">
+						<view class="items cu-btn {{index==1?'bg-red':'bg-ghostWhite darkGray'}} radius " data-ind='1' data-index='1' bindtap="invoiceLink">个人</view>
+						<view class="items cu-btn {{index==2?'bg-red':'bg-ghostWhite darkGray'}} radius" data-ind='1' data-index='2' bindtap="invoiceLink">公司</view>
+					</view>
+				</block>
+				<input name="InvoiceType" value="{{index}}" hidden='true'></input>
+				<!-- 个人/企业 -->
+				<view class="type-ipt flex align-center bg-ghostWhite radius margin-top-sm">
+					<input class="flex-sub padding-lr-sm" placeholder-class="gray" placeholder="{{msgInvoiceName}}" placeholder-class="gray" name="InvoiceName" value='{{Invoice.InvoiceName}}'>{{InvoiceName}}</input>
+				</view>
+				<block wx:if="{{index>1}}">
+					<!-- 企业 -->
+					<view class="margin-top">
+						<view class="type-title text-black text-bold" wx:if="{{index>2}}">纳税人识别码</view>
+						<view class="type-ipt flex align-center bg-gray radius margin-top-sm">
+							<input class="flex-sub padding-lr-sm" placeholder-class="gray" placeholder="请填写纳税人识别码" name="InvoiceIdentifier" value='{{Invoice.InvoiceIdentifier}}'>请填写纳税人识别码</input>
+						</view>
+					</view>
+				</block>
+			</view>
+			<block wx:if="{{index>2}}">
+				<view class="margin-top">
+					<view class="type-title text-black text-bold">注册地址</view>
+					<view class="type-ipt flex align-center bg-gray radius margin-top-sm">
+						<input class="flex-sub padding-lr-sm" placeholder-class="gray" placeholder="请填写注册地址" name="invoiceAddress" value='{{Invoice.invoiceAddress}}'>请填写注册地址</input>
+					</view>
+				</view>
+				<view class="margin-top">
+					<view class="type-title text-black text-bold">注册电话</view>
+					<view class="type-ipt flex align-center bg-gray radius margin-top-sm">
+						<input class="flex-sub padding-lr-sm" placeholder-class="gray" placeholder="请输入注册电话" name="invoicePhone" value='{{Invoice.invoicePhone}}'>请填写注册电话</input>
+					</view>
+				</view>
+				<view class="margin-top">
+					<view class="type-title text-black text-bold">开户银行</view>
+					<view class="type-ipt flex align-center bg-gray radius margin-top-sm">
+						<input class="flex-sub padding-lr-sm" placeholder-class="gray" placeholder="请填写开户银行" name="invoiceBank" value='{{Invoice.invoiceBank}}'>请填写开户银行</input>
+					</view>
+				</view>
+				<view class="margin-top">
+					<view class="type-title text-black text-bold">银行账户</view>
+					<view class="type-ipt flex align-center bg-gray radius margin-top-sm">
+						<input class="flex-sub padding-lr-sm" placeholder-class="gray" placeholder="请填写银行账户" name="invoiceAccount" value='{{Invoice.invoiceAccount}}'>请填写银行账户</input>
+					</view>
+				</view>
+			</block>
+		</view>
+		<!-- 发票内容 -->
+		<view class="invoice-form bg-white padding margin-top-sm">
+			<view class="type-title text-black text-bold">发票内容</view>
+			<view class="type-inner flex flex-wrap margin-top-sm">
+				<view class="items cu-btn bg-red radius">商品明细</view>
+			</view>
+		</view>
+		<view class="spacing-bottom {{isIphoneX?'iphoneX':''}}"></view>
+	</block>
+	<!-- 确认 -->
+	<view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}">
+		<button class="btns-invoice btns bg-red radius font-size13" formType="submit">确认保存</button>
+	</view>
+</form>

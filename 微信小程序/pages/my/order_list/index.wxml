@@ -1,0 +1,78 @@
+<!--pages/my/order-list/index.wxml-->
+<view class="filter bg-white flex">
+	<block wx:for="{{navTopItems}}" wx:key="item.tid">
+		<view class="filter-item flex justify-center align-center {{tid == item.tid ? 'active red' : ''}}" bindtap="switchTab" data-index="{{index}}" data-tid="{{item.tid}}">{{item.title}}</view>
+	</block>
+</view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{pageOrderList.length>0}}">
+	<view class="order">
+		<view class="order-item bg-white margin-top-sm" wx:for="{{pageOrderList}}" wx:key="item.Oid">
+			<view class="order-item-header flex justify-between padding" data-oid="{{item.Oid}}">
+				<view class="flex-sub">订单号：{{item.TradeNo}}</view>
+				<view class="red">{{item.StatusEnum}}</view>
+				<block wx:if="{{item.Status==4||item.Status==5}}">
+					<view class="del bg-ghostWhite flex justify-center align-center radius  margin-left-sm" data-oid='{{item.Oid}}' bindtap="orderDelete">
+						<text class="cuIcon-delete black"></text>
+					</view>
+				</block>
+			</view>
+			<view class="order-item-goods">
+				<view class="goods-sm flex padding solid-top" wx:for="{{item.OrderItems}}" wx:for-item="proItem" wx:for-index="proItemIndex" wx:key="proItem.itemId">
+					<view class="box" data-oid="{{item.Oid}}" bindtap="gateDetail">
+						<image class="items-pic" src="{{proItem.img}}" mode="aspectFill"></image>
+						<text class="items-status font-size10 white text-center text-cut1" wx:if="{{proItem.refundStatus>0?true:false}}" data-itemid="{{proItem.itemId}}">{{proItem.refundStatusName}}</text>
+					</view>
+					<view class="items-desc flex-sub margin-left-sm">
+						<view class="desc-name text-cut2 font-size14" data-oid="{{item.Oid}}" bindtap="gateDetail">{{proItem.title}}</view>
+						<view class="desc-sku text-cut1 font-size12 gray margin-top-xs" data-oid="{{item.Oid}}" bindtap="gateDetail">{{proItem.color}}</view>
+						<view class="desc-inner flex align-center justify-between margin-top-sm" data-oid="{{item.Oid}}" bindtap="gateDetail">
+							<view class="price font-size10">￥
+								<text class="font-size14">{{proItem.price}}</text>
+								<text class="num gray font-size14 margin-left-sm">×{{proItem.num}}</text>
+							</view>
+							<view class="return" wx:if="{{item.Status>1}}">
+								<button class="cu-btn line-gray radius sm text-darkGray" wx:if="{{item.Status!=5&&proItem.refundStatus==0&&item.PlatForm!=4&&item.PlatForm!=5&&item.PlatForm!=6}}" data-itemid="{{proItem.itemId}}" bindtap="gotoReturn">退换/退款
+								</button>
+								<button class="cu-btn line-gray radius sm text-darkGray" wx:if="{{proItem.refundStatus>0?true:false}}" data-itemid="{{proItem.itemId}}" bindtap="gotoReturnDetail">退换详情
+								</button>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="order-item-total flex align-center justify-end padding-lr">
+				<text class="gray font-size12">共30件商品</text>
+				<text class="margin-left-sm font-size14">实付金额：</text>
+				<text class="font-size14">￥{{item.Payment}}</text>
+			</view>
+			<!-- 确认付款 -->
+			<view class="order-item-footer flex justify-end padding-lr padding-tb-sm margin-top solid-top" wx:if="{{item.Status==1}}">
+				<button class="cu-btn line-gray radius font-size13 margin-left-sm" data-oid="{{item.Oid}}" bindtap="closeOrder">取消订单</button>
+				<button class="cu-btn bg-red radius font-size13 margin-left-sm" data-oid="{{item.Oid}}" bindtap="gotoPayment">立即付款</button>
+			</view>
+			<!-- 确认收货 -->
+			<view class="order-item-footer flex justify-end padding-lr padding-tb-sm margin-top solid-top" wx:elif="{{item.Status==3}}">
+				<button class="cu-btn line-red radius font-size13 margin-left-sm" data-pid="{{item.pid}}" bindtap="gotoProDetail">再次购买</button>
+				<button class="cu-btn bg-red radius font-size13 margin-left-sm " data-oid="{{item.Oid}}" bindtap="gotoConfimOrder">确认收货</button>
+			</view>
+			<view class="order-item-footer flex justify-end padding-lr padding-tb-sm margin-top solid-top" wx:else>
+				<button class="cu-btn line-red radius font-size13 margin-left-sm" data-pid="{{item.pid}}" bindtap="gotoProDetail">再次购买</button>
+			</view>
+		</view>
+		<view class="loading" hidden="{{hiddenLoading}}">
+			<view class="loader"></view>
+			<text>加载中</text>
+		</view>
+		<view class="font-size10 text-center gray padding-tb" hidden="{{hiddenbuttomMsg}}">已经到底了~~</view>
+	</view>
+</block>
+<block wx:else>
+	<view class="no-data text-center">
+		<view class="icon cuIcon-formfill grey"></view>
+		<view class="text margin-top-xs grey">哎呀, 你现在还没订单哦~~</view>
+		<view class="link flex justify-center margin-top-xl">
+			<button class="bg-grey light shadow radius font-size13" bindtap="gotoIndex">去购物</button>
+		</view>
+	</view>
+</block>

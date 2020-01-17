@@ -1,0 +1,19 @@
+/* pages/my/refund/index.wxss */
+.return .form {
+  height: 72rpx;
+  position: relative;
+}
+
+.return .textarea {
+  height: 150rpx;
+}
+
+.return .textarea textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.return .form::before {
+  position: absolute;
+  right: 20rpx;
+}

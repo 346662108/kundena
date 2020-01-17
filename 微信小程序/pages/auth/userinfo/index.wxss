@@ -1,0 +1,55 @@
+page {
+  font-size: 28rpx;
+  color: #000;
+}
+
+.avatar {
+  position: relative;
+  margin-top: 100rpx;
+  width: 246rpx;
+  height: 246rpx;
+}
+
+.avatar::before, .avatar::after {
+  content: "";
+  position: absolute;
+  border-radius: 100%;
+}
+
+.avatar::before {
+  width: 198rpx;
+  height: 198rpx;
+  top: 24rpx;
+  left: 24rpx;
+  border: 1rpx solid rgb(0, 0, 0, 0.05);
+}
+
+.avatar::after {
+  width: 246rpx;
+  height: 246rpx;
+  top: 0;
+  left: 0;
+  border: 1rpx solid rgb(0, 0, 0, 0.1);
+}
+
+.avatar .cu-avatar {
+  width: 150rpx;
+  height: 150rpx;
+  box-shadow: 0 0 30rpx rgb(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.prompt {
+  color: #666;
+}
+
+.upgrade {
+  margin-top: 280rpx;
+  color: #999;
+  text-align: center;
+}
+
+.upgrade .icons {
+  font-size: 160rpx;
+  color: #ddd;
+}

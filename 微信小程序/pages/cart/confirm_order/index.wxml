@@ -1,0 +1,75 @@
+<!--pages/cart/confirm_order/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{hiddenLoading}}">
+	<view class="address">
+		<view class="address-item ddress-default bg-white padding padding-bottom-lg flex align-center justify-between solid-top" bindtap="onaddresslist" wx:if="{{address}}" data-aid='{{address.Id}}'>
+			<view class="address-info">
+				<view class="name font-size15">
+					<text>{{address.Receiver}}</text>
+					<text class="margin-left-xs">{{address.Tel}}</text>
+				</view>
+				<view class="desc darkGray margin-top-xs">
+					<text>{{address.RegionPath}}{{address.Address}}</text>
+				</view>
+			</view>
+			<view class="cuIcon-right font-size20 gray"></view>
+			<view class="address-line"></view>
+		</view>
+		<view class="address-item bg-white padding flex align-center justify-center solid-top" bindtap="onaddressadd" wx:else>
+			<view class="cuIcon-roundaddfill red font-size18"></view>
+			<view class="text margin-left-xs">添加收货地址</view>
+			<view class="address-line"></view>
+		</view>
+	</view>
+	<view class="inner-list bg-white margin-top-sm">
+		<block wx:for="{{dest}}" wx:key="indexs" wx:for-item="array" wx:for-index="indexs">
+			<!-- sku -->
+			<block wx:for="{{array.data}}" wx:key="index" wx:for-index="index">
+				<view class="goods-xs flex padding solid-top" wx:if="{{item.selected}}">
+					<image class="items-pic" src="{{item.img}}" mode="aspectFill"></image>
+					<view class="items-desc flex-sub margin-left-sm">
+						<view class="desc-name text-cut1 font-size14">{{item.h1}}</view>
+						<view class="desc-sku text-cut1 font-size12 gray margin-top-xs">{{item.h2}}</view>
+						<view class="desc-inner flex align-center justify-between margin-top-sm">
+							<view class="price red font-size10">￥
+								<text class="font-size14">{{item.price}}</text>
+							</view>
+							<view class="num">×{{item.num}}</view>
+						</view>
+					</view>
+				</view>
+			</block>
+			<!-- sku -->
+		</block>
+	</view>
+	<view class="form-group-sm bg-white flex align-center justify-between padding-lr margin-top-sm" bindtap="invoiceLink">
+		<view class="title gray">发票信息</view>
+		<view class="content flex-sub text-right margin-left">{{text}}</view>
+			<view class="cuIcon-right gray font-size16"></view>
+		</view>
+	<view class="form-group-sm bg-white flex align-center justify-between padding-lr margin-top-sm">
+		<view class="title gray">留言</view>
+		<input class="content flex-sub text-right margin-left" bindinput="bindMsgInput" placeholder="点击给商家留言" placeholder-class="gray"></input>
+	</view>
+	<view class="settlement bg-white margin-top-sm padding">
+		<view class="flex align-center justify-between">
+			<text class="gray">商品总额</text>
+			<text class="black">￥{{totalpro}}</text>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm">
+			<text class="gray">运费</text>
+			<text class="black">+￥{{postfee}}</text>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm">
+			<text class="black">实付金额</text>
+			<view class="red text-bold font-size10">￥
+				<text class="font-size20">{{totalall}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="spacing-bottom {{isIphoneX?'iphoneX':''}}"></view>
+	<view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}">
+		<button class="btns btns-order bg-red radius font-size13" bindtap="subOrder">提交订单</button>
+	</view>
+	<loading hidden="{{hiddenSaveLoading}} ">订单付款中...</loading>
+</block>

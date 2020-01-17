@@ -1,0 +1,201 @@
+<!--pages/product/detail/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container">
+	<!--商品轮播图-->
+	<view class="sp_banner bg-white">
+		<swiper bindchange="swiperChange" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+			<block wx:for="{{proInfo.pics}}" wx:key="picUrl">
+				<swiper-item class="text-center">
+					<image src="{{item.picUrl}}" class="slide-image" mode="aspectFit" data-index="{{index}}" bindtap="previewImage" />
+				</swiper-item>
+			</block>
+		</swiper>
+		<view class="imageCount white font-size12">{{current+1}}/{{proInfo.pics.length}}</view>
+	</view>
+	<!--商品说明-->
+	<view class="sp_cont bg-white padding">
+		<view class="sp-cont-price red text-bold">
+			<text class="font-size16">￥</text>
+			<text class="price font-size26">{{proInfo.price}}</text>
+		</view>
+		<view class="sp-cont-title font-size16 margin-top-xs">{{proInfo.title}}</view>
+		<view class="sp-cont-other flex align-center justify-between margin-top-sm gray">
+			<view class="flex-sub">
+				库存
+				<text>{{proInfo.surplus}}</text>件
+			</view>
+			<view class="flex-sub text-center">销量
+				<text>{{proInfo.buys}}</text>件
+			</view>
+			<view class="flex-sub text-right">运费
+				<text>￥0.00</text>
+			</view>
+		</view>
+	</view>
+	<view class="sp_color flex justify-between align-center bg-white padding-lr margin-top-sm" bindtap="setModalStatus" data-status="1" data-addtype="3">
+		<text class="color-left gray">{{protext?"已选择":"请选择"}}</text>
+		<text class="color-right flex-sub margin-lr">{{protext}}</text>
+		<text class="cuIcon-right gray"></text>
+	</view>
+	<!--商品详情图-->
+	<view class="sp_map margin-top-sm">
+		<view class="sp_map_tab flex justify-center align-center solid-bottom bg-white solid-top {{topFixed ? 'tab-fixed':''}}">
+			<text class="flex justify-center align-center gray {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">图文详情</text>
+			<text class="flex justify-center align-center gray {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">规格参数</text>
+			<!-- <text class="flex justify-center align-center gray {{currentTab==2?'active':''}}" data-current="2" bindtap="clickTab">问答专区</text> -->
+		</view>
+		<view class="sp_map_cont sp-graphic bg-white {{currentTab==0? 'show':''}}">
+			<!-- <rich-text nodes="{{proInfo.desc}}"></rich-text> -->
+			<block wx:for="{{proInfo.content}}" wx:for-index="idy" wx:for-item="cellData" wx:key="attr">
+				<block wx:if="{{cellData.type == 'view'}}">
+					<view>
+						<block wx:for="{{cellData.child}}" wx:key="text">
+							<block wx:if="{{item.type == 'a'}}">
+								<text data-seccode="{{item.attr['data-seccode']}}" data-secname="{{item.attr['data-secname']}}">{{item.text}}</text>
+							</block>
+							<block wx:else>
+								<text>{{item.text}}</text>
+							</block>
+						</block>
+					</view>
+				</block>
+				<block wx:if="{{cellData.type == 'img'}}">
+					<image data-index="{{idy}}" style="height:{{cellData.attr.height?cellData.attr.height:0}}rpx" mode="widthFix" src="{{cellData.attr.src}}"></image>
+				</block>
+			</block>
+		</view>
+		<view class="sp_map_cont sp-parameter bg-white padding {{currentTab==1? 'show':''}}">
+			<block wx:if="{{PropsValue.length>0}}">
+				<block wx:for="{{PropsValue}}" wx:for-item="item" wx:key="propvaluekey">
+					<view class="parameter-items flex">
+						<text class="name gray text-cut1">{{item.name}}</text>
+						<text class="parameter flex-sub text-cut3 margin-left">{{item.value}}</text>
+					</view>
+				</block>
+			</block>
+		</view>
+
+		<view class="sp_map_cont sp-reply bg-white {{currentTab==2? 'show':''}}">
+			<block wx:if="{{queslist.length>0}}" wx:key='qid'>
+				<block wx:for="{{queslist}}" wx:key="id">
+					<!-- problem -->
+					<view class="reply-items">
+						<view class="items-Q">
+							<view class="items-Q-body">
+								<view class="text txtover-1">{{item.quest}}</view>
+							</view>
+						</view>
+						<view class="items-A">
+							<view class="items-A-header">
+								<view wx:if="{{item.problem!=''}}">
+									<view class="text txtover-1">{{item.problem}}</view>
+								</view>
+								<view wx:else>
+									<view class="text txtover-1">暂无回复</view>
+								</view>
+							</view>
+							<view class="items-A-body">
+								<text class="operating" bindtap="btnsReply" data-reply="1" data-qid="{{item.qid}}" data-name='{{item.quest}}'>我要回复</text>
+								<text class="operating icon" bindtap="btnsAllReply" data-allreply="1" data-qid="{{item.qid}}">查看全部</text>
+							</view>
+						</view>
+					</view>
+				</block>
+			</block>
+			<block wx:else>
+				<view class="page-nodata">暂无相关问答</view>
+			</block>
+		</view>
+	</view>
+	<view class="spacing-bottom {{isIphoneX?'iphoneX':''}}"></view>
+	<!--商品底部-->
+	<view class="sp_footer fixed-bottom bg-white padding-lr flex justify-center align-center {{isIphoneX?'iphoneX':''}}">
+		<button class="link flex-sub darkGray text-center" bindtap="onhome" hover-class="none">
+			<view class="cuIcon-home icons font-size20"></view>
+			<view class="font-size10">首页</view>
+		</button>
+		<button class="link flex-sub darkGray text-center" bindtap="ongotocart" hover-class="none">
+			<view class="cuIcon-goodsnew icons font-size20"></view>
+			<view class="font-size10">购物袋</view>
+			<!-- <text class="dot bg-red round"></text> -->
+		</button>
+		<button class="link flex-sub darkGray text-center" open-type="contact" hover-class="none">
+			<view class="cuIcon-comment icons font-size20"></view>
+			<view class="font-size10">客服</view>
+		</button>
+		<button class="button button-xs flex justify-center align-center bg-ghostWhite radius text-bold margin-left-xs" bindtap="setModalStatus" data-status="1" data-addtype="1" hover-class="none">加入购物袋</button>
+		<button class="button button-xs flex justify-center align-center bg-red radius text-bold margin-left-xs" wx:if="{{proInfo.approve_Status==1}}" bindtap="setModalStatus" data-status="1" data-addtype="2" hover-class="none">现在购买</button>
+	</view>
+	<!--加入购物车弹层-->
+	<view class="black_layer" animation="{{animationBlack}}" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}" catchtouchmove="true"></view>
+	<view class="layer bg-white padding" animation="{{animationData}}" wx:if="{{showModalStatus}}" catchtouchmove="true">
+		<view class="close_icon cuIcon-close font-size20" bindtap="setModalStatus" data-status="0"></view>
+		<view class="layer_content">
+			<view class="flex padding-bottom">
+				<image class="layer_img" src="{{attrPic?attrPic:proInfo.pic}}"></image>
+				<view class="layer_text flex-sub margin-left-sm">
+					<view class="price red text-bold">
+						<text class="font-size10">￥</text>
+						<text class="font-size20">{{includeGroup.length==1?includeGroup[0].price:proInfo.price}}</text>
+					</view>
+					<view class="h1 font-size14 text-cut3 margin-top-xs">{{proInfo.title}}</view>
+				</view>
+			</view>
+			<scroll-view class="attr_list" scroll-y='true'>
+				<view class="attr_box padding-top-xs padding-bottom" wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="attrKey">
+					<!--属性名-->
+					<view class="attr_name gray">{{attrValueObj.attrKey}}</view>
+					<!--每个属性值-->
+					<view class="attr_sku flex flex-wrap">
+						<view class="attr_value margin-left-sm margin-top-sm font-size14 text-center padding-lr-sm radius text-cut1 {{attrIndex==firstIndex || attrValueObj.attrValueStatus[valueIndex]?(value==attrValueObj.selectedValue?'attr_value_active':''):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus[valueIndex]}}" data-value="{{value}}" data-attrPic="{{attrValueObj.attrPVPics[valueIndex]}}" data-key="{{attrValueObj.attrKey}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" wx:for="{{attrValueObj.attrValues}}" wx:for-item="value" wx:for-index="valueIndex" wx:key="value">{{value}}</view>
+					</view>
+				</view>
+				<!--attr_list end-->
+				<view class="attr_num flex justify-between align-center padding-bottom-xl">
+					<view class="attr_num_name gray">数量</view>
+					<view class="attr_num_rest flex-sub font-size12 text-right margin-right">
+						库存
+						<text>{{includeGroup.length==1?includeGroup[0].stock:proInfo.surplus}}</text>件
+					</view>
+					<view class="flex attr_num_set">
+						<view class="less {{minusStatus}} " bindtap="bindMinus"></view>
+						<input class="text-center font-size12" type="number" maxlength="3" bindchange="bindManual" value="{{num}}" onkeyup="this.value=this.value.replace(/\D/g, '')" />
+						<view class="plus {{maxusStatus}}" bindtap="bindPlus"></view>
+					</view>
+				</view>
+				<!--attr_num end-->
+			</scroll-view>
+		</view>
+		<view class="attr-btns fixed-bottom flex align-center bg-white padding-lr {{isIphoneX?'iphoneX':''}}" wx:if="{{addtype==1}}">
+			<button class="button-sm bg-red flex-sub radius font-size15" bindtap="submit">确认</button>
+		</view>
+		<view class="attr-btns fixed-bottom flex align-center bg-white padding-lr {{isIphoneX?'iphoneX':''}}" wx:if="{{addtype==2||addtype==3}}">
+			<button class="button-sm bg-ghostWhite flex-sub radius font-size15" bindtap="submit">加入购物袋</button>
+			<button class="button-sm bg-red flex-sub radius font-size15 margin-left-xs" bindtap="submitNext">现在购买</button>
+		</view>
+
+	</view>
+	<!--layer end-->
+	<!-- 问题回复弹窗 -->
+	<view class="black_layer" animation="{{animationBlack}}" bindtap="btnsReply" data-reply="0" wx:if="{{showReply}}" catchtouchmove="true"></view>
+	<view class="layer-mini" wx:if="{{showReply}}" catchtouchmove="true">
+		<!-- <icon class="close_icon" bindtap="btnsReply" data-reply="0" type="cancel" size="23" color="#bec5cc" /> -->
+		<view class="reply-main">
+			<view class="main-problem">
+				<view class="text txtover-2">{{qtext}}</view>
+			</view>
+			<view class="main-textarea" scroll-y='true'>
+				<form bindsubmit="bindFormSubmit">
+					<input hidden='true' value='{{qid}}' name="qid"></input>
+					<textarea placeholder="请输入回复内容，限制200个字以内" name="textarea" maxlength="200" placeholder-style="color:rgba(0, 0, 0, 0.35)" fixed="true" cursor-spacing="180" auto-focus />
+					<view class="reply-btns">
+            <button bindtap="btnsReply" data-reply="0">取消</button>
+            <button form-type="submit" class="blue">提交</button>
+          </view>
+        </form>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--container end-->

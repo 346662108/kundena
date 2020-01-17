@@ -1,0 +1,11 @@
+<!--pages/about/join.wxml-->
+<view class="information">
+  <view class="text-bold text-pink text-center title"> 厂家直销，诚招代理加盟，支持一件代发</view>
+  <view class="text-bold text-pink text-center title">支持淘宝、天猫、微商等各平台上架拿货</view>
+  <view class="margin-top"> <text class="text-bold text-black">【一件代发】</text>代理享受优惠价格，一件起批，工厂货源稳定，现货供应，并提供图片数据包，让您轻松铺货；</view>
+  <view class="margin-top-xs"><text class="text-bold text-black">【批发】</text>外贸订单、大货批发等，请联系我们，量大价格可谈；
+  </view>
+  <view class="margin-top-xs"><text class="text-bold text-black">【快递】</text>本店默认快递为百世快递、优速快递、邮政快递包裹，系统自动适配快递，快递送不到可以联系我们免费转件哦，除偏远地区外均包邮；</view>
+  <view class="margin-top-xs"><text class="text-bold text-black">【售后问题】</text>产品出现问题请联系售后客服，说明情况，我们会第一时间帮您处理。</view>
+  <view class="margin-top-xs"><text class="text-bold text-black">【质量】</text>所售产品均由工厂自主生产，质量保证，请放心购买！</view>
+</view>

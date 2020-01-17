@@ -1,0 +1,150 @@
+/* pages/my/lottery_winitem/lottery_winitem.wxss */
+
+page {
+  background: #e8e8ed;
+  font-size: 26rpx;
+  line-height: 1.25;
+  color: #666;
+}
+
+.gorup_md {
+  position: relative;
+  padding: 40rpx;
+  display: flex;
+  background: #fff;
+}
+
+.gorup_md image {
+  width: 300rpx;
+  height: 300rpx;
+}
+
+.gorup_md .info {
+  flex: 1;
+  height: 300rpx;
+  padding-left: 60rpx;
+}
+
+.gorup_md .info_box {
+  position: relative;
+  height: 100%;
+}
+
+.gorup_md .title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+.gorup_md .title {
+  line-height: 1.5;
+  font-size: 28rpx;
+  font-weight: bold;
+  -webkit-line-clamp: 3;
+}
+
+.gorup_md .price {
+  padding-top: 20rpx;
+}
+
+.gorup_md .price text:nth-child(1) {
+  color: #e0187b;
+  font-weight: bold;
+  font-size: 36rpx;
+}
+
+.gorup_md .price text:nth-child(2) {
+  color: #9c9c9c;
+  font-size: 24rpx;
+  text-decoration: line-through;
+  padding-left: 20rpx;
+}
+
+.gorup_md .statusbtn {
+  width: 100%;
+  padding: 24rpx 0;
+  color: #fff;
+  font-size: 28rpx;
+  text-align: center;
+  background-color: #a9a09c;
+  border-radius: 10rpx;
+  position: absolute;
+  bottom: 0;
+}
+
+.app {
+  background: #fff;
+}
+
+.app_title {
+  padding: 0 35rpx;
+  line-height: 88rpx;
+  display: flex;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.app_title image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.app_title text {
+  font-size: 30rpx;
+  color: #333;
+  flex: 1;
+  padding-left: 10rpx;
+}
+
+.app_li {
+  font-size: 24rpx;
+  line-height: 60rpx;
+  padding: 16rpx 0;
+  margin: 0 20rpx;
+  border-bottom: 1rpx solid #eee;
+  text-align: center;
+  display: flex;
+}
+
+.app_li.title {
+  background-color: #fafafa;
+  color: #333;
+  font-size: 28rpx;
+  padding: 6rpx 20rpx;
+  margin: 0;
+}
+
+.app_li:last-child {
+  border: 0;
+}
+
+.app_li view {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app_li .name, .app_li .phone {
+  width: 30%;
+}
+
+.app_li .name image, .app_li .name view {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.app_li .name image {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 100%;
+}
+
+.app_li .name view {
+  width: 60%;
+  padding-left: 10rpx;
+}
+
+.app_li .num {
+  width: 40%;
+}

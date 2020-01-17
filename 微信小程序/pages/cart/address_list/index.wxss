@@ -1,0 +1,9 @@
+/* pages/cart/address_list/index.wxss */
+.btns-address {
+  width: 304rpx;
+}
+
+.address-item .address-info .tag-line {
+  height: 34rpx;
+  line-height: 34rpx;
+}

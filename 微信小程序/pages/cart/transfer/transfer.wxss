@@ -1,0 +1,115 @@
+/* pages/cart/transfer/transfer.wxss */
+
+page {
+  font-size: 28rpx;
+}
+
+.transfer-sum {
+  width: 700rpx;
+  height: 110rpx;
+  padding: 0 30rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  background: #fafafa;
+  box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 16rpx;
+  border-bottom-right-radius: 16rpx;
+}
+
+.transfer-sum .price text:nth-child(3) {
+  font-size: 56rpx;
+}
+
+.transfer-sum .process button {
+  font-size: 22rpx;
+}
+
+.transfer-sum, .transfer-aging, .transfer-seller, .transfer-prompt>view {
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+  overflow: hidden;
+}
+
+.transfer-aging, .transfer-seller, .transfer-prompt>view {
+  border-radius: 16rpx;
+}
+
+.transfer-aging {
+  margin-top: 130rpx;
+  font-size: 24rpx;
+  line-height: 44rpx;
+}
+
+.transfer-aging text {
+  font-size: 28rpx;
+  margin: 0 5rpx;
+}
+
+.transfer-seller .seller-title {
+  padding: 30rpx 30rpx 0;
+}
+
+.transfer-seller .seller-items {
+  height: 90rpx;
+  padding: 0 30rpx;
+}
+
+.transfer-seller .seller-items .account {
+  width: 180rpx;
+}
+
+.transfer-seller .seller-items .copy {
+  margin-left: 40rpx;
+}
+
+.transfer-prompt {
+  counter-reset: sectioncounter;
+  padding-bottom: 120rpx;
+}
+
+.transfer-prompt.iPhoneX {
+  padding-bottom: 184rpx;
+}
+
+.transfer-prompt .prompt-items {
+  padding: 20rpx 0 0 30rpx;
+  font-size: 26rpx;
+  line-height: 38rpx;
+  position: relative;
+}
+
+.transfer-prompt .prompt-items::before {
+  content: counter(sectioncounter)".";
+  counter-increment: sectioncounter;
+  position: absolute;
+  top: 20rpx;
+  left: 0;
+}
+
+.transfer-footer {
+  width: 100%;
+  height: 100rpx;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 101;
+}
+
+.transfer-footer.iPhoneX {
+  height: 164rpx;
+  padding-bottom: 64rpx;
+}
+
+.transfer-footer .upload-btns {
+  height: 68rpx;
+  margin: 16rpx 8rpx 0 30rpx;
+}
+
+.transfer-footer .receipt-btns {
+  height: 68rpx;
+  margin: 16rpx 30rpx 0 8rpx;
+}

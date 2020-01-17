@@ -1,0 +1,56 @@
+/* pages/article/search/search.wxss */
+
+page {
+  background: #fff;
+}
+
+.search {
+  width: 100%;
+  height: 120rpx;
+  background: #fff;
+  box-shadow: 4rpx 0px 20rpx rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 101;
+}
+
+.search .search-inner {
+  height: 72rpx;
+  margin: 0 25rpx;
+  background: #f2f2f2;
+  border-radius: 12rpx;
+}
+
+.search .search-inner .inner-ipt {
+  height: 100%;
+  padding-left: 25rpx;
+}
+
+.search .search-inner .inner-btns {
+  width: 100rpx;
+  font-size: 36rpx;
+  color: #000;
+}
+
+.findtig {
+  padding: 156rpx 25rpx 0;
+}
+
+.findtig .findtig-inner .inner-title {
+  font-size: 32rpx;
+  color: #666;
+}
+
+.findtig .findtig-inner  .inner-tag {
+  margin-left: -30rpx;
+}
+
+.findtig .findtig-inner  .inner-tag .label {
+  margin: 30rpx 0 0 30rpx;
+  height: 60rpx;
+  padding: 0 26rpx;
+  font-size: 28rpx;
+}

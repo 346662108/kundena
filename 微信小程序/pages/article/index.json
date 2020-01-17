@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "home": "/pages/article/home/home",
+    "list": "/pages/article/list/list"
+  },
+  "navigationBarTitleText": "家世比资讯"
+}

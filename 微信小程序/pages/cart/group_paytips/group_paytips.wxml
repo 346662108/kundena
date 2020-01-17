@@ -1,0 +1,35 @@
+<!--pages/cart/group_paytips/group_paytips.wxml-->
+<view class="container">
+  <view class="paytips">
+    <!--成功-->
+    <view class="paytips_status success">
+      <icon type="success" size="80" color="#1aad19" />
+      <text>拼团成功</text>
+    </view>
+    <!--失败-->
+    <view class="paytips_status clear hide">
+      <icon type="clear" size="80" color="#e0187b" />
+      <text>拼团失败，未成功支付</text>
+    </view>
+    <!--支付金额-->
+    <view class="paytips_money">
+      <view>支付金额</view>
+      <view class="money">
+        <text>￥</text>
+        <text>16.00</text>
+      </view>
+    </view>
+    <!--优惠券-->
+    <view class="paytips_voucher">
+      <image src="../../../images/icon_voucher.png" mode="aspectFit"></image>
+      <view class="name">送你5元优惠券</view>
+      <!--已领取,样式加:disabled，按钮文字为:已领取 -->
+      <view class="btn" hover-class="navigator-hover">领取</view>
+    </view>
+    <!--操作按钮-->
+    <view class="paytips_btn">
+      <!--支付失败时,按钮文字为:重新支付  -->
+      <view class="big_button mainbtn" bindtap="saveMyCarts" hover-class="navigator-hover">完成</view>
+    </view>
+  </view>
+</view>

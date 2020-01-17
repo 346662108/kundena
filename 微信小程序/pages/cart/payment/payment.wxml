@@ -1,0 +1,18 @@
+<!--pages/cart/payment/payment.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view hidden="{{!hiddenLoading}}">
+	<view class="payment-amount bg-white padding-lr padding-tb-lg solid-top">
+		<view class="font-size15">订单已提交，等待付款</view>
+		<view class="margin-top-xs font-size13 gray">24小时内内未付款将自动取消订单</view>
+		<view class="margin-top-sm red text-bold font-size16">￥
+			<text class="font-size26">{{orderInfo.TotalFee}}</text>
+		</view>
+	</view>
+	<view class="payment-btns flex flex-direction padding">
+		<button class="pay-wechat cu-btn bg-green margin-tb-sm lg shadow" bindtap="gotoPayment">微信支付</button>
+		<block wx:if="{{orderInfo.InvoiceType==3}}">
+			<!--增值税发票才显示-->
+			<!-- <button class="cu-btn bg-blue margin-tb-sm lg shadow pay-bank" bindtap="bankTransfer">对公转账</button> -->
+		</block>
+	</view>
+</view>

@@ -1,0 +1,61 @@
+<!-- 头像 -->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view wx:if="{{hiddenLoading}}">
+	<view class="user-header flex align-center justify-between padding-lr">
+		<view class="header-avatar flex align-center">
+			<image class="avatar-pic cu-avatar xl round" src="{{userInfo.UserHead}}" bindtap="userDateLink"></image>
+			<view class="avatar-desc white margin-left-sm">
+				<!--正式账号:手机号码注册-->
+				<block wx:if="{{userInfo.Mobile.length>0}}">
+					<view class="name text-cut1">{{userInfo.UserNick?userInfo.UserNick:"未设置昵称"}}</view>
+					<view class="status flex margin-top-xs">
+						<block wx:if="{{uid>0}}">
+							<text class="round cuIcon-roundrightfill font-size10 radius" bindtap="UserSwith">切换至临时账号</text>
+						</block>
+					</view>
+				</block>
+				<!-- 临时账号:通过openid创建,只能用于小程序登录 -->
+				<block wx:else>
+					<view class="name text-cut1">{{userInfo.UserNick?userInfo.UserNick:"未设置昵称"}}（临时账户）</view>
+					<view class="status flex margin-top-xs">
+						<text class="round cuIcon-roundrightfill font-size10 radius" bindtap="UserSwith">切换至正式账号</text>
+					</view>
+				</block>
+			</view>
+		</view>
+	</view>
+	<!-- 我的订单 -->
+	<view class="user-nav bg-white margin-top-sm">
+		<view class="nav-title flex justify-between padding font-size15 solid-bottom">
+			<text class="name">{{items.text}}</text>
+			<!-- <text class="cuIcon-roundrightfill more" bindtap="{{item.tid==5?'urlService':'onorder'}}">{{items.msg}}</text> -->
+		</view>
+		<view class="nav-inner flex flex-wrap">
+			<button class="nav-items solid-bottom solid-left padding-tb text-center" wx:for="{{ nav }}" wx:key="index" data-index="{{ index }}" data-tid="{{item.tid}}" bindtap="{{item.tid==5?'urlService':'onorder'}}" hover-class="none">
+				<view class="icon-line {{ item.icon }}"></view>
+				<view class="name-line">{{ item.text }}</view>
+				<text class="num-line bg-red white radius font-size10" wx:if="{{item.shownum}}">{{ item.num }}</text>
+			</button>
+		</view>
+	</view>
+	<!-- 其它服务 -->
+	<view class="user-nav user-template-1 bg-white margin-top-sm">
+		<view class="nav-title flex justify-between padding font-size15 solid-bottom">
+			<text class="name">我的服务</text>
+		</view>
+		<view class="nav-inner flex flex-wrap">
+			<button class="nav-items solid-bottom solid-left padding-tb text-center" bindtap="gotoaddresslist" hover-class="none">
+				<view class="icon-line cuIcon-addressbook"></view>
+				<view class="name-line">地址簿</view>
+			</button>
+			<button class="nav-items solid-bottom solid-left padding-tb text-center" bindtap="userDateLink" hover-class="none">
+				<view class="icon-line cuIcon-profile"></view>
+				<view class="name-line">个人资料</view>
+			</button>
+			<button class="nav-items solid-bottom solid-left padding-tb text-center" open-type="contact" hover-class="none">
+				<view class="icon-line cuIcon-community"></view>
+				<view class="name-line font-size13">在线客服</view>
+			</button>
+		</view>
+	</view>
+</view>

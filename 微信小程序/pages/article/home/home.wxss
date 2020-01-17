@@ -1,0 +1,51 @@
+/* pages/article/home/home.wxss */
+
+/*横幅*/
+
+.ar-banner {
+  padding-top: 84rpx;
+  position: relative;
+}
+
+.ar-banner .banner-swiper, .ar-banner .banner-navigator {
+  height: 400rpx;
+}
+
+.ar-banner .banner-swiper .pic {
+  width: 100%;
+  height: 100%;
+}
+
+.ar-banner .banner-swiper .title {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  height: 80rpx;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.ar-banner .banner-swiper .title text {
+  padding: 0 20rpx;
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: 700;
+}
+
+.ar-banner .banner-dot {
+  position: absolute;
+  top: 114rpx;
+  right: 30rpx;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 40rpx;
+  padding: 4rpx 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+}
+
+/* 推荐文章列表 */
+
+.ar-list {
+  padding-bottom: 130rpx;
+}

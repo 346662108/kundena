@@ -1,0 +1,284 @@
+<!--pages/product/group_proitem/group_proitem.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container">
+  <!--商品轮播图-->
+  <view class="sp_banner">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{proInfo.pics}}" wx:key="picUrl">
+        <swiper-item>
+          <image src="{{item.picUrl}}" class="slide-image" mode="aspectFill" data-index="{{index}}" bindtap="previewImage" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!--商品基础信息-->
+  <view class="sp_cont">
+    <view class="sp_cont_li">
+      <view class="sp_cont_left">
+        <view class="price">
+          <text>￥{{proInfo.teamPrice}}</text>
+          <text>￥{{proInfo.marketPrice}}</text>
+          <text class="label" wx:if="{{proInfo.teamIsLottery==2}}">免费试用</text>
+        </view>
+        <view class="sales">
+          <text>已团{{proInfo.teamSalesNumber}}件·{{proInfo.teamNum}}人团</text>
+        </view>
+      </view>
+      <button class="sp-cont-right" plain="true" open-type="share">
+        <text>分享</text>
+      </button>
+    </view>
+    <view class="sp_cont_li title">
+      <text class="sp_cont_h1">{{proInfo.title}}</text>
+    </view>
+  </view>
+
+  <!--商品优惠信息-->
+  <view class="item_li li1 offer icon" bindtap="navigateCoupon" data-pid="{{proInfo.pid}}" wx:if="{{proInfo.teamIsLottery==0&&actTitle.Coupons.length>0}}">
+    <view class="sp_cont_name">优惠券</view>
+    <view class="sp_cont_offer">
+      <view class="p1">
+        <text wx:for="{{actTitle.Coupons}}" wx:key="CouponName">{{item.CouponName}}</text>
+      </view>
+    </view>
+    <text class="sp_cont_prompt">领取</text>
+  </view>
+
+  <!--活动规则-->
+  <view class="rule mtop10" wx:if="{{proInfo.teamIsLottery!=0&&proInfo.teamIsLottery!=3}}">
+    <view class="rule_title">规则</view>
+    <view class="rule_cont">
+      <view class="date">活动时间：{{proInfo.teamLotteryStart}}~{{proInfo.teamLotteryEnd}}</view>
+      <rich-text nodes="{{proInfo.teamLotteryDesc}}"></rich-text>
+    </view>
+  </view>
+
+  <!--售后服务-->
+  <view class="item_li li2 service icon" bindtap="urlService" data-status="1" data-addtype="2">
+    <view class="service_li" wx:for="{{service}}" wx:key="title">
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+  <!--售后服务弹出层-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="urlService" data-status="0" wx:if="{{showurlService}}"></view>
+  <view class="layer layer_1 servicePOP" animation="{{animationData}}" wx:if="{{showurlService}}">
+    <view class="close_icon" bindtap="urlService" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_title">服务说明</view>
+    <view class="layer_content">
+      <!--循环开始-->
+      <view class="servicePOP_li" wx:for="{{service}}" wx:key="tid">
+        <view>
+          <text>{{item.title}}</text>
+          <text>{{item.subtitle}}</text>
+        </view>
+      </view>
+      <!--循环结束-->
+    </view>
+  </view>
+
+  <!--开团人数-->
+  <view class="group_num mtop10" wx:if="{{proInfo.teamIsLottery==0&&proInfo.teamIsLottery==3&&teamOrderFirstTwo.length>0}}">
+    <view class="group_title icon">
+      <text>开团人数{{proInfo.teamTeamNum}}</text>
+      <text bindtap="urlGroupnum" data-status="1" data-addtype="2">查看更多</text>
+    </view>
+    <view class="group_num_cont">
+      <!--循环开始-->
+      <view class="group_num_li" wx:for="{{teamOrderFirstTwo}}" wx:key="tOid">
+        <view class="info">
+          <image src="{{item.buyerUserHeadImg}}" mode="aspectFit"></image>
+          <view class="info_text">
+            <view class="p1">
+              <text>{{item.buyerNick}}</text>
+            </view>
+            <view class="p2">
+              <text>还差{{item.overNum}}人，</text>
+              <text wx:if="{{item.Team_Over_Days>0}}">剩余{{item.Team_Over_Days}}.{{wxTimerList['wxTimer'+index].wxTimer}}</text>
+              <text wx:else>剩余{{wxTimerList['wxTimer'+index].wxTimer}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="senate">
+          <text data-toid="{{item.tOid}}" bindtap="urlGroupitem">去参团</text>
+        </view>
+      </view>
+      <!--循环结束-->
+    </view>
+  </view>
+
+  <!--开团人数弹出层-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="urlGroupnum" data-status="0" wx:if="{{showurlGroupnum}}"></view>
+  <view class="layer layer_2 groupnumPOP" animation="{{animationData}}" wx:if="{{showurlGroupnum}}">
+    <view class="close_icon" bindtap="urlGroupnum" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_title">正在开团</view>
+    <view class="layer_content">
+      <!--循环开始-->
+      <view class="group_num_li" wx:for="{{teamOrderFirst}}" wx:key="tOid">
+        <view class="info">
+          <image src="{{item.buyerUserHeadImg}}" mode="aspectFit"></image>
+          <view class="info_text">
+            <view class="p1">
+              <text>{{item.buyerNick}}</text>
+              <text>还差{{item.overNum}}人</text>
+            </view>
+            <view class="p2">
+              <text wx:if="{{item.Team_Over_Days>0}}">剩余{{item.Team_Over_Days}}.{{wxTimerList['wxTimer'+index].wxTimer}}</text>
+              <text wx:else>剩余{{wxTimerList['wxTimer'+index].wxTimer}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="senate">
+          <text data-toid="{{item.tOid}}" bindtap="urlGroupitem">去参团</text>
+        </view>
+      </view>
+      <!--循环结束-->
+    </view>
+    <view class="layer_footer">
+      仅显示5个正在开团的人
+    </view>
+  </view>
+
+
+  <!--商品详情图-->
+  <view class="sp_map mtop10">
+    <view class="group_title">
+      <text>商品详情</text>
+    </view>
+    <!-- <rich-text nodes="{{proInfo.desc}}"></rich-text> -->
+    <block wx:for="{{proInfo.content}}" wx:for-index="idy" wx:for-item="cellData" wx:key="attr">
+      <block wx:if="{{cellData.type == 'view'}}">
+        <view>
+          <block wx:for="{{cellData.child}}" wx:key="text">
+            <block wx:if="{{item.type == 'a'}}">
+              <text data-seccode="{{item.attr['data-seccode']}}" data-secname="{{item.attr['data-secname']}}">{{item.text}}</text>
+            </block>
+            <block wx:else>
+              <text>{{item.text}}</text>
+            </block>
+          </block>
+        </view>
+      </block>
+      <block wx:if="{{cellData.type == 'img'}}">
+        <image data-index="{{idy}}" style="height:{{cellData.attr.height?cellData.attr.height:0}}rpx" mode="widthFix" src="{{cellData.attr.src}}"></image>
+      </block>
+    </block>
+  </view>
+
+  <!--为你推荐-->
+  <view class="hotgoods">
+    <view class="title">
+      <text>为你推荐</text>
+    </view>
+    <view class="hotgoods_list">
+      <!--推荐产品循环开始-->
+      <view class="hotgoods_items" wx:for="{{teamProYouLike}}" wx:key="tpid" data-tpid="{{item.tpid}}" bindtap="urlGroupproitem">
+        <view class="hotgoods_image">
+          <image src="{{item.pic}}" mode="aspectFit"></image>
+        </view>
+        <view class="hotgoods_cont">
+          <view class="name">
+            <text>{{item.title}}</text>
+          </view>
+          <view class="other">
+            <text>{{item.teamPrice}}</text>
+            <text>已团{{item.teamSalesNumber}}件</text>
+          </view>
+        </view>
+      </view>
+      <!--推荐产品循环结束-->
+    </view>
+  </view>
+
+  <!--商品底部-->
+  <view class="sp_footer">
+    <view class="sp_footer_sy" bindtap="onhome">
+      <image src="../../../images/icon_index.png" class="sp_footer_icon" />
+      <text class="sp_footer_h1">首页</text>
+    </view>
+    <view class="sp_footer_kf">
+      <button open-type="contact">
+        <image src="../../../images/icon_service.png" class="sp_footer_icon" />
+        <text class="sp_footer_h1">客服</text>
+      </button>
+    </view>
+
+    <view class="sp_footer_join" bindtap="urlDetail">
+      <view>
+        <text>￥{{proInfo.proPrice}}</text>
+        <text>单独购买</text>
+      </view>
+    </view>
+
+    <view class="sp_footer_shop" bindtap="setModalStatus" data-status="1" data-addtype="2" wx:if="{{proInfo.teamStatus==0}}">
+      <view>
+        <text>￥{{proInfo.teamPrice}}</text>
+        <text>一键开团</text>
+      </view>
+    </view>
+    <view class="sp_footer_shop" wx:elif="{{proInfo.teamStatus==1}}">
+      <view>
+        <text>￥{{proInfo.teamPrice}}</text>
+        <text>已下架</text>
+      </view>
+    </view>
+    <view class="sp_footer_pershop" wx:elif="{{proInfo.teamStatus==2&&(proInfo.teamIsLottery==1||proInfo.teamIsLottery==2)}}">
+      <view>
+        <text>{{proInfo.team_Kill_Start}}开始</text>
+      </view>
+    </view>
+    <view class="sp_footer_pershop" wx:elif="{{proInfo.teamStatus==2&&proInfo.teamIsLottery==3}}">
+      <view>
+        <text>{{proInfo.team_Kill_Start}}开抢</text>
+      </view>
+    </view>
+    <view class="sp_footer_shop" wx:elif="{{proInfo.teamStatus==3}}">
+      <view>
+        <text>已结束</text>
+      </view>
+    </view>
+
+  </view>
+  <!--加入购物车弹层-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+  <view class="layer layer_1" animation="{{animationData}}" wx:if="{{showModalStatus}}">
+    <view class="close_icon" bindtap="setModalStatus" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_content">
+      <image class="layer_img" src="{{attrPic?attrPic:proInfo.pic}}"></image>
+      <view class="layer_h1">{{proInfo.title}}</view>
+      <view class="layer_coin">￥{{includeGroup.length==1?includeGroup[0].price:proInfo.teamPrice}}</view>
+      <view class="attr_list">
+        <view class="attr_box" wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="attrKey">
+          <!--属性名-->
+          <view class="attr_name">{{attrValueObj.attrKey}}</view>
+          <!--每个属性值-->
+          <view class="attr_value {{attrIndex==firstIndex || attrValueObj.attrValueStatus[valueIndex]?(value==attrValueObj.selectedValue?'attr_value_active':''):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus[valueIndex]}}"
+            data-value="{{value}}" data-attrPic="{{attrValueObj.attrPVPics[valueIndex]}}" data-key="{{attrValueObj.attrKey}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" wx:for="{{attrValueObj.attrValues}}" wx:for-item="value"
+            wx:for-index="valueIndex" wx:key="value">{{value}}</view>
+        </view>
+        <!--attr_list end-->
+        <view class="attr_num">
+          <text class="attr_num_name">购买数量 :</text>
+          <text class="attr_num_rest">剩余:{{includeGroup.length==1?includeGroup[0].stock:proArrInfo.surplus}}</text>
+          <view class="attr_num_set">
+            <text class="less {{minusStatus}} " bindtap="bindMinus">-</text>
+            <input type="number" bindchange="bindManual" value="{{num}}" onkeyup="this.value=this.value.replace(/\D/g, '')" />
+            <text class="plus {{maxusStatus}}" bindtap="bindPlus">+</text>
+          </view>
+        </view>
+        <!--attr_num end-->
+      </view>
+    </view>
+
+    <button class="btn" wx:if="{{addtype==2}}" bindtap="submitNext">下一步</button>
+  </view>
+  <!--layer end-->
+
+</view>
+<!--container end-->

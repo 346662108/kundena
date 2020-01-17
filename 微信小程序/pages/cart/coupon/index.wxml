@@ -1,0 +1,97 @@
+<!--pages/cart/coupon/index.wxml-->
+
+<view class="container">
+  <!--优惠券开始-->
+  <view class="coupon" wx:if="{{tid==1}}">
+    <view class="coupon__title">
+      <text class="name">优惠券</text>
+      <text class="price" wx:if="{{!isfreepost}}">减￥{{couponprice}}</text>
+      <text class="price" wx:if="{{isfreepost}}">免运费</text>
+    </view>
+    <view class="coupon__cont">
+
+      <view wx:for="{{coupons}}" class="coupon__li {{item.IsCanUser?'':'Noselect'}} {{item.IsSelect?'select':''}}" data-couponid="{{item.CouponId}}" data-iscanuser="{{item.IsCanUser}}" bindtap="selectCoupon" wx:key="{{item.CouponId}}">
+        <view class="radio">
+          <text></text>
+        </view>
+        <view class="info">
+          <view class="info__name">{{item.CouponName}}</view>
+          <view class="info__date">有效期：{{item.StartTime}}至{{item.EndTime}}</view>
+          <view class="info__cond" wx:if="{{item.Condition>0}}">使用条件：单笔交易满{{item.Condition}}元可使用</view>
+          <view class="info__range" wx:if="{{item.CouponType==1}}">
+            <text>使用范围：部分指定商品可使用</text>
+            <text></text>
+          </view>
+          <view class="info__range" wx:elif="{{item.CouponType==2}}">
+            <text>不包邮区：{{item.ExcludeAreaNameStr}}</text>
+            <text bindtap="powerDrawer" data-exclude="{{item.ExcludeAreaNameStr}}" data-statu="open">查看全部</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+  <!--优惠券结束-->
+  <!--满减促销开始-->
+  <view class="coupon" wx:if="{{tid==2}}">
+    <view class="coupon__title">
+      <text class="name">满减促销</text>
+      <text class="price" wx:if="{{couponprice>0&&isfreepost}}">减￥{{couponprice}},免运费</text>
+      <text class="price" wx:elif="{{couponprice>0}}">减￥{{couponprice}}</text>
+      <text class="price" wx:elif="{{isfreepost}}">免运费</text>
+    </view>
+    <view class="coupon__cont">
+
+      <!--选中状态-->
+      <view wx:for="{{mjss}}" class="coupon__li {{item.IsCanUser?'':'Noselect'}} {{item.IsSelect?'select':''}}" data-mjsid="{{item.MjsId}}" data-iscanuser="{{item.IsCanUser}}" bindtap="selectMjs" wx:key="{{item.MjsId}}">
+        <view class="radio">
+          <text></text>
+        </view>
+        <view class="info">
+          <view class="info__name" wx:if="{{item.IsCanUser}}">
+            <text class="price" wx:if="{{item.MjsPrice>0&&item.IsFreePost}}">减￥{{item.MjsPrice}},免运费</text>
+            <text class="price" wx:elif="{{item.MjsPrice>0}}">减￥{{item.MjsPrice}}</text>
+            <text class="price" wx:elif="{{item.IsFreePost}}">免运费</text>
+          </view>
+          <view class="info__cond">活动名称：{{item.MjsName}}</view>
+          <view class="info__date">促销时间：{{item.StartTime}}至{{item.EndTime}}</view>
+          <view class="info__cond" wx:if="{{item.IsAmountOver}}">使用条件：单笔交易满{{item.TotalPrice}}元可使用</view>
+          <view class="info__cond" wx:if="{{item.IsItemCountOver}}">使用条件：单笔购买数量满{{item.ItemCount}}件可使用</view>
+          <view class="info__range" wx:if="{{item.ExcludeAreaNameStr}}">
+            <text>不包邮区：{{item.ExcludeAreaNameStr}}</text>
+            <text bindtap="powerDrawer" data-exclude="{{item.ExcludeAreaNameStr}}" data-statu="open">查看全部</text>
+          </view>
+          <view class="info__range" wx:if="{{item.IsTypePartPro}}">
+            <text>使用范围：部分指定商品可使用</text>
+            <text></text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+  <!--满减促销结束-->
+  <view class="high120"></view>
+  <view class="footer__btn" bindtap="confimSelect">
+    <view class="confirm__btn">确认</view>
+  </view>
+</view>
+
+<view class="hide">
+  <view class="no__data">
+    <image src="../../../images/Nocoupon.png"></image>
+    <text>很遗憾</text>
+    <text>您暂无可以使用的优惠券</text>
+  </view>
+</view>
+
+<!--不包邮区弹窗-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+  <view class="drawer_title">不可使用包邮券地区</view>
+  <view class="drawer_content">
+    {{excludeAreaNameStr}}
+  </view>
+  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">知道了</view>
+</view>

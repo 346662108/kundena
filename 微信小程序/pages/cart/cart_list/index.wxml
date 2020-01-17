@@ -1,0 +1,73 @@
+<!--pages/cart/cart_list/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{hiddenLoading}}">
+	<block wx:if="{{hasList}}">
+		<view class="car-goods bg-white">
+			<block wx:for="{{dest}}" wx:key="indexs" wx:for-item="array" wx:for-index="indexs">
+				<!-- goods -->
+				<block wx:for="{{array.data}}" wx:key="index" wx:for-index="index">
+					<view class="goods-sm flex padding solid-top" data-index="{{index}}" data-skuid='{{item.skuid}}'>
+						<view class="flex align-center">
+							<checkbox-group data-skuid='{{item.skuid}}' bindchange="checkproductsku">
+								<checkbox class="round red mini" checked="{{item.selected?'true':''}}"></checkbox>
+							</checkbox-group>
+						</view>
+						<image class="items-pic margin-left-xs" src="{{item.img}}" mode="aspectFill" bindtap="navigateDetail" data-pid="{{item.pid}}"></image>
+						<view class="items-desc flex-sub margin-left-sm">
+							<view class="desc-name text-cut2 font-size14" bindtap="navigateDetail" data-pid="{{item.pid}}">{{item.h1}}</view>
+							<view class="desc-sku text-cut1 font-size12 gray margin-top-xs">{{item.h2}}</view>
+							<view class="desc-inner flex align-center justify-between margin-top-xs">
+								<view class="price red text-bold font-size10">￥
+									<text class="font-size16">{{item.price}}</text>
+								</view>
+								<view class="flex attr_num_set xs">
+									<view class="less {{item.minbtn}}" data-pid='{{array.pid}}' data-skuid='{{item.skuid}}' data-index="{{index}}" bindtap="bindMinus"></view>
+									<input class="text-center font-size12" type="number" data-pid='{{array.pid}}' data-skuid='{{item.skuid}}' data-index="{{index}}" bindchange="bindManual" value="{{item.num}}" maxlength="3" />
+									<view class="plus {{item.maxbtn}}" data-pid='{{array.pid}}' data-skuid='{{item.skuid}}' data-index="{{index}}" bindtap="bindPlus"></view>
+								</view>
+							</view>
+							<view class="delete text-right font-size12 gray margin-top-sm" catchtap="del" data-skuid='{{item.skuid}}' data-index="{{index}}">删除</view>
+						</view>
+					</view>
+				</block>
+			</block>
+			<!-- goods -->
+		</view>
+		<view class="font-size10  text-center gray padding-tb">已经到底了~~</view>
+		<view class="spacing-bottom"></view>
+		<view class="car-settlement fixed-bottom flex justify-between align-center bg-white padding-lr">
+			<view class="settlement-all flex align-center">
+				<checkbox-group bindchange="checkproductall">
+					<checkbox class="round red mini" checked="{{selectedAllStatus?true:false}}">
+						<text class="gray">全选</text>
+					</checkbox>
+				</checkbox-group>
+				<button class="delsku flex justify-center align-center button" bindtap="delsku">
+					<text class="cuIcon-delete gray font-size16"></text>
+				</button>
+			</view>
+			<view class="settlement-total flex align-center">
+				<view class="total-inner text-right">
+					<view class="price">
+						<text>合计：</text>
+						<text class="tag red text-bold font-size10">￥</text>
+						<text class="num red text-bold font-size16">{{total}}</text>
+					</view>
+					<view class="cost">
+						<text class="font-size10 gray">不含运费</text>
+					</view>
+				</view>
+				<button class="btns-settle btns bg-red radius font-size13 margin-left-sm" bindtap="gotoConfirm">去结算({{sumcout}})</button>
+			</view>
+		</view>
+	</block>
+	<block wx:else>
+		<view class="no-data text-center">
+			<view class="icon cuIcon-goods grey"></view>
+			<view class="text margin-top-xs grey">购物袋还是空的，快来挑选好货吧~~</view>
+			<view class="link flex justify-center margin-top-xl">
+				<button class="bg-grey light shadow radius font-size13" bindtap="gotoIndex">去购物</button>
+			</view>
+		</view>
+	</block>
+</block>

@@ -1,0 +1,86 @@
+/**index.wxss**/
+
+/* 横幅 */
+
+.bannerWrap {
+  position: relative;
+  margin-top: 174rpx;
+}
+
+.bannerSwiper,
+.bannerWrap .bannerImage {
+  width: 750rpx;
+  height: 400rpx;
+}
+
+.bannerWrap .dots {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  bottom: 20rpx;
+  transform: translateX(-50%);
+}
+
+.bannerWrap .dot {
+  width: 12rpx;
+  height: 12rpx;
+  background-color: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.38);
+  margin: 0 6rpx;
+  border-radius: 100%;
+}
+
+.bannerWrap .dot.current {
+  width: 16rpx;
+  height: 16rpx;
+  background-color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+}
+
+/* 广告 */
+
+.adver-item {
+  width: 25%;
+  height: 200rpx;
+}
+
+/*推荐分类的商品*/
+
+.goods-items:first-child {
+  margin-top: 0;
+}
+
+.goods-items .items-image {
+  width: 670rpx;
+  height: 400rpx;
+}
+
+.goods-items .items-text {
+  height: 120rpx;
+}
+
+.goods-items .items-text .name {
+  width: 360rpx;
+}
+
+.heat-list {
+  white-space: nowrap;
+}
+
+.heat-items {
+  width: 270rpx;
+  display: inline-block;
+}
+
+.heat-items:last-child {
+  margin-right: 0;
+}
+
+.heat-items .items-image {
+  width: 270rpx;
+  height: 270rpx;
+}
+
+.heat-items .items-desc {
+  white-space: normal;
+}

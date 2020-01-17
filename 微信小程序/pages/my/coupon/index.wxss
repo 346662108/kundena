@@ -1,0 +1,160 @@
+/* pages/my/coupon/index.wxss */
+
+page {
+  background: #e8e8ed;
+}
+
+.nav_top {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  border-top: 1rpx solid #ddd;
+  line-height: 88rpx;
+  background: #fff;
+  display: flex;
+}
+
+.nav_top_items {
+  width: 33.333%;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.nav_top .active {
+  color: #e0187b;
+  border-bottom: 4rpx solid #e0187b;
+}
+
+.coupon {
+  margin-top: 110rpx;
+  padding: 30rpx 20rpx;
+  background: #fff;
+}
+
+.coupon__li {
+  border: 1rpx solid #47c1c4;
+  border-radius: 6rpx;
+  font-size: 26rpx;
+  line-height: 1.25;
+  margin-bottom: 30rpx;
+  position: relative;
+}
+
+.coupon__li:last-child {
+  margin: 0;
+}
+
+.coupon__info {
+  height: 130rpx;
+  padding: 20rpx;
+  color: #47c1c4;
+  position: relative;
+  display: -webkit-box;
+  display: box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -o-box;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-box-align: center;
+  box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  box-pack: center;
+  -ms-flex-pack: center;
+}
+
+.coupon__num {
+  width: 25%;
+}
+
+.coupon__num text:nth-child(1) {
+  font-size: 30rpx;
+}
+
+.coupon__num text:nth-child(2) {
+  font-size: 60rpx;
+}
+
+.coupon__num text.freemail{
+  font-size: 50rpx;
+  font-weight: 600;
+}
+
+.coupon__text {
+  width: 75%;
+}
+
+.coupon__text .cond {
+  font-size: 36rpx;
+}
+
+.coupon__text .range {
+  margin-top: 10rpx;
+}
+
+.coupon__text .mail {
+  display: flex;
+  margin-top: 5rpx;
+}
+
+.coupon__text .mail text:nth-child(1) {
+  flex: 1;
+  height: 34rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.coupon__text .mail text:nth-child(2) {
+  margin-left: 20rpx;
+}
+
+.coupon__date {
+  background: #47c1c4;
+  padding: 10rpx 20rpx;
+  color: #fff;
+  display: flex;
+  font-size: 24rpx;
+}
+
+.coupon__date text:nth-child(1) {
+  flex: 1;
+}
+
+.coupon__label {
+  padding: 4rpx 10rpx;
+  background: #666;
+  color: #fff;
+  line-height: 1.25;
+  font-size: 20rpx;
+  border-top-left-radius: 50rpx;
+  border-bottom-left-radius: 50rpx;
+  position: absolute;
+  right: -1px;
+  top: 20rpx;
+  display: none;
+}
+
+.Expired, .Used {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
+  opacity: .6;
+}
+
+.Expired .coupon__label, .Used .coupon__label {
+  display: block;
+}

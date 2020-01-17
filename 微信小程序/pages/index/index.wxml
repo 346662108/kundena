@@ -1,0 +1,99 @@
+<!--header-->
+<view class="header bg-white">
+	<view class="inner flex align-center padding-top-sm padding-lr-lg">
+		<!--header-logo-->
+		<view class="logo" bindtap="linklogo">
+			<image src="../../images/logo.png"></image>
+		</view>
+		<!--header-search-->
+		<view class="search flex-sub flex margin-left radius">
+			<input class="search-ipt flex-sub padding-left-sm font-size13" name="search" type='text' confirm-type="search" bindconfirm="wxSearchFn" focus='{{focus}}' bindinput='bindKeyInput' placeholder="搜索你感兴趣的" placeholder-style="color:#ccc"></input>
+			<button class="flex justify-center align-center button search-btn font-size15" bindtap="wxSearchFn">
+				<text class="cuIcon-search"></text>
+			</button>
+		</view>
+	</view>
+	<!--header-nav-->
+	<scroll-view scroll-x class='swiper-nav' scroll-left='{{swiperNav.x}}' scroll-with-animation='true' bindtap='swiperNav'>
+		<text class='item-nav text-center font-size15 active'  bindtap='linkIndex'>推荐</text>
+		<text wx:for='{{swiperNav.arr}}' wx:key='{{index}}' class='item-nav text-center font-size15' data-i='{{index}}' data-cid="{{item.cid}}"  bindtap='urlProlist'>{{item.txt}}</text>
+	</scroll-view>
+</view>
+<!--banner--750*400-->
+<view class='bannerWrap'>
+	<block wx:if="{{indexBanner != ''}}">
+		<swiper class='bannerSwiper' previous-margin="0" next-margin='0' indicator-color='#B5B5B5' indicator-active-color='#fff' interval='3000' duration='500' bindchange='swiperChange' circular='true'>
+			<block wx:for-items="{{indexBanner}}" wx:key="index">
+				<swiper-item>
+					<image src="{{item.pic}}" class="bannerImage {{swiperIndex == index ? 'current' : ''}}" data-href="{{item.picurl}}" bindtap="bannerurl" mode="aspectFill"></image>
+				</swiper-item>
+			</block>
+		</swiper>
+		<!--重置小圆点的样式  -->
+		<view class="dots flex align-center">
+			<block wx:for="{{indexBanner}}" wx:key="itemkey">
+				<view class="dot{{swiperIndex == index ? ' current' : ''}}"></view>
+			</block>
+		</view>
+	</block>
+</view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<!--广告位 188*200-->
+<view class="adver flex" wx:if="{{centerBanner.length>0}}">
+	<block wx:for-items="{{centerBanner}}" wx:key="index">
+		<image src="{{item.pic}}" mode="aspectFill" class="adver-item" data-href="{{item.picurl}}" bindtap="bannerurl"></image>
+	</block>
+</view>
+<!--推荐-->
+<view class="heat">
+	<view class="title-style1 padding-top-xl padding-bottom text-center font-size17">推荐</view>
+	<scroll-view scroll-x class="heat-list">
+		<block wx:if="{{indexNewPro.length>0}}">
+			<block wx:for="{{indexNewPro}}" wx:for-item="product" wx:key="pid">
+				<block wx:for="{{product.product}}" wx:for-item="item" wx:key="pid">
+					<view class="heat-items bg-white margin-right-xs" bindtap="navigateDetail" data-proid="{{item.pid}}">
+						<image class="items-image" src="{{item.pic}}"></image>
+						<view class="items-desc padding-sm">
+							<view class="desc-name text-cut2">
+								{{item.name}}
+							</view>
+							<view class="desc-price margin-top-xs red">
+								<text class="font-size10">￥</text>
+								<text class="price font-size15">{{item.price}}</text>
+							</view>
+						</view>
+					</view>
+				</block>
+			</block>
+		</block>
+	</scroll-view>
+</view>
+<!--分类-->
+<block wx:if="{{ProList.length>0}}">
+	<block wx:for="{{ProList}}" wx:for-item="products" wx:key="pid">
+		<view class="goods">
+			<view class="title-style1 padding-top-xl padding-bottom text-center font-size17">{{products.catename}}</view>
+			<view class="goods-list ">
+				<block wx:for="{{products.product}}" wx:for-item="item" wx:key="pid">
+					<!--分类-商品 670*400-->
+					<view class="goods-items bg-white margin-lr-lg margin-top-sm" bindtap="navigateDetail" data-proid="{{item.pid}}">
+						<view class="text-center">
+							<image class="items-image" src="{{item.pic}}" mode="aspectFill"></image>
+						</view>
+						<view class="items-text flex align-center justify-between padding-lr">
+							<view class="name text-cut2 font-size14">
+								{{item.name}}
+							</view>
+							<view class="price red">
+								<text class="font-size12">￥</text>
+								<text class="price font-size17">{{item.price}}</text>
+							</view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+	</block>
+</block>
+
+<view class="font-size10  text-center gray padding-tb">已经到底了~~</view>

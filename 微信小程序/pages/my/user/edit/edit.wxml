@@ -1,0 +1,40 @@
+<!--pages/my/user/edit/edit.wxml-->
+<!-- 绑定手机号码 -->
+<block wx:if="{{type==2}}">
+	<form bindsubmit="submitForm">
+		<!-- <view class="form-group-sm bg-white flex align-center justify-between solid-top" wx:if="{{userInfo.IsBind}}">
+      <input class="content flex-sub padding-lr" type="number" name="mobile" value="{{Mobile}}" maxlength="11" disabled="{{IsBind}}" bindblur="bindMobile" placeholder="请填写11位手机号">请填写11位手机号</input>
+    </view> -->
+		<view wx:if="{{userInfo.IsPwd}}">
+			<view class="form-group-sm bg-white flex align-center justify-between solid-top">
+				<input class="content flex-sub padding-lr" type="password" name="oldpwd" value="" maxlength="15" placeholder="请输入旧密码" />
+			</view>
+		</view>
+		<view class="form-group-sm bg-white flex align-center justify-between solid-top">
+			<input class="content flex-sub padding-lr" type="password" name="pwd" value="{{password}}" maxlength="15" bindblur="bindPwd" placeholder="请输入密码" />
+		</view>
+		<view class="form-group-sm bg-white flex align-center justify-between solid-top">
+			<input class="content flex-sub padding-lr" type="password" name="pwd1" value="" maxlength="15" bindblur="bindPwd" placeholder="再次输入密码" />
+		</view>
+		<view class="gray font-size12 padding">设置密码后,该密码可用于登录宽德纳官方商城（如电脑端、移动触屏端等），账号为当前登录的手机号。</view>
+		<!-- <view class="form-group-sm bg-white flex align-center justify-between solid-top">
+    <input class="content flex-sub padding-lr" type="password" name="pwd" value="{{password}}" maxlength="15" bindblur="bindPwd" placeholder="请输入密码">请输入密码</input>
+  </view> -->
+		<view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}">
+			<button class="btns button-sm bg-red radius font-size13" formType="submit">{{userInfo.IsPwd?"确认更改":'确认保存'}}</button>
+		</view>
+	</form>
+</block>
+
+<block wx:if="{{type==1}}">
+	<!-- 设置昵称等 -->
+	<form bindsubmit="submitNameForm">
+		<view class="form-group-sm bg-white flex align-center justify-between solid-top">
+			<input class="content flex-sub padding-lr" placeholder="设置个性昵称（不超过20个字符）" name="RealName" value='{{RealName}}' maxlength="20">设置个性昵称（不超过20个字符）</input>
+		</view>
+		<view class="gray font-size12 padding">昵称由中文、英文、数字、-和_组成。</view>
+		<view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}">
+			<button class="btns button-sm bg-red radius font-size13" formType="submit">确认保存</button>
+		</view>
+	</form>
+</block>

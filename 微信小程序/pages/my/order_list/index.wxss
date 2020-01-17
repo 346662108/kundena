@@ -1,0 +1,52 @@
+/* pages/my/order-list/index.wxss */
+.filter {
+  width: 100%;
+  height: 84rpx;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 101;
+}
+
+.filter-item {
+  width: 25%;
+  height: 100%;
+  position: relative;
+}
+
+.filter-item.active::after {
+  content: '';
+  width: 24rpx;
+  height: 4rpx;
+  background: #980000;
+  position: absolute;
+  left: 50%;
+  bottom: 12rpx;
+  transform: translateX(-50%);
+}
+
+.order {
+  padding-top: 84rpx;
+}
+.order-item-header .del{
+  width: 44rpx;
+  height: 44rpx;
+
+}
+.order-item-goods .goods-sm .box {
+  position: relative;
+  height: 200rpx;
+}
+
+.order-item-goods .goods-sm .box .items-status {
+  width: 100%;
+  height: 36rpx;
+  line-height: 36rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.65);
+}

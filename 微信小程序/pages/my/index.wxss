@@ -1,0 +1,63 @@
+/* 2019.7.25更新*/
+
+.user-header {
+  height: 250rpx;
+  background-image: url('http://pics.kundena.com/account-bg.jpg');
+  background-size: 750rpx 311rpx;
+  overflow: hidden;
+  /*border-radius: 100% / 0% 0% 25% 25%;
+   box-shadow: 4rpx 0 20rpx rgba(0, 0, 0, 0.35); */
+}
+
+.user-header .avatar-pic {
+  border: 6rpx solid rgb(255, 255, 255, 0.01);
+}
+
+.user-header .avatar-desc .name {
+  width: 360rpx;
+}
+
+.user-header .avatar-desc .status text {
+  position: relative;
+  background: rgba(0, 0, 0, 0.14);
+  height: 40rpx;
+  line-height: 40rpx;
+  padding-left: 10rpx;
+  padding-right: 36rpx;
+  overflow: hidden;
+}
+
+.user-header .header-avatar .avatar-desc .status text::before {
+  position: absolute;
+  top: 50%;
+  right: 10rpx;
+  transform: translateY(-50%);
+}
+
+.user-nav {
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.user-nav .nav-inner {
+  margin-bottom: -1rpx;
+}
+
+.user-nav .nav-inner .nav-items {
+  position: relative;
+  width: 250rpx;
+}
+
+.user-nav .nav-inner .nav-items .icon-line {
+  font-size: 50rpx;
+}
+
+.user-nav .nav-inner .num-line {
+  position: absolute;
+  min-width: 20rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  padding: 0 6rpx;
+  right: 80rpx;
+  top: 24rpx;
+}

@@ -1,0 +1,20 @@
+/* pages/my/refund_detail/index.wxss */
+.refund-status {
+  background-image: url('http://pics.kundena.com/refund-bg.jpg');
+  background-size: 750rpx 185rpx;
+  overflow: hidden;
+}
+
+.status-item .prompt,
+.logistics-item .name {
+  margin-top: 6rpx;
+}
+
+.logistics-item .form input {
+  height: 68rpx;
+}
+
+.certificate {
+  width: 160rpx;
+  height: 160rpx;
+}

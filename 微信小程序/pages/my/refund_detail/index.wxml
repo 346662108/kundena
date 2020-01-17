@@ -1,0 +1,140 @@
+<!--pages/my/refund_detail/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="refund-status padding-lr padding-tb-lg white">
+	<view class="status-item" wx:if="{{refundInfo.RefundStatus==1}}">
+		<view class="status text-white text-bold font-size16">待商家审核退款申请</view>
+		<view class="prompt">48小时内审核退款申请</view>
+	</view>
+	<view class="status-item" wx:if="{{refundInfo.RefundStatus==2}}">
+		<view class="status text-white text-bold font-size16">商家已同意退款申请</view>
+		<view class="prompt">请您尽快把货物寄回指定地点</view>
+	</view>
+	<view class="status-item" wx:if="{{refundInfo.RefundStatus==3}}">
+		<view class="status text-white text-bold font-size16">待商家确认收货</view>
+		<view class="prompt">确认收货后72小时内为您办理退款</view>
+	</view>
+	<view class="status-item" wx:if="{{refundInfo.RefundStatus==6}}">
+		<view class="status text-white text-bold font-size16">商家已退款,资金原路退回</view>
+		<view class="prompt">{{refundInfo.GoodReturnTime}}已退款,请耐心等待银行处理,如未到账,请联系银行核实原因</view>
+	</view>
+	<view class="status-item" wx:if="{{refundInfo.RefundStatus==4}}">
+		<view class="status text-white text-bold font-size16">商家拒绝退款</view>
+		<view class="prompt">原因：{{refundInfo.RefundOptionMsg}}</view>
+	</view>
+	<view class="status-item" wx:if="{{refundInfo.RefundStatus==5}}">
+		<view class="status text-white text-bold font-size16">买家主动取消退款</view>
+		<view class="prompt">可再次发起退款申请</view>
+	</view>
+</view>
+<view class="bg-white padding-lr">
+	<view class="logistics-item flex align-center padding-tb solid-bottom" wx:if="{{refundInfo.RefundType==0&&(refundInfo.RefundStatus==2||refundInfo.RefundStatus==3||refundInfo.RefundStatus==6)}}">
+		<view class="cuIcon-refund gray font-size22"></view>
+		<view class="flex-sub margin-left-sm">
+			<view class="title font-size14">退货地址：</view>
+			<view class="name flex align-center darkGray">
+				<text>张燕红</text>
+				<text class="margin-left-sm">18065521958</text>
+				<button class="cu-btn line-gray radius sm margin-left-xs" bindtap="mobile" hover-class="none">拨号</button>
+			</view>
+			<view class="desc darkGray">
+				福建省泉州市惠安县惠东工业区家世比
+			</view>
+		</view>
+	</view>
+	<form bindsubmit="refundProPost">
+		<view class="logistics-item flex align-center padding-tb solid-bottom" wx:if="{{refundInfo.RefundType==0&&(refundInfo.RefundStatus==2||refundInfo.RefundStatus==3||refundInfo.RefundStatus==6)}}">
+			<view class="cuIcon-deliver gray font-size22"></view>
+			<view class="flex-sub margin-left-sm">
+				<view class="title font-size14">退货物流：</view>
+				<view class="form">
+					<input class="padding-sm bg-ghostWhite radius margin-top-sm" name="LogisticsCompany" value="{{refundInfo.LogisticsCompany}}" placeholder="填写退货物流公司名" placeholder-class="text-gray">填写退货物流公司名</input>
+					<input class="padding-sm bg-ghostWhite radius margin-top-sm" name="LogisticsNO" value="{{refundInfo.LogisticsNO}}" placeholder="填写退货物流运单号" placeholder-class="text-gray">填写退货物流运单号</input>
+				</view>
+				<view class="desc flex align-center justify-between margin-top">
+					<text class="font-size11 gray">发货后请及时更新物流，以免影响了退款进度</text>
+					<button class="cu-btn lines-blue radius sm text-bold" formType="submit"	wx:if="{{refundInfo.RefundStatus==2}}">确认保存</button>
+					<button class="cu-btn lines-blue radius sm text-bold" formType="submit" wx:if="{{refundInfo.RefundStatus==3}}">确认更改</button>
+				</view>
+			</view>
+		</view>
+	</form>
+</view>
+<view class="bg-white padding-bottom margin-top-sm">
+	<view class="flex align-center justify-between padding" data-oid="{{item.Oid}}">
+		<view class="flex-sub font-size5">退款信息</view>
+		<button class="flex align-center justify-center blue" open-type="contact">
+			<text class="cuIcon-comment font-size16"></text>
+			<text class="margin-left-xs">在线客服</text>
+		</button>
+	</view>
+	<view class="goods-sm flex padding solid-top" bindtap="navigateDetail" data-pid="{{proInfo.pid}}">
+		<image class="items-pic" src="{{proInfo.img}}" data-pid="{{item.pid}}" mode="aspectFill"></image>
+		<view class="items-desc flex-sub margin-left-sm">
+			<view class="desc-name text-cut2 font-size14">{{proInfo.title}}</view>
+			<view class="desc-sku text-cut1 font-size12 gray margin-top-xs">{{proInfo.color}}</view>
+			<view class="desc-inner flex align-center justify-between margin-top-sm">
+				<view class="price font-size10">￥
+					<text class="font-size14">{{proInfo.price}}</text>
+					<text class="num gray font-size14 margin-left-sm">×{{proInfo.num}}</text>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="flex align-center padding-lr">
+		<text class="title gray">服务类型：</text>
+		<text class="desc flex-sub black" wx:if="{{refundInfo.RefundType==0}}">我要退货</text>
+		<text class="desc flex-sub black" wx:if="{{refundInfo.RefundType==1}}">我要退款</text>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm" wx:if="{{refundInfo.RefundType==1}}">
+		<text class="title gray">收货状态：</text>
+		<text class="desc flex-sub black">{{refundInfo.GoodStatus}}</text>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm">
+		<text class="title gray">退货数量：</text>
+		<text class="flex-sub text-black text-bold desc">{{refundInfo.num}}</text>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm">
+		<text class="title gray">退款总额：</text>
+		<text class="flex-sub text-black text-bold desc">￥{{refundInfo.RefundFee}}</text>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm">
+		<text class="title gray">退款方式：</text>
+		<block wx:if="{{refundInfo.PayType==1}}">
+			<text class="desc flex-sub black">微信支付原返到零钱或付款行</text>
+		</block>
+		<block wx:else>
+			<text class="desc flex-sub black">对公转账原返到{{refundInfo.invoiceAccount?refundInfo.invoiceAccount:"转账账号"}}的银行账号</text>
+		</block>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm" wx:if="{{refundInfo.RefundType==1&&refundInfo.Reason!='undefined'}}">
+		<text class="title gray">退款原因：</text>
+		<text class="desc flex-sub black">{{refundInfo.Reason}}</text>
+	</view>
+
+	<view class="flex align-center padding-lr padding-top-sm" wx:if="{{refundInfo.DescMsg.length>0}}">
+		<text class="title gray">退款说明：</text>
+		<text class="desc flex-sub black">{{refundInfo.DescMsg}}</text>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm">
+		<text class="title gray">申请时间：</text>
+		<text class="desc flex-sub black">{{refundInfo.ReturnCreated}}</text>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm">
+		<text class="title gray">服务单号：</text>
+		<view class="desc flex-sub flex align-center black">
+			<text> {{refundInfo.RefundTradeNo}}</text>
+			<button class="cu-btn line-gray round sm margin-left-xs" bindtap='copyRefundTradeNo' data-text="{{refundInfo.RefundTradeNo}}">复制</button>
+		</view>
+	</view>
+	<view class="flex align-center padding-lr padding-top-sm" wx:if="{{refundInfo.images.length>0}}">
+		<text class="title gray">凭证图片：</text>
+		<view class="desc flex-sub black">
+			<image class="certificate" wx:for="{{refundInfo.images}}" wx:key="id" data-id="{{item.id}}" src="{{item.smallSrc}}" data-index="{{index}}" bindtap="previewImage"></image>
+		</view>
+	</view>
+</view>
+<view class="spacing-bottom {{isIphoneX?'iphoneX':''}}"></view>
+<view class="fixed-bottom bg-white padding-lr flex align-center justify-end {{isIphoneX?'iphoneX':''}}">
+	<button class="button-xs cu-btn bg-gray darkGray radius font-size13 margin-left-xs" bindtap="closeRefund" wx:if="{{refundInfo.RefundStatus>0&&refundInfo.RefundStatus<5}}">取消退款</button>
+	<button class="button-xs cu-btn bg-red white radius font-size13 margin-left-xs" bindtap="gotoReturn" wx:if="{{refundInfo.RefundStatus==4||refundInfo.RefundStatus==5}}">重新退款</button>
+</view>

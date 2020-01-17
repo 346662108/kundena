@@ -1,0 +1,57 @@
+<!--pages/my/lottery_list/lottery_list.wxml-->
+<view class="container">
+
+  <view wx:if="{{onInitLoading}}">
+
+    <view wx:if="{{pageTeamLuckList.length>0}}">
+
+      <view class="nav_section_items {{item.CssName}}" wx:for="{{pageTeamLuckList}}" wx:key="Id">
+
+        <view class="confirm_tit">
+          <text class="num">订单号:{{item.TradeNo}}</text>
+          <text class="way">{{item.Team_StatusStr}}</text>
+        </view>
+        <view class="confirm_list">
+          <view class="gorup_md" data-toid="{{item.Id}}" bindtap="urlOrderitem">
+            <view class="statusicon"></view>
+            <view>
+              <image src="{{item.PicPath}}" mode="aspectFill"></image>
+            </view>
+            <view class="info">
+              <view class="info_box">
+                <view class="title">{{item.ProductTitle}}</view>
+                <view class="color">{{item.SkuPropertiesName}}</view>
+                <view class="btmtxt">
+                  实付:
+                  <text class="price">￥{{item.Payment}}</text>
+                  <text wx:if="{{item.PostFee==0}}">(免运费)</text>
+                  <text wx:if="{{item.PostFee>0}}">(运费:{{item.PostFee}})</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="gorup_dd" wx:if="{{item.Team_Lottery_Status!=0}}">
+          <view class="btn auxi" data-tpid="{{item.Team_Product_Id}}" bindtap="urlWinitem">中奖详情</view>
+        </view>
+
+      </view>
+      <view class="nothing" hidden="{{hiddenbuttomMsg}}">亲，没有更多喽~</view>
+      <view class="loading" hidden="{{hiddenLoading}}">
+        <view class="loader"></view>
+        <text>加载中</text>
+      </view>
+
+    </view>
+    <view wx:else class="nan">
+      <image src="../../../images/NaN.png"></image>
+      <text>哎呀, 你现在还没订单哦~</text>
+    </view>
+  </view>
+  <view class='loadingbox' wx:else>
+    <view class="loading">
+      <view class="loader"></view>
+      <text>数据加载中</text>
+    </view>
+  </view>
+</view>

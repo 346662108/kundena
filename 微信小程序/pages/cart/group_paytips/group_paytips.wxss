@@ -1,0 +1,109 @@
+/* pages/cart/group_paytips/group_paytips.wxss */
+
+page {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  color: #333;
+  font-size: 32rpx;
+  line-height: 1.25;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -o-box;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-box-align: center;
+  box-align: center;
+  -ms-flex-align: center;
+}
+
+.paytips {
+  width: 100%;
+  text-align: center;
+}
+
+.paytips_status text {
+  display: block;
+  margin-top: 20rpx;
+}
+
+.paytips_status.success text {
+  color: #1aad19;
+}
+
+.paytips_status.clear text {
+  color: #e0187b;
+}
+
+.paytips_money {
+  margin-top: 40rpx;
+}
+
+.paytips_money .money text:nth-child(1) {
+  font-size: 48rpx;
+}
+
+.paytips_money .money text:nth-child(2) {
+  font-size: 78rpx;
+}
+
+.paytips_voucher {
+  margin: 80rpx 60rpx 0;
+  padding: 40rpx 0;
+  border-top: 1rpx solid #eee;
+  border-bottom: 1rpx solid #eee;
+  text-align: left;
+  position: relative;
+}
+
+.paytips_voucher image, .paytips_voucher view {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.paytips_voucher image {
+  width: 126rpx;
+  height: 85rpx;
+}
+
+.paytips_voucher .name {
+  font-size: 32rpx;
+  padding: 0 20rpx;
+}
+
+.paytips_voucher .btn {
+  width: 100rpx;
+  line-height: 62rpx;
+  text-align: center;
+  font-size: 26rpx;
+  background-color: #1aad19;
+  border: 1rpx solid #158a14;
+  color: #fff;
+  border-radius: 8rpx;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -32rpx;
+}
+
+.paytips_voucher .btn.disabled {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
+  opacity: 0.45;
+}
+
+.paytips_btn {
+  margin: 180rpx 40rpx 0;
+}

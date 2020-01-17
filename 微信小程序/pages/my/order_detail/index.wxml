@@ -1,0 +1,201 @@
+<!--pages/my/order_detail/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{hiddenLoading}}">
+	<view class="order-status padding white">
+		<view class="status text-white text-bold font-size16">{{orderInfo.StatusEnum}}</view>
+		<view class="margin-top-xs" wx:if="{{orderInfo.Status==1}}">您的订单还未付款，请尽快付款</view>
+		<view class="margin-top-xs" wx:if="{{orderInfo.Status==2}}">您的订单正在发货中，请耐心等待</view>
+		<view class="margin-top-xs" wx:if="{{orderInfo.Status==3}}">您的订单正在配送中，请耐心等待</view>
+		<view class="margin-top-xs" wx:if="{{orderInfo.Status==4}}">您的订单已签收，祝您购物愉快</view>
+		<view class="margin-top-xs" wx:if="{{orderInfo.Status==5}}">您的订单已取消</view>
+	</view>
+
+	<view class="bg-white padding-lr">
+		<view class="order-logistics flex align-center padding-tb solid-bottom" wx:if="{{orderInfo.LogisticsNO}}">
+			<view class="cuIcon-deliver_fill gray font-size22"></view>
+			<view class="flex-sub margin-left-sm font-size14">
+				<view class="name">
+					<text>配送方式：</text>
+					<text>{{orderInfo.LogisticsCompany}}</text>
+				</view>
+				<view class="text flex align-center">
+					<text>运货单号：</text>
+					<text>{{orderInfo.LogisticsNO}}</text>
+					<button class="cu-btn line-gray sm radius margin-left-xs" bindtap='copyLogisticsNO' data-text="{{orderInfo.LogisticsNO}}">复制</button>
+				</view>
+			</view>
+		</view>
+		<view class="order-address flex align-center padding-tb">
+			<view class="cuIcon-locationfill gray font-size22"></view>
+			<view class="flex-sub margin-left-sm">
+				<view class="name font-size14">
+					<text>收货人：</text>
+					<text>{{orderInfo.ReceiverName}}</text>
+					<text class="margin-left-sm">{{orderInfo.ReceiverMobile}}</text>
+				</view>
+				<view class="text gray margin-top-xs">
+					<text>收货地址：</text>
+					<text>{{orderInfo.ReceiverAddress}}</text>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<view class="order-goods bg-white margin-top-sm">
+		<view class="flex justify-between padding " data-oid="{{item.Oid}}">
+			<view class="flex-sub font-size15">商品清单</view>
+			<button class="flex align-center justify-center red margin-left-xs" open-type="contact">
+				<text class="cuIcon-comment font-size16"></text>
+				<text>在线客服</text>
+			</button>
+		</view>
+		<view class="goods-sm flex padding solid-top" wx:for="{{orderInfo.OrderItems}}" wx:key="item.itemId">
+			<view class="box" data-pid="{{item.pid}}" bindtap="navigateDetail">
+				<image class="items-pic" src="{{item.img}}" mode="aspectFill"></image>
+				<text  class="items-status font-size10 white text-center text-cut1" wx:if="{{item.refundStatus>0?true:false}}" data-itemid="{{item.itemId}}">{{item.refundStatusName}}</text>
+			</view>
+			<view class="items-desc flex-sub margin-left-sm">
+				<view class="desc-name text-cut2 font-size14" data-pid="{{item.pid}}" bindtap="navigateDetail">{{item.title}}</view>
+				<view class="desc-sku text-cut1 font-size12 gray margin-top-xs">{{item.color}}</view>
+				<view class="desc-inner flex align-center justify-between margin-top-sm">
+					<view class="price font-size10">￥
+						<text class="font-size14">{{item.price}}</text>
+						<text class="num gray font-size14 margin-left-sm">×{{item.num}}</text>
+					</view>
+					<view class="return">
+						<button class="cu-btn line-gray radius sm text-darkGray" wx:if="{{orderInfo.Status>1&&orderInfo.Status!=5&&item.refundStatus==0&&orderInfo.PlatForm!=4&&orderInfo.PlatForm!=5&&orderInfo.PlatForm!=6}}" data-itemid="{{item.itemId}}" bindtap="gotoReturn">退换/退款
+						</button>
+						<button class="cu-btn line-gray radius sm text-darkGray" wx:if="{{item.refundStatus>0?true:false}}" data-itemid="{{item.itemId}}" bindtap="gotoReturnDetail">退换详情
+						</button>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<view class="order-items bg-white margin-top-sm padding">
+		<view class="flex align-center justify-between">
+			<view class="title gray">订单号</view>
+			<view class="desc black">
+				<text>{{orderInfo.TradeNo}}</text>
+				<button class="cu-btn line-gray radius sm margin-left-xs copy" bindtap='copyTradeNo' data-text="{{orderInfo.TradeNo}}">复制</button>
+			</view>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm">
+			<view class="title gray">下单时间</view>
+			<view class="desc black">
+				<text>{{orderInfo.Created}}</text>
+			</view>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm">
+			<view class="title gray">下单平台</view>
+			<view class="desc black">
+				<text>{{orderInfo.PlatFormEnum}}</text>
+			</view>
+		</view>
+		<block wx:if="{{orderInfo.Status>1}}">
+			<view class="flex align-center justify-between padding-top-sm">
+				<view class="title gray">付款方式</view>
+				<view class="desc black">
+					<text>{{orderInfo.PayType==2?'对公转账':'微信支付'}}</text>
+				</view>
+			</view>
+			<view class="flex align-center justify-between padding-top-sm">
+				<view class="title gray">付款时间</view>
+				<view class="desc black">
+					<text>{{orderInfo.PayTime}}</text>
+				</view>
+			</view>
+		</block>
+	</view>
+
+	<view class="order-items bg-white margin-top-sm padding">
+		<view class="flex align-center justify-between">
+			<view class="title gray">发票类型</view>
+			<view class="desc black">
+				<text class="text-black desc" wx:if="{{orderInfo.InvoiceType<1}}">不开发票</text>
+				<text class="text-black desc" wx:if="{{orderInfo.InvoiceType==1}}">纸质普通发票(个人)</text>
+				<text class="text-black desc" wx:if="{{orderInfo.InvoiceType==2}}">纸质普通发票(公司)</text>
+				<text class="text-black desc" wx:if="{{orderInfo.InvoiceType==3}}">增值税专用发票</text>
+			</view>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm" wx:if="{{orderInfo.InvoiceType>0}}">
+			<view class="title gray">发票抬头</view>
+			<view class="desc black">
+				<text>{{orderInfo.InvoiceName}}</text>
+			</view>
+		</view>
+		<block wx:if="{{orderInfo.InvoiceType>1}}">
+			<view class="flex align-center justify-between padding-top-sm">
+				<view class="title gray">纳税人识别码</view>
+				<view class="desc black">
+					<text class="text-black desc">{{orderInfo.InvoiceIdentifier}}</text>
+				</view>
+			</view>
+			<block wx:if="{{orderInfo.InvoiceType>2}}">
+				<view class="flex align-center justify-between padding-top-sm">
+					<view class="title gray">注册地址</view>
+					<view class="desc black">
+						<text class="text-black desc">{{orderInfo.invoiceAddress}}</text>
+					</view>
+				</view>
+				<view class="flex align-center justify-between padding-top-sm">
+					<view class="title gray">注册电话</view>
+					<view class="desc black">
+						<text class="text-black desc">{{orderInfo.invoicePhone}}</text>
+					</view>
+				</view>
+				<view class="flex align-center justify-between padding-top-sm">
+					<view class="title gray">开户银行</view>
+					<view class="desc black">
+						<text class="text-black desc">{{orderInfo.invoiceBank}}</text>
+					</view>
+				</view>
+				<view class="flex align-center justify-between padding-top-sm">
+					<view class="title gray">银行账户</view>
+					<view class="desc black">
+						<text class="text-black desc">{{orderInfo.invoiceAccount}}</text>
+					</view>
+				</view>
+			</block>
+		</block>
+		<view class="flex align-center justify-between padding-top-sm" wx:if="{{orderInfo.InvoiceType>0}}">
+			<view class="title gray">发票内容</view>
+			<view class="desc black">
+				<text class="text-black desc">商品明细</text>
+			</view>
+		</view>
+	</view>
+
+	<view class="order-items bg-white margin-top-sm padding">
+		<view class="flex align-center justify-between">
+			<view class="title gray">商品金额</view>
+			<view class="desc black">
+				<text>￥{{orderInfo.TotalFee}}</text>
+			</view>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm">
+			<view class="title gray">运费</view>
+			<view class="desc black">
+				<text>+￥{{orderInfo.PostFee}}</text>
+			</view>
+		</view>
+		<view class="flex align-center justify-between padding-top-sm">
+			<view class="title gray">实付金额</view>
+			<view class="desc red font-size10 text-bold">￥
+				<text class="font-size18">{{orderInfo.Payment}}</text>
+			</view>
+		</view>
+	</view>
+
+	<view class="spacing-bottom {{isIphoneX?'iphoneX':''}}"></view>
+  
+	<view class="fixed-bottom bg-white padding-lr flex align-center justify-end {{isIphoneX?'iphoneX':''}}">
+		<button class="button-xs cu-btn line-gray radius font-size13 margin-left-xs" data-oid="{{orderInfo.Oid}}" bindtap="orderDelete" wx:if="{{orderInfo.Status==4||orderInfo.Status==5}}">删除订单</button>
+		<button class="button-xs cu-btn line-red radius font-size13 margin-left-xs" data-pid="{{orderInfo.pid}}" bindtap="navigateDetail" wx:if="{{orderInfo.Status!=1}}">再次购买</button>
+		<button class="button-xs cu-btn line-gray radius font-size13 margin-left-xs" wx:if="{{orderInfo.Status==1?true:false}}" data-oid="{{orderInfo.Oid}}" bindtap="closeOrder">取消订单</button>
+		<button class="button-xs cu-btn bg-red radius font-size13 margin-left-xs" data-oid="{{orderInfo.Oid}}" bindtap="gotoConfimOrder" wx:if="{{orderInfo.Status==3?true:false}}">确认收货</button>
+		<button class="button-xs cu-btn bg-red radius font-size13 margin-left-xs" bindtap="gotoPayment" wx:if="{{orderInfo.Status==1?true:false}}">立即付款</button>
+	</view>
+
+</block>

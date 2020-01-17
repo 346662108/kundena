@@ -1,0 +1,58 @@
+/* pages/my/commission/index.wxss */
+
+page {
+  background: #e8e8ed;
+  font-size: 24rpx;
+  line-height: 100%;
+  color: #333;
+}
+
+.notice {
+  padding: 20rpx;
+  background-color: #fef2f2;
+  border-bottom: 1rpx solid #ffb4a8;
+  color: #de8476;
+  text-align: center;
+}
+
+.commission {
+  margin-top: 20rpx;
+}
+
+.commission_item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 25rpx 30rpx;
+  border-bottom: 1rpx solid #e8e8ed;
+}
+
+.commission_item:last-child {
+  border: 0;
+}
+
+.commission_item text {
+  display: block;
+}
+
+.commission_item .commission_item_left .amount {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.commission_item .commission_item_left .date {
+  color: #999;
+  margin-top: 15rpx;
+}
+
+.commission_item .commission_item_right .status {
+  color: #de8476;
+}

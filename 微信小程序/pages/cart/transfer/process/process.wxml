@@ -1,0 +1,62 @@
+<!--pages/cart/transfer/process/process.wxml-->
+<view class="cu-timeline">
+  <!-- <view class="cu-time">步骤一</view> -->
+  <view class="cu-item">
+    <view class="content">
+      <view class="flex align-center bg-pink round light title"> 获得商家收款信息</view>
+      <view class="inner">
+        <view>
+          在银行转账信息页，获得商家收款信息，包括收款人、账号、银行、银行所在地、支行、联行号。
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-timeline">
+  <!-- <view class="cu-time">步骤二</view> -->
+  <view class="cu-item">
+    <view class="content">
+      <view class="flex align-center bg-pink round light title">转成付款</view>
+      <view class="inner">
+        <view>
+          选择网上银行、手机银行、银行柜台进行转账。
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-timeline">
+  <!-- <view class="cu-time">步骤三</view> -->
+  <view class="cu-item">
+    <view class="content">
+      <view class="flex align-center bg-pink round light title">确认订单状态</view>
+      <view class="inner">
+        <view>
+          转账成功后，到我的订单页面查询订单状态，如果订单状态已变化为付款成功相应订单状态，则支付成功；
+        </view>
+        <view>
+          如果订单状态没有变化，则银行转账付款失败，已转账资金原路退回，可致电咨询您的付款银行。
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-timeline">
+  <!-- <view class="cu-time">步骤四</view> -->
+  <view class="cu-item">
+    <view class="content">
+      <view class="flex align-center bg-pink round light title">付款成功</view>
+      <view class="inner">
+        <view>
+          付款成功后可申请退换退款等售后服务，具体可到我的订单页面进行相对应的操作；
+        </view>
+        <view>
+          退款时，资金将原路转回买家的银行账户。
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

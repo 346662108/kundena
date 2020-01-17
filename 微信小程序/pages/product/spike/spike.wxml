@@ -1,0 +1,72 @@
+<!--pages/product/spike/spike.wxml-->
+<view class="container">
+  <view class="base-list-wrapper" wx:if="{{onInitLoading}}">
+
+    <view wx:if="{{pageTeamProList.length>0}}">
+
+      <view class="spike-list-item {{item.cssName}}" wx:for="{{pageTeamProList}}" wx:key="tpid">
+        <!--显示抢购时间开始-->
+        <view class="time-line" wx:if="{{item.team_Kill_Start}}">
+          <view class="time-icon"></view>
+          <view class="time-show">
+            <view class="status">
+              <text>{{item.team_Kill_Start}}</text>
+              <text wx:if="{{item.Status==0||item.Status==1}}">正在进行中</text>
+              <text wx:if="{{item.Status==2}}">
+                <text wx:if="{{item.IsToady==1}}">即将开抢</text>
+                <text wx:else>开抢</text>
+              </text>
+            </view>
+          </view>
+        </view>
+        <!--显示抢购时间结束-->
+        <view class="spike-goods" data-tpid="{{item.tpid}}" bindtap="navigateDetail">
+          <view class="line"></view>
+          <image class="spike-img" src="{{item.pic}}"></image>
+          <view class="spike-info">
+            <view class="spike-goods-name">{{item.name}}</view>
+            <view class="spike-buy">
+              <view class="remind-purchase" wx:if="{{item.Status==1}}">{{item.sales}}件被抢光了，下次早点来哦</view>
+              <view class="remind-purchase" wx:if="{{item.Status==2}}">限量{{item.quantity-item.sales}}件</view>
+              <view class="item-status">
+                <view class="status-num">已抢{{item.sales}}件</view>
+                <view class="status-num">剩余{{item.quantity-item.sales}}件</view>
+              </view>
+              <view class="left-time">
+                <view class="all-price">
+                  <view class='sale-price'>
+                    <text>￥</text>
+                    <text>{{item.team_Price}}</text>
+                  </view>
+                  <view class="market-price">
+                    <text>￥</text>
+                    <text class="market">{{item.marketPrice}}</text>
+                  </view>
+                </view>
+                <view class="btnClass"></view>
+              </view>
+            </view>
+          </view>
+          
+        </view>
+        
+      </view>
+
+      <view class="nothing" hidden="{{hiddenbuttomMsg}}">------- 已经加载完 -------</view>
+      <view class="loading" hidden="{{hiddenLoading}}">
+        <view class="loader"></view>
+        <text>加载中</text>
+      </view>
+
+    </view>
+    <view wx:else>
+      <view class="nothing pt500">------- 暂无数据 -------</view>
+    </view>
+  </view>
+  <view class='loadingbox' wx:else>
+    <view class="loading">
+      <view class="loader"></view>
+      <text>数据加载中</text>
+    </view>
+  </view>
+</view>

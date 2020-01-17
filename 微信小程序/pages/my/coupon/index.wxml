@@ -1,0 +1,68 @@
+<!--pages/my/coupon/index.wxml-->
+<view class="container">
+  <view class="nav_top">
+    <view class="nav_top_items {{tid == 0 ? 'active' : ''}}" bindtap="switchTab" data-tid="0">
+      <text>待使用</text>
+    </view>
+    <view class="nav_top_items {{tid == 2 ? 'active' : ''}}" bindtap="switchTab" data-tid="2">
+      <text>已过期</text>
+    </view>
+    <view class="nav_top_items {{tid == 1 ? 'active' : ''}}" bindtap="switchTab" data-tid="1">
+      <text>已使用</text>
+    </view>
+  </view>
+
+  <view class="coupon" wx:if="{{pageCouponList.length>0}}">
+
+    <view class="coupon__li {{item.liClass}}" wx:for="{{pageCouponList}}" wx:key="{{item.CouponId}}">
+      <view class="coupon__info">
+        <view class="coupon__num" wx:if="{{item.CouponType!=2}}">
+          <text>￥</text>
+          <text>{{item.Denominations}}</text>
+        </view>
+        <view class="coupon__num" wx:if="{{item.CouponType==2}}">
+          <text></text>
+          <text class='freemail'>包邮券</text>
+        </view>
+        <view class="coupon__text">
+          <view class="cond">满{{item.Condition}}可用</view>
+          <view class="range" wx:if="{{item.CouponType==0}}">全部商品都可使用</view>
+          <view class="range" wx:if="{{item.CouponType==1}}">部分商品可使用</view>
+          <view class="mail" wx:if="{{item.CouponType==2}}">
+            <text>不包邮区：{{item.ExcludeAreaNameStr}}</text>
+            <text bindtap="powerDrawer" data-exclude="{{item.ExcludeAreaNameStr}}" data-statu="open">查看全部</text>
+          </view>
+        </view>
+      </view>
+      <view class="coupon__date">
+        <text>有效期</text>
+        <text>{{item.StartTime}}至{{item.EndTime}}</text>
+      </view>
+      <view class="coupon__label" wx:if="{{tid==1}}">已使用</view>
+      <view class="coupon__label" wx:elif="{{tid==2}}">已过期</view>
+    </view>
+    <view class="nothing" hidden="{{hiddenbuttomMsg}}">亲，没有更多喽~</view>
+    <view class="loading" hidden="{{hiddenLoading}}">
+      <view class="loader"></view>
+      <text>加载中</text>
+    </view>
+  </view>
+  <view wx:else>
+    <view class="no__data">
+      <image src="../../../images/Nocoupon.png"></image>
+      <text>很遗憾</text>
+      <text>您还没有领取优惠券</text>
+    </view>
+  </view>
+
+</view>
+
+<!--不包邮区弹窗-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+  <view class="drawer_title">不可使用包邮券地区</view>
+  <view class="drawer_content">
+    {{excludeAreaNameStr}}
+  </view>
+  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">知道了</view>
+</view>

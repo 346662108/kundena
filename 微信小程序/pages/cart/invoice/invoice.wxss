@@ -1,0 +1,13 @@
+/* pages/cart/invoice/invoice.wxss */
+
+.invoice-form .type-inner .items+.items {
+  margin-left: 15rpx;
+}
+
+.invoice-form .type-ipt input {
+  height: 64rpx;
+}
+
+.btns-invoice {
+  width: 264rpx;
+}

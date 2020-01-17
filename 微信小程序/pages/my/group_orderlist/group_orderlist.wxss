@@ -1,0 +1,146 @@
+/* pages/my/group_orderlist/group_orderlist.wxss */
+
+page {
+  background: #e8e8ed;
+  line-height: 1.25;
+}
+
+.nav_top {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  border-top: 1rpx solid #ddd;
+  line-height: 88rpx;
+  background: #fff;
+  display: flex;
+}
+
+.nav_top_items {
+  width: 25%;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.nav_top .active text {
+  color: #e0187b;
+  border-bottom: 4rpx solid #e0187b;
+  display: inline-block;
+}
+
+.nav_section {
+  width: 100%;
+  margin-top: 114rpx;
+}
+
+.nav_section_items {
+  margin: 20rpx 0 0 0;
+  background: #fff;
+}
+
+.confirm_list {
+  background: #fff;
+  padding: 5rpx 0 5rpx 20rpx;
+}
+
+.gorup_md {
+  position: relative;
+  padding: 15rpx 0;
+  display: flex;
+}
+
+.gorup_md image {
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.gorup_md .info {
+  flex: 1;
+  height: 160rpx;
+  padding: 10rpx 20rpx;
+}
+
+.gorup_md .info_box {
+  position: relative;
+  height: 100%;
+}
+
+.gorup_md .title, .gorup_md .btmtxt {
+  width: 100%;
+  position: absolute;
+}
+
+.gorup_md .title {
+  line-height: 1.25;
+  font-size: 28rpx;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  top: 0;
+}
+
+.gorup_md .color {
+  font-size: 24rpx;
+  color: #898989;
+}
+
+.gorup_md .btmtxt {
+  display: flex;
+  bottom: 0;
+}
+
+.gorup_md .num {
+  color: #666;
+  font-size: 24rpx;
+  padding: 6rpx 30rpx 0 0;
+}
+
+.gorup_md .price, .gorup_md .status {
+  color: #e0187b;
+}
+
+.gorup_md .price {
+  flex: 1;
+  font-size: 32rpx;
+}
+
+.gorup_md .status {
+  font-size: 28rpx;
+}
+
+.gorup_dd {
+  font-size: 26rpx;
+  margin-left: 20rpx;
+  padding-right: 20rpx;
+  display: flex;
+  flex-direction: row-reverse;
+  border-top: 1rpx solid #eee;
+}
+
+.gorup_dd .btn {
+  border-width: 1rpx;
+  border-style: solid;
+  border-radius: 6rpx;
+  padding: 10rpx 20rpx;
+  margin: 20rpx 0 20rpx 20rpx;
+  line-height: 1.25;
+  font-size: 26rpx;
+}
+
+.gorup_dd .main {
+  background-color: #e0187b;
+  border-color: #e0187b;
+  color: #fff;
+}
+
+.gorup_dd .auxi {
+  border-color: #333;
+  color: #333;
+}

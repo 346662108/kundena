@@ -1,0 +1,47 @@
+<!--pages/cart/address_list/index.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{hiddenLoading}}">
+	<block wx:if="{{address.length>0}}">
+		<view class="address solid-top">
+			<view class="address-item bg-white  flex align-center margin-bottom-sm" wx:for="{{address}}" wx:key="index">
+				<view class="flex-sub flex align-center padding-top padding-bottom-lg padding-left" data-addrid="{{item.Id}}" bindtap="bindCheckbox">
+					<block wx:if="{{istrue}}">
+						<view class="radio margin-right-sm">
+							<block wx:if="{{item.Id==aid}}" type="success">
+								<radio class="red mini" checked></radio>
+								<view class="address-line"></view>
+							</block>
+							<block wx:else type=" circle">
+									<radio class="red mini"></radio>
+							</block>
+						</view>
+					</block>
+					<view class="address-info flex-sub" data-addrid="{{item.Id}}">
+						<view class="name flex align-center font-size15">
+							<text>{{item.Receiver}}</text>
+							<text class="margin-left-xs">{{item.Tel}}</text>
+							<text class="tag-line bg-red radius font-size10 margin-left-xs padding-lr-xs" wx:if="{{item.IsDefault}}">默认</text>
+						</view>
+						<view class="desc darkGray margin-top-xs">
+							<text>{{item.RegionPath}}{{item.Address}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="address-edit flex align-center justify-center gray margin-left-sm" data-addrid="{{item.Id}}" bindtap="onedit">
+					<text class="cuIcon-write"></text>
+					<text class="font-size12">编辑</text>
+				</view>
+				<view class="address-line" wx:if="{{item.IsDefault}}"></view>
+			</view>
+		</view>
+	</block>
+	<block wx:else>
+		<view class="no-data text-center">
+			<view class="icon cuIcon-locationfill grey"></view>
+			<view class="text margin-top-xs grey">收货地址还是空的，赶紧添加个吧~~</view>
+		</view>
+	</block>
+</block>
+<view class="fixed-bottom bg-white padding-lr flex align-center justify-center {{isIphoneX?'iphoneX':''}}">
+	<button class="btns-address btns bg-red radius font-size13" bindtap="onadded">新增收货地址</button>
+</view>

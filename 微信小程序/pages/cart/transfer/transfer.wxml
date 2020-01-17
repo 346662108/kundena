@@ -1,0 +1,89 @@
+<!--pages/cart/transfer/transfer.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view hidden='{{!hiddenLoading}}'>
+  <view class="flex justify-between align-center text-black transfer-sum">
+    <view class="flex flex-sub align-center text-pink price">
+      <text class="text-black">{{orderInfo.StatusEnum}}:</text>
+      <text>￥</text>
+      <text>{{orderInfo.TotalFee}}</text>
+    </view>
+    <view class="process">
+      <button class="cu-btn line-black sm" bindtap="orderLink">订单状态</button>
+      <button class="cu-btn line-black sm margin-left-sm" bindtap="processLink">转账流程</button>
+    </view>
+  </view>
+  <view class="bg-white padding text-black transfer-aging">
+    请在
+    <text class="text-bold">7天</text> 内通过
+    <text class="text-pink">网上银行（网银）</text>或
+    <text class="text-pink">银行柜台</text>或
+    <text class="text-pink">手机银行</text>向如下账号完成转账。
+  </view>
+
+  <view class="bg-white text-black margin-top-sm transfer-seller">
+    <view class="text-bold seller-title">商家收款信息：</view>
+
+    <view class="flex align-center text-black solid-bottom seller-items">
+      <text class="text-darkGray account">收款人</text>
+      <text class="flex-sub">{{payee}}</text>
+      <button class="cu-btn line-gray sm shadow copy" bindtap='copyPayee' data-text="{{payee}}">复制</button>
+    </view>
+
+    <view class="flex align-center text-black solid-bottom seller-items">
+      <text class="text-darkGray account">账号</text>
+      <text class="flex-sub">{{bankNum}}</text>
+      <button class="cu-btn line-gray sm shadow copy" bindtap='copyBankNum' data-text="{{bankNum}}">复制</button>
+    </view>
+    <view class="flex align-center text-black solid-bottom seller-items">
+      <text class="text-darkGray account">银行</text>
+      <text class="text-bold flex-sub">泉州银行</text>
+    </view>
+    <view class="flex align-center text-black solid-bottom seller-items">
+      <text class="text-darkGray account">银行所在地</text>
+      <text class="flex-sub">福建泉州</text>
+    </view>
+    <view class="flex align-center text-black solid-bottom seller-items">
+      <text class="text-darkGray account">支行</text>
+      <text class="flex-sub">{{subbranch}}</text>
+      <button class="cu-btn line-gray sm shadow copy" bindtap='copySubbranch' data-text="{{subbranch}}">复制</button>
+    </view>
+    <view class="flex align-center text-black seller-items">
+      <text class="text-darkGray account">联行号</text>
+      <text class="flex-sub">{{num}}</text>
+      <button class="cu-btn line-gray sm shadow copy" bindtap='copyNum' data-text="{{num}}">复制</button>
+    </view>
+  </view>
+
+  <view class="transfer-prompt {{isIphoneX?'iPhoneX':''}}">
+    <view class="bg-white padding text-black margin-top-sm ">
+      <view class="prompt-title">
+        <text class="text-black">特别提醒</text>
+        <text class="text-pink text-bold">（转账前必读）</text>
+      </view>
+      <view class="prompt-items">
+        汇款银行账户名必须是
+        <text class="text-pink text-bold">{{orderInfo.InvoiceName}}</text>，
+        <text class="text-pink">否则无法提供增值税专用发票</text>；
+      </view>
+      <view class="prompt-items">
+        <text class="text-pink">转账金额与订单金额务必保持一致</text>， 不得多转、不得少转，不得分次转账，否则无法完成支付；
+      </view>
+      <view class="prompt-items">
+        <text class="text-pink">请您务必使用左边家世比网站提供的账号进行转账</text>， 不得向其他任何渠道提供的银行账户转账，否则造成的资损由您自行承担（可能钱货两空），平台不负任何责任；
+      </view>
+      <view class="prompt-items">
+        <text class="text-pink">转账后请截图保存汇款单据，并通过当前页（或该订单的详情页）上传单据</text>，待我们确认到账后，订单即支付成功；具体到账时间以银行为准。
+      </view>
+    </view>
+  </view>
+  <view class="flex bg-white shadow transfer-footer {{isIphoneX?'iPhoneX':''}}">
+    <button class="flex-sub cu-btn bg-blue shadow-blur upload-btns" bindtap="uploadReceipt">
+      <text class="cuIcon-upload"></text> {{text}}
+      <!--重新上传汇款单据-->
+    </button>
+    <button class="flex-sub cu-btn line-blue shadow receipt-btns"data-src='{{imgs[0]}}' bindtap="receiptLink">
+      查看已上传的单据
+      <image src="{{imgs[0]}}" hidden='true' ></image>
+    </button>
+  </view>
+</view>

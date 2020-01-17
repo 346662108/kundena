@@ -1,0 +1,375 @@
+<!--pages/product/group_item/group_item.wxml-->
+<view class="container">
+  <!-- 商品信息开始-->
+  <view class="nav_section_items" bindtap="navigateDetail">
+    <view class="section_image">
+      <image src="{{teamFirstObj.PicPath}}" mode="aspectFill"></image>
+      <text class="label" wx:if="{{teamFirstObj.Team_IsLottery==1}}">抽奖</text>
+      <text class="label" wx:elif="{{teamFirstObj.Team_IsLottery==2}}">试用</text>
+      <text class="label" wx:elif="{{teamFirstObj.Team_IsLottery==3}}">秒杀</text>
+    </view>
+    <view class="section_cont">
+      <view class="section_cont_sub">
+        <text>{{teamFirstObj.ProductTitle}}</text>
+      </view>
+      <view class="section_cont_bottom">
+        <view class="sales">
+          <text>{{teamFirstObj.Team_Num}}人团·已团{{teamFirstObj.Team_Sales_Number}}件</text>
+        </view>
+        <view class="price">
+          <text>￥{{teamFirstObj.Team_Price}}</text>
+          <text>拼团省{{teamFirstObj.Team_Save_Price}}元</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品信息结束-->
+
+  <!--售后服务开始-->
+  <view class="item_li service icon" bindtap="urlService" data-status="1">
+    <view class="service_li" wx:for="{{service}}" wx:key="unique">
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+  <!--售后服务结束-->
+  <!--售后服务结束弹出层开始-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="urlService" data-status="0" wx:if="{{showurlService}}"></view>
+  <view class="layer layer_1 servicePOP" animation="{{animationData}}" wx:if="{{showurlService}}">
+    <view class="close_icon" bindtap="urlService" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_title">服务说明</view>
+    <view class="layer_content">
+      <view class="servicePOP_li" wx:for="{{service}}" wx:key="id">
+        <view>
+          <text>{{item.title}}</text>
+          <text>{{item.subtitle}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--售后服务结束弹出层结束-->
+
+  <!--状态-未支付--开始-->
+  <view class="normal" wx:if="{{teamFirstObj.Team_Status==0||teamUserObj.Team_Status==0}}">
+    <view class="status">
+      <view class="avatar_list" bindtap="urlGroupnum" data-status="1">
+
+        <view class="avatar_item  {{item.Team_First==1 ? '' : 'default'}} " wx:for="{{teamImgList}}" wx:key="unique">
+          <image wx:if="{{item.Team_First==1||item.Team_First==2}}" src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <image wx:else src="../../../images/avatar_default.png" mode="aspectFit"></image>
+          <text class="job" wx:if="{{item.Team_First==1}}">团长</text>
+        </view>
+
+      </view>
+
+      <view class="countdown" wx:if="{{teamFirstObj.Team_Status==1}}">
+        仅剩
+        <text class="red">{{teamFirstObj.Team_Num-teamFirstObj.Team_MenNum}}</text>个名额，
+        <text class="bold" wx:if="{{teamFirstObj.Team_Over_Days>0}}">{{teamFirstObj.Team_Over_Days}}.</text>
+        <text class="bold">{{wxTimer}}</text>后结束
+      </view>
+      <form bindsubmit="gotoPayment" data-toid="{{teamFirstObj.Toid}}" report-submit="true">
+        <block wx:if="{{teamFirstObj.Team_Pro_Status==0}}">
+          <button class="status_btn" form-type="submit" wx:if="{{teamFirstObj.Team_Status==0}}">立即支付开团</button>
+          <button class="status_btn" form-type="submit" wx:elif="{{teamUserObj.Team_Status==0}}">立即支付参团</button>
+        </block>
+      </form>
+    </view>
+  </view>
+  <!--状态-未支付--结束-->
+
+  <!--状态-拼团中-未加入该团--开始-->
+  <view class="normal" wx:elif="{{teamFirstObj.Team_Status==1&&teamFirstObj.userJoinOn==0}}">
+    <view class="status">
+      <view class="avatar_list" bindtap="urlGroupnum" data-status="1">
+
+        <view class="avatar_item  {{item.Team_First==1 ? '' : 'default'}} " wx:for="{{teamImgList}}" wx:key="BuyerNick">
+          <image wx:if="{{item.Team_First==1||item.Team_First==2}}" src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <image wx:else src="../../../images/avatar_default.png" mode="aspectFit"></image>
+          <text class="job" wx:if="{{item.Team_First==1}}">团长</text>
+        </view>
+
+      </view>
+
+      <view class="countdown">
+        仅剩
+        <text class="red">{{teamFirstObj.Team_Num-teamFirstObj.Team_MenNum}}</text>个名额，
+        <text class="bold" wx:if="{{teamFirstObj.Team_Over_Days>0}}">{{teamFirstObj.Team_Over_Days}}.</text>
+        <text class="bold">{{wxTimer}}</text>后结束
+      </view>
+      <view wx:if="{{teamFirstObj.Team_Pro_Status==0}}" class="status_btn" bindtap="setModalStatus" data-status="1">一键参团</view>
+    </view>
+  </view>
+  <!--状态-拼团中-未加入该团--结束-->
+
+  <!--状态-拼团中-加入该团-开始-->
+  <view class="processing" wx:elif="{{teamFirstObj.Team_Status==1&&teamFirstObj.userJoinOn==1}}">
+    <view class="status mtop10">
+      <view class="countdown">
+        还差
+        <text class="red">{{teamFirstObj.Team_Num-teamFirstObj.Team_MenNum}}</text>人
+        <text class="bold" wx:if="{{teamFirstObj.Team_Over_Days>0}}">{{teamFirstObj.Team_Over_Days}}.</text>
+        <text class="bold">{{wxTimer}}</text>后结束
+      </view>
+      <button class="status_btn" open-type="share">邀请好友参团</button>
+      <view class="prompt" wx:if="{{teamFirstObj.Team_IsLottery==1||teamFirstObj.Team_IsLottery==2}}">成团成功即送优惠券</view>
+    </view>
+    <view class="status_ul mtop10">
+      <view class="status_li avatar" bindtap="urlGroupnum" data-status="1">
+
+        <view class="avatar_item  {{item.Team_First==1 ? '' : 'default'}} " wx:for="{{teamImgList}}" wx:key="BuyerNick">
+          <image wx:if="{{item.Team_First==1||item.Team_First==2}}" src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <image wx:else src="../../../images/avatar_default.png" mode="aspectFit"></image>
+          <text class="job" wx:if="{{item.Team_First==1}}">团长</text>
+        </view>
+
+      </view>
+      <view class="status_li">
+        <text class="title">参团时间</text>
+        <text class="text">{{teamUserObj.PayTime}}</text>
+      </view>
+    </view>
+  </view>
+  <!--状态-拼团中-加入该团-结束-->
+
+
+
+  <!--状态-拼团成功开始--未加入-开始-->
+  <view class="success" wx:elif="{{teamFirstObj.Team_Status==2&&teamFirstObj.userJoinOn==0}}">
+    <view class="status">
+      <view class="mode">
+        <view class="mode_h1">
+          <icon type="success" color="#09bb07" size="20"></icon>
+          <text>拼团已满</text>
+        </view>
+      </view>
+      <view class="status_btn" bindtap="gotoIndex">去首页逛逛</view>
+      <view class="avatar_list" bindtap="urlGroupnum" data-status="1">
+
+        <view class="avatar_item  {{item.Team_First==1 ? '' : 'default'}} " wx:for="{{teamImgList}}" wx:key="BuyerNick">
+          <image wx:if="{{item.Team_First==1||item.Team_First==2}}" src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <image wx:else src="../../../images/avatar_default.png" mode="aspectFit"></image>
+          <text class="job" wx:if="{{item.Team_First==1}}">团长</text>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+  <!--状态-拼团成功开始--未加入-结束-->
+
+  <!--状态-拼团成功开始--加入-开始-->
+  <view class="success" wx:elif="{{teamFirstObj.Team_Status==2&&teamFirstObj.userJoinOn==1}}">
+    <view class="status">
+      <view class="mode">
+        <view class="mode_h1">
+          <icon type="success" color="#09bb07" size="20"></icon>
+          <text>拼团成功</text>
+        </view>
+        <view class="mode_p">
+          <text> 商家正在努力发货，请耐心等待！</text>
+        </view>
+      </view>
+      <view class="status_btn" bindtap="gotoIndex">去首页逛逛</view>
+      <view class="avatar_list" bindtap="urlGroupnum" data-status="1">
+
+        <view class="avatar_item  {{item.Team_First==1 ? '' : 'default'}} " wx:for="{{teamImgList}}" wx:key="BuyerNick">
+          <image wx:if="{{item.Team_First==1||item.Team_First==2}}" src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <image wx:else src="../../../images/avatar_default.png" mode="aspectFit"></image>
+          <text class="job" wx:if="{{item.Team_First==1}}">团长</text>
+        </view>
+
+      </view>
+    </view>
+    <view class="status_ul mtop10">
+      <view class="status_li">
+        <text class="title">收货人</text>
+        <text class="text">{{teamUserObj.ReceiverName}} {{teamUserObj.ReceiverMobile}}</text>
+      </view>
+      <view class="status_li">
+        <text class="title">收货地址</text>
+        <text class="text">{{teamUserObj.RegionPath}} {{teamUserObj.ReceiverAddress}}</text>
+      </view>
+      <view class="status_li">
+        <text class="title">参团时间</text>
+        <text class="text">{{teamUserObj.PayTime}}</text>
+      </view>
+      <view class="status_li">
+        <text class="title">成团时间</text>
+        <text class="text">{{teamFirstObj.Team_GroupTime}}</text>
+      </view>
+    </view>
+  </view>
+  <!--状态-拼团成功开始--加入-开始-->
+
+
+
+  <!--状态-拼团失败开始-->
+  <view class="failure" wx:elif="{{teamFirstObj.Team_Status==3||teamFirstObj.Team_Status==4}}">
+    <view class="status">
+      <view class="mode">
+        <view class="mode_h1">
+          <icon type="warn" color="#e0187b" size="20"></icon>
+          <text>拼团失败</text>
+        </view>
+        <view class="mode_p" wx:if="{{teamFirstObj.Team_Status==3}}">
+          <text>很遗憾，你的拼团未成功，款项将原路返还</text>
+        </view>
+        <view class="mode_p" wx:else>
+          <text>很遗憾，你的拼团未成功！</text>
+        </view>
+      </view>
+      <view class="status_btn" bindtap="gotoIndex">去首页逛逛</view>
+      <view class="avatar_list" bindtap="urlGroupnum" data-status="1">
+
+        <view class="avatar_item  {{item.Team_First==1 ? '' : 'default'}} " wx:for="{{teamImgList}}" wx:key="BuyerNick">
+          <image wx:if="{{item.Team_First==1||item.Team_First==2}}" src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <image wx:else src="../../../images/avatar_default.png" mode="aspectFit"></image>
+          <text class="job" wx:if="{{item.Team_First==1}}">团长</text>
+        </view>
+
+      </view>
+    </view>
+  </view>
+  <!--状态-拼团失败结束-->
+
+  <!--拼团人数弹窗开始-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="urlGroupnum" data-status="0" wx:if="{{showurlGroupnum}}"></view>
+  <view class="layer layer_2 groupnumPOP" animation="{{animationData}}" wx:if="{{showurlGroupnum}}">
+    <view class="close_icon" bindtap="urlGroupnum" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_content">
+      <view class="groupnumPOP_hd">
+        <view class="avatar_item">
+          <image src="{{teamUserFirst.BuyerUserHeadImg?teamUserFirst.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <text class="job">团长</text>
+        </view>
+        <view class='name'>{{teamUserFirst.BuyerNick}}</view>
+        <view class="date">{{teamUserFirst.PayTime}}开团</view>
+      </view>
+      <!--无数据下显示-->
+      <view class="groupnumPOP_bd_nodata" wx:if="{{teamUserList.length==0}}">赶快邀请好友参团吧~</view>
+      <!--参团人数列表-->
+      <view class="groupnumPOP_bd" wx:if="{{teamUserList.length>0}}">
+        <view class="groupnumPOP_li" wx:for="{{teamUserList}}" wx:key="BuyerNick">
+          <image src="{{item.BuyerUserHeadImg?item.BuyerUserHeadImg:'../../../images/user_head_def.png'}}" mode="aspectFit"></image>
+          <text class="name">{{item.BuyerNick}}</text>
+          <text class="date">{{item.PayTime}}参团</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--拼团人数弹窗结束-->
+
+
+  <!--拼团须知开始-->
+  <!--备注:未成团/拼团中/拼团失败/时显示-->
+  <view class="notice" bindtap="urlNotice" data-status="1">
+    <view class="title">拼团须知</view>
+    <view class="subtitle">
+      <text>好友参团</text>
+      <text>人满发货</text>
+      <text>人不满退款</text>
+    </view>
+  </view>
+  <!--拼团须知弹出层-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="urlNotice" data-status="0" wx:if="{{showurlNotice}}"></view>
+  <view class="layer layer_2 noticePOP" animation="{{animationData}}" wx:if="{{showurlNotice}}">
+    <view class="close_icon" bindtap="urlNotice" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_title">如何参加拼团</view>
+    <view class="layer_content">
+      <view class="noticePOP_li">
+        <text>开团或参加别人的团</text>
+      </view>
+      <view class="noticePOP_li">
+        <text>在规定的时间内，邀请好友参团</text>
+      </view>
+      <view class="noticePOP_li">
+        <text>达到拼团人数，分别给团长和团员发货</text>
+      </view>
+      <view class="noticePOP_li">
+        <text>未达到拼团人数，货款将自动原路退还</text>
+      </view>
+    </view>
+  </view>
+  <!--拼团须知结束-->
+
+
+  <!--活动规则-->
+  <view class="rule mtop10" wx:if="{{teamFirstObj.Team_IsLottery==1||teamFirstObj.Team_IsLottery==2}}">
+    <view class="rule_title">规则</view>
+    <view class="rule_cont">
+      <view class="date">活动时间：{{teamFirstObj.Team_Lottery_Start}}~{{teamFirstObj.Team_Lottery_End}}</view>
+      <rich-text nodes="{{teamFirstObj.Team_Lottery_Desc}}"></rich-text>
+    </view>
+  </view>
+
+  <!--为你推荐开始-->
+  <!--为你推荐-->
+  <view class="hotgoods" wx:if="{{teamProYouLike.length>0}}">
+    <view class="title">
+      <text>为你推荐</text>
+    </view>
+    <view class="hotgoods_list">
+      <!--推荐产品循环开始-->
+      <view class="hotgoods_items" wx:for="{{teamProYouLike}}" wx:key="tpid" data-tpid="{{item.tpid}}" bindtap="urlGroupproitem">
+        <view class="hotgoods_image">
+          <image src="{{item.pic}}" mode="aspectFit"></image>
+        </view>
+        <view class="hotgoods_cont">
+          <view class="name">
+            <text>{{item.title}}</text>
+          </view>
+          <view class="other">
+            <text>{{item.teamPrice}}</text>
+            <text>已团{{item.teamSalesNumber}}件</text>
+          </view>
+        </view>
+      </view>
+      <!--推荐产品循环结束-->
+    </view>
+  </view>
+  <!--为你推荐结束-->
+
+  <!--加入购物车弹层-->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="setModalStatus" data-status="0" wx:if="{{showModalStatus}}"></view>
+  <view class="layer layer_1" animation="{{animationData}}" wx:if="{{showModalStatus}}">
+    <view class="close_icon" bindtap="setModalStatus" data-status="0">
+      <icon type="cancel" size="25" color="#999" />
+    </view>
+    <view class="layer_content">
+      <image class="layer_img" src="{{attrPic?attrPic:teamFirstObj.PicPath}}"></image>
+      <view class="layer_h1">{{teamFirstObj.ProductTitle}}</view>
+      <view class="layer_coin">￥{{includeGroup.length==1?includeGroup[0].price:teamFirstObj.Team_Price}}</view>
+      <view class="attr_list">
+        <view class="attr_box" wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="attrKey">
+          <!--属性名-->
+          <view class="attr_name">{{attrValueObj.attrKey}}</view>
+          <!--每个属性值-->
+          <view class="attr_value {{attrIndex==firstIndex || attrValueObj.attrValueStatus[valueIndex]?(value==attrValueObj.selectedValue?'attr_value_active':''):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus[valueIndex]}}"
+            data-value="{{value}}" data-attrPic="{{attrValueObj.attrPVPics[valueIndex]}}" data-key="{{attrValueObj.attrKey}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" wx:for="{{attrValueObj.attrValues}}" wx:for-item="value"
+            wx:for-index="valueIndex" wx:key="value">{{value}}</view>
+        </view>
+        <!--attr_list end-->
+        <view class="attr_num">
+          <text class="attr_num_name">购买数量 :</text>
+          <text class="attr_num_rest">剩余:{{includeGroup.length==1?includeGroup[0].stock:proArrInfo.surplus}}</text>
+          <view class="attr_num_set">
+            <text class="less {{minusStatus}} " bindtap="bindMinus">-</text>
+            <input type="number" bindchange="bindManual" value="{{num}}" onkeyup="this.value=this.value.replace(/\D/g, '')" />
+            <text class="plus {{maxusStatus}}" bindtap="bindPlus">+</text>
+          </view>
+        </view>
+        <!--attr_num end-->
+      </view>
+    </view>
+
+    <button class="btn" wx:if="{{addtype==2}}" bindtap="submitNext">下一步</button>
+  </view>
+
+
+</view>

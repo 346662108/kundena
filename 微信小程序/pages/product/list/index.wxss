@@ -1,0 +1,48 @@
+/* pages/product/list/index.wxss */
+
+/*筛选*/
+
+.filter-item {
+  width: 160rpx;
+  height: 64rpx;
+  background: #f9f9f9;
+}
+
+.filter-item icon {
+  margin-left: 8rpx;
+  width: 20rpx;
+  height: 20rpx;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAABQCAYAAAAZQFV3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTlENzgzRjczMjkxMTFFQUIzMDdCOTEwMTM5Q0UyM0YiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTlENzgzRjYzMjkxMTFFQUIzMDdCOTEwMTM5Q0UyM0YiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2NUU4NzkzMUE4NkExMUU5QkQ0OTkwNDI1OEIzRUQ5RCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2NUU4NzkzMkE4NkExMUU5QkQ0OTkwNDI1OEIzRUQ5RCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pn1yIfEAAAGZSURBVHja7JixSsNQFIYbqYMOdXZwc3Nz0LWKuoggouDgVkSfQaRiEWdHRdwcBEEEcVGpsw6+RJ9ABx0E43fgxEGCTZtfSfEe+LiQtl/T5OTevzeK47ikrL60g1vb9SrERspr9Y6FbWoX6bpSaHWIdEkptM+dIZ1XCa364RzptErYggG4QjqpEG7CPQzCDdLxvMJXWIRHqMBJXmFpf6/xwjAHd7Bmx8p5nwykzwyzimsobey/E5b9gR9jOIBlvya5z/AUZryfKgphDawFJuDSm7V7IT/zyfvJmnXKZpPcNwXpA8MCvMGI5C4jbTKswLusbZBeM6zCh6wPkV74bKJrbKTHDDudCiP1MtojwqMoyvTmjQxf3rvzYRViJ2SbkG1CtvmH2SYRWra5hSGV8CvbeAsUJ9skbZNkm6Znm1HFTdFnGz9Dbbah9NmG6jrb/PQsW7YZDgt9gdNXluts1/h3/pql7dv4imZT/PdTs2zTkGYb0Gcb0Gcb0Gcb0Gcb0GcbKGC28YVNm22osG8T9m3Cvk3Yt2lfnwIMAOmsxOYjam3cAAAAAElFTkSuQmCC');
+  background-size: 20rpx auto;
+}
+
+.filter-item.arrow-first .icon {
+  background-position: -1rpx -1rpx;
+}
+
+.filter-item.arrow-down .icon {
+  background-position: -1rpx -29rpx;
+}
+
+.filter-item.arrow-up .icon {
+  background-position: -1rpx -57rpx;
+}
+
+/*商品列表*/
+
+.nav-section-list {
+  margin-top: 278rpx;
+}
+
+.nav-section-items {
+  width: 370rpx;
+}
+
+.nav-section-items:nth-child(2n) {
+  margin-left: 10rpx;
+}
+
+.section-image image {
+  width: 370rpx;
+  height: 370rpx;
+}

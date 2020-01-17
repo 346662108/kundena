@@ -1,0 +1,85 @@
+{
+  "pages": [ 
+    "pages/index/index",
+    "pages/auth/userinfo/index",
+    "pages/auth/index",
+    "pages/about/about",
+    "pages/about/join",
+    "pages/article/index",
+    "pages/article/home/home",
+    "pages/article/list/list",
+    "pages/article/item/item",
+    "pages/article/search/search",
+    "pages/cart/invoice/invoice",
+    "pages/cart/address_list/index",
+    "pages/cart/confirm_order/index",
+    "pages/cart/payment/payment",
+    "pages/cart/transfer/transfer",
+    "pages/cart/transfer/process/process",
+    "pages/cart/address_edit/index",
+    "pages/cart/cart_list/index",
+    "pages/cart/coupon/index",
+    "pages/cart/group_order/group_order",
+    "pages/cart/group_paytips/group_paytips",
+    "pages/my/index",
+    "pages/my/order_list/index",
+    "pages/my/order_detail/index",
+    "pages/my/repair_list/repair_list",
+    "pages/my/refund/index",
+    "pages/my/refund_detail/index",
+    "pages/my/user/user",
+    "pages/my/user/edit/edit",
+    "pages/my/attest/index",
+    "pages/my/commission/index",
+    "pages/my/coupon/index",
+    "pages/my/lottery_list/lottery_list",
+    "pages/my/lottery_winitem/lottery_winitem",
+    "pages/my/group_orderlist/group_orderlist",
+    "pages/my/group_orderitem/group_orderitem",
+    "pages/product/list/index",
+    "pages/product/detail/index",
+    "pages/product/classify/index",
+    "pages/product/reply/index",
+    "pages/product/coupon/index",
+    "pages/product/group_prolist/group_prolist",
+    "pages/product/group_proitem/group_proitem",
+    "pages/product/group_item/group_item",
+    "pages/product/spike/spike",
+    "pages/logs/logs",
+    "pages/my/userswitch/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#333333",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/icon-index.png",
+        "selectedIconPath": "images/icon-index-h.png"
+      },
+      {
+        "pagePath": "pages/cart/cart_list/index",
+        "text": "购物袋",
+        "iconPath": "images/icon-cart.png",
+        "selectedIconPath": "images/icon-cart-h.png"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的",
+        "iconPath": "images/icon-account.png",
+        "selectedIconPath": "images/icon-account-h.png"
+      }
+    ]
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
+}

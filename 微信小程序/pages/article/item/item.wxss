@@ -1,0 +1,84 @@
+/* pages/article/item/item.wxss */
+
+.article-inner {
+  padding: 25rpx;
+  background: #fff;
+}
+
+.article-inner .inner-title {
+  font-weight: 700;
+  font-size: 46rpx;
+  line-height: 58rpx;
+}
+
+.article-inner .inner-info {
+  color: #999;
+}
+
+.article-inner .inner-info view {
+  position: relative;
+  padding-left: 35rpx;
+}
+
+.article-inner .inner-info view::before {
+  position: absolute;
+  left: 0;
+  font-size: 30rpx;
+}
+
+.article-inner .inner-summary {
+  padding: 0 40rpx;
+  height: 160rpx;
+  background: #f7f7f7;
+  border-radius: 16rpx;
+  line-height: 44rpx;
+  font-size: 32rpx;
+}
+
+.article-inner .inner-content {
+  font-size: 36rpx;
+  line-height: 58rpx;
+}
+
+.article-inner .inner-content view, .article-inner .inner-content image {
+  margin-bottom: 30rpx;
+}
+
+.article-inner .inner-content image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 16rpx;
+}
+
+.article-inner .inner-prompt {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.article-inner .inner-ad image {
+  width: 100%;
+  max-height: 150rpx;
+  border-radius: 16rpx;
+}
+
+.article-inner .inner-tag {
+  margin-left: -25rpx;
+}
+
+.article-inner .inner-tag .tag {
+  margin: 0 0 30rpx 25rpx;
+  height: 60rpx;
+  padding: 0 26rpx;
+  font-size: 28rpx;
+}
+
+.article-recommend {
+  background: #fff;
+  padding-bottom: 200rpx;
+}
+
+.article-recommend .recommend-title {
+  padding: 30rpx 20rpx 0;
+  font-weight: 700;
+  font-size: 30rpx;
+}

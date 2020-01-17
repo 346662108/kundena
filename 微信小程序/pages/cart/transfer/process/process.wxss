@@ -1,0 +1,51 @@
+/* pages/cart/transfer/process/process.wxss */
+
+page {
+  background: #fff;
+}
+
+.cu-timeline .cu-time {
+  color: #000;
+}
+
+.cu-timeline>.cu-item:not([class*="text-"]) {
+  color: #e0197b;
+}
+
+.cu-timeline>.cu-item>.content {
+  padding: 0;
+}
+
+.cu-timeline>.cu-item>.content:not([class*="bg-"]) {
+  background-color: transparent;
+}
+
+.cu-timeline>.cu-item>.content>.title {
+  padding: 0 30rpx;
+  height: 64rpx;
+  font-size: 32rpx;
+}
+
+.cu-timeline>.cu-item>.content>.inner {
+  margin-left: 30rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.cu-timeline>.cu-item>.content>.inner view {
+  position: relative;
+  margin-top: 30rpx;
+  padding-left: 20rpx;
+  line-height: 40rpx;
+}
+
+.cu-timeline>.cu-item>.content>.inner view::before {
+  content: "";
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 100%;
+  background: #999;
+  position: absolute;
+  top: 16rpx;
+  left: 0;
+}

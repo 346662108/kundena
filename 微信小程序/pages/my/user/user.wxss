@@ -1,0 +1,4 @@
+/* pages/my/user/user.wxss */
+.avatar {
+  height: 180rpx;
+}

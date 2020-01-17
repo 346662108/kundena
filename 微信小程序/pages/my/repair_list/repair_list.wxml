@@ -1,0 +1,40 @@
+<!--pages/my/repair_list/repair_list.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if=" {{pageRefundList.length>0}}">
+	<view class="refund-item bg-white margin-top-sm" wx:for="{{pageRefundList}}" wx:key="refundId">
+		<view class="padding flex align-center justify-between">
+			<view class="flex-sub">服务号:{{item.refundTradeNo}}</view>
+			<view class="blue">{{item.refundStatusName}}</view>
+		</view>
+		<view class="goods-sm flex padding solid-top" data-itemid="{{item.orderItemId}}" bindtap="gotoReturnDetail">
+			<image class="items-pic" src="{{item.img}}" mode="aspectFill"></image>
+			<view class="items-desc flex-sub margin-left-sm">
+				<view class="desc-name text-cut2 font-size14">{{item.title}}</view>
+				<view class="desc-inner flex align-center justify-between margin-top-sm">
+					<view class="flex-sub">
+						<view class="num">
+							<text class="darkGray">退货数量：</text>
+							<text class="text-bold">{{item.num}}</text>
+						</view>
+						<view class="price">
+							<text class="darkGray">退款总额：</text>
+							<text class="text-bold">￥{{item.price}}</text>
+						</view>
+					</view>
+					<button class="cu-btn line-gray radius sm btn" data-itemid="{{item.orderItemId}}" bindtap="gotoReturnDetail">查看详情</button>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="loading" hidden="{{hiddenLoading}}">
+		<view class="loader"></view>
+		<text>加载中</text>
+	</view>
+	<view class="font-size10 text-center gray padding-tb" hidden="{{hiddenbuttomMsg}}">已经到底了~~</view>
+</block>
+<block wx:else>
+	<view class="no-data text-center">
+		<view class="icon cuIcon-refund grey"></view>
+		<view class="text margin-top-xs grey">你还没有退款服务单~~</view>
+	</view>
+</block>

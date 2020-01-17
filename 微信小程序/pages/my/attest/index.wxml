@@ -1,0 +1,125 @@
+<!--pages/my/attest/index.wxml-->
+<!--审核状态-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<loading hidden="{{hiddenuploading}}">上传中</loading>
+<view hidden="{{!hiddenLoading}}">
+  <view class="attest-status">
+    <block wx:for="{{attestStatus}}" wx:key="item.id">
+      <view class="status-items {{id == item.id ? 'active':''}} {{item.bgcolor}} light" data-index="{{index}}" data-tid="{{item.id}}">
+        <view class="{{item.icons}} icons"></view>
+        <view class="status">{{item.status}}{{id==3&&auth.Msg.length>0?'（原因：'+auth.Msg +')':''}}</view>
+      </view>
+    </block>
+  </view>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <!--类型选择-->
+    <view class="margin-top attest-items">
+      <view class="cu-form-group ipt">
+        <view class="title">认证类型</view>
+        <picker bindchange="bindPickerChange" name="InvoiceType" value="{{index}}" range="{{array}}">
+          <view class="picker">
+            {{array[index]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <!--个人认证-->
+    <view class="margin-top attest-items" hidden='{{personalmsg}}'>
+      <view class='cu-form-group ipt'>
+        <text class="title">真实姓名</text>
+        <input type="text" placeholder="请输入真实姓名" name='RealName' value='{{auth.RealName}}'>请输入真实姓名
+        </input>
+      </view>
+      <view class='cu-form-group ipt'>
+        <text class="title">身份证号</text>
+        <input type="idcard" placeholder="请输入身份证号码" maxlength="18" name='CardId' bindblur="bindCard" value='{{auth.CardId}}'> 请输入身份证号码
+        </input>
+      </view>
+    </view>
+
+    <!--企业认证-->
+    <view class="margin-top attest-items" hidden='{{companymsg}}'>
+      <view class='cu-form-group ipt'>
+        <text class="title">公司名称</text>
+        <input type="text" placeholder="请输入公司名称" name='CompanyName' value='{{auth.CompanyName}}'> 请输入公司名称
+        </input>
+      </view>
+      <view class='cu-form-group ipt'>
+        <text class="title">纳税人识别码</text>
+        <input type="text" placeholder="请输入纳税人识别码" name='InvoiceIdentifier' value='{{auth.InvoiceIdentifier}}'> 请输入纳税人识别码
+        </input>
+      </view>
+      <view class='cu-form-group ipt'>
+        <text class="title">注册地址</text>
+        <input type="text" placeholder="请输入注册地址" name='invoiceAddress' value='{{auth.invoiceAddress}}'> 请输入注册地址
+        </input>
+      </view>
+      <view class='cu-form-group ipt'>
+        <text class="title">注册电话</text>
+        <input type="number" placeholder="请输入注册电话" name='invoicePhone' value='{{auth.invoicePhone}}'> 请输入注册电话
+        </input>
+      </view>
+      <view class='cu-form-group ipt'>
+        <text class="title">开户银行</text>
+        <input type="text" placeholder="请输入开户银行" name='invoiceBank' value='{{auth.invoiceBank}}'> 请输入开户银行
+        </input>
+      </view>
+      <view class='cu-form-group ipt'>
+        <text class="title">银行账户</text>
+        <input type="number" placeholder="请输入银行账户" name='invoiceAccount' value='{{auth.invoiceAccount}}'> 请输入银行账户
+        </input>
+      </view>
+    </view>
+
+    <!--上传图片-->
+    <view class="margin-top attest-items">
+      <view class="cu-bar bg-white">
+        <view class="action text-black">
+          {{context}}
+        </view>
+        <view class="action text-gray">
+          {{imgList.length}}/{{count}}
+        </view>
+      </view>
+      <view class="cu-form-group">
+        <view class="grid col-4 grid-square flex-sub">
+          <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+            <image src='{{imgList[index]}}' mode='aspectFill'></image>
+            <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+              <text class="cuIcon-close"></text>
+            </view>
+          </view>
+          <block wx:if="{{count==2}}">
+            <block wx:if="{{imgList.length<2}}">
+              <view class="solids" data-count='{{count}}' bindtap="chooseImage">
+                <text class="cuIcon-cameraadd"></text>
+              </view>
+            </block>
+          </block>
+          <block wx:if="{{count==1}}">
+            <block wx:if="{{imgList.length<1}}">
+              <view class="solids" data-count='{{count}}' bindtap="chooseImage">
+                <text class="cuIcon-cameraadd"></text>
+              </view>
+            </block>
+          </block>
+
+        </view>
+      </view>
+    </view>
+    <view class="padding flex flex-direction attest-items">
+      <block wx:if="{{IsAuth==0}}">
+        <button formType="submit" class="cu-btn bg-orange margin-tb-sm lg shadow-blur">提交审核</button>
+      </block>
+      <block wx:if="{{IsAuth==1}}">
+        <button formType="submit" class="cu-btn bg-blue margin-tb-sm lg shadow-blur">确定提交更改</button>
+      </block>
+      <block wx:if="{{IsAuth==2}}">
+        <button formType="submit" class="cu-btn bg-green margin-tb-sm lg shadow-blur">再次提交审核</button>
+      </block>
+      <block wx:if="{{IsAuth==3}}">
+        <button formType="submit" class="cu-btn bg-pink margin-tb-sm lg shadow-blur">重新提交审核</button>
+      </block>
+    </view>
+  </form>
+</view>

@@ -1,0 +1,4 @@
+/* pages/cart/confirm_order/index.wxss */
+.btns-order {
+  width: 264rpx;
+}

@@ -1,0 +1,6 @@
+/* pages/my/order_detail/index.wxss */
+.order-status{
+  background-image: url('http://pics.kundena.com/account-bg.jpg');
+  background-size: 750rpx 311rpx;
+  overflow: hidden;
+}

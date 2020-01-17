@@ -1,0 +1,36 @@
+<!--pages/article/list/list.wxml-->
+<!-- 文章列表 -->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view hidden="{{!hiddenLoading}}">
+
+  <scroll-view scroll-y bindscrolltolower="loadMore" style="height:600px;">
+    <view class="ar-list {{isIphoneX?'pb-198':''}}">
+      <block wx:if="{{articleList.length>0}}">
+        <block wx:for="{{articleList}}" wx:key="itemkey">
+          <view class="flex align-center solid-bottom ar-items" bindtap="articleLink" data-tid='{{item.tid}}'>
+            <view class="flex-sub items-desc">
+              <view class="title">
+                <text class="txtover-2">{{item.title}}</text>
+              </view>
+              <view class="tag">
+                <text class="cuIcon-time tag-date">{{item.date}}</text>
+                <text class="cuIcon-attention tag-read">{{item.read}}</text>
+                <text class="cuIcon-appreciatefill">{{item.CommentGoods}}</text>
+              </view>
+            </view>
+            <view class="items-pic">
+              <image src="{{item.pic}}"></image>
+            </view>
+          </view>
+        </block>
+        <view class="flex justify-center align-center page-end">duang 到底啦~~</view>
+      </block>
+      <block wx:else>
+        <view class="page-nodata">
+          <view class="flex justify-center align-center cuIcon-search icons"></view>
+          <view>非常抱歉,未找到相关的文章~~</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>

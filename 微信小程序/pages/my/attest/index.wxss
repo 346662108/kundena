@@ -1,0 +1,28 @@
+/* pages/my/attest/index.wxss */
+
+.attest-status .status-items {
+  padding: 20rpx 25rpx;
+  display: none;
+}
+
+.attest-status .status-items.active {
+  display: block;
+}
+
+.attest-status .status-items .icons, .attest-status .status-items .status {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.attest-status .status-items .icons {
+  width: 50rpx;
+  font-size: 40rpx;
+}
+
+.attest-status .status-items .status {
+  width: 650rpx;
+}
+
+.attest-items .btns-submit {
+  margin: 40rpx 30rpx;
+}

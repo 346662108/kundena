@@ -1,0 +1,81 @@
+<!--pages/product/group_prolist/group_prolist.wxml-->
+<view class="container">
+  <view class="search-view">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <picker bindchange="pickChange" value="{{searchTypeIndex}}" range="{{array}}" class="search__type">
+          <view>{{array[searchTypeIndex]}}</view>
+        </picker>
+        <view class="search__input">
+          <icon class="icon" type="search" size="14"></icon>
+          <input type="text" class="input" value="{{keyWord}}" bindinput="bindKeyInput" placeholder="搜索家世比商品" />
+        </view>
+      </view>
+      <view class="weui-search-bar__button">
+        <button hover-class="none" bindtap="wxSearchFn" size="mini" plain="true">搜索</button>
+      </view>
+    </view>
+  </view>
+  <!-- 顶部商品分类栏 -->
+  <scroll-view class="classify" scroll-x wx:if="{{lottery.length>0}}">
+    <view class="classify_ul">
+      <!--点击后样式加：active -->
+      <view class="classify_li {{cid==item.cid?'active':''}}" wx:for="{{classify}}" data-cid="{{item.cid}}" wx:key="cid" bindtap="bindCategoryTeamPro">{{item.cname}}</view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{onInitLoading}}">
+
+    <view wx:if="{{pageTeamProList.length>0}}">
+      <view class="nav_section_list">
+        <block wx:for="{{pageTeamProList}}" wx:key="tpid">
+          <view class="nav_section_items" bindtap="navigateDetail" data-tpid="{{item.tpid}}">
+            <!--image-->
+            <view class="section_image">
+              <image src="{{item.pic}}" mode="aspectFill"></image>
+              <text class="label" wx:if="{{item.lottery==1}}">抽奖</text>
+              <text class="label" wx:elif="{{item.lottery==2}}">试用</text>
+            </view>
+            <!--content-->
+            <view class="section_cont">
+              <view class="section_cont_sub">
+                <text>{{item.name}}</text>
+              </view>
+              <view class="section_cont_other">
+                <text>{{item.team_Num}}人团·单买价{{item.price}}</text>
+              </view>
+              <view class="section_cont_num">
+                <image src="{{head.userHead}}" wx:for="{{item.teamFirstHeads}}" wx:for-item="head" wx:key="unique"></image>
+              </view>
+              <view class="section_cont_bottom">
+                <view class="section_cont_price">
+                  <text>已团{{item.sales}}件</text>
+                  <text>￥{{item.team_Price}}</text>
+                </view>
+                <view class="section_cont_btn">
+                  <text>去开团</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <view class="nothing" hidden="{{hiddenbuttomMsg}}">------- 已经加载完 -------</view>
+        <view class="loading" hidden="{{hiddenLoading}}">
+          <view class="loader"></view>
+          <text>加载中</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else>
+      <view class="nothing pt500">------- 暂无数据 -------</view>
+    </view>
+
+  </view>
+  <view class='loadingbox' wx:else>
+    <view class="loading">
+      <view class="loader"></view>
+      <text>数据加载中</text>
+    </view>
+  </view>
+
+</view>

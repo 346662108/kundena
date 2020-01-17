@@ -1,0 +1,47 @@
+<!--pages/article/index.wxml-->
+<!-- 文章公用头部 -->
+<view class="ar-header">
+  <scroll-view scroll-x  class="nav" scroll-with-animation scroll-left="{{scrollLeft}}">
+    <view class="flex align-center nav-menu">
+      <block wx:for="{{nav}}" wx:key="navkey">
+        <block wx:if="{{index==0}}">
+          <view bindtap="NavChange" data-cur="{{item.mark}}"  data-index="{{index}}" data-mark='{{item.mark}}'>
+            <text class="{{PageCur==item.mark?'current':''}}">{{item.name}}</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view bindtap="NavChange" data-cur="list" data-index="{{index}}" data-mark='{{item.mark}}'>
+            <text class="{{ mark==item.mark?'current':''}}">{{item.name}}</text>
+          </view>
+        </block>
+      </block>
+    </view>
+  </scroll-view>
+  <view class="nav-mask"></view>
+</view>
+<!-- 引入外部页面 -->
+<home wx:if="{{PageCur=='home'}}"></home>
+<list wx:if="{{PageCur=='list'}}" eventmark="{{mark}}" eventtid="{{tid}}" keyWord="{{keyWord}}"></list>
+<!-- 文章公用底部 -->
+<view class="cu-bar tabbar bg-white shadow foot {{isIphoneX?'ipx-button':''}}">
+  <view class="action" bindtap="NavChange" data-cur="home">
+    <view class="cuIcon-home {{PageCur=='home'?'text-fuchsia':'text-gray'}}"></view>
+    <view class="{{PageCur=='home'?'text-fuchsia':'text-gray'}}">首页</view>
+  </view>
+  <view class="action" bindtap="NavChange" data-cur="list" data-mark="1">
+    <view class="cuIcon-news {{PageCur=='list'?'text-fuchsia':'text-gray'}}"></view>
+    <view class="{{PageCur=='list'?'text-fuchsia':'text-gray'}}">最新</view>
+  </view>
+  <view class="action" bindtap="searchLink">
+    <view class="cuIcon-search text-gray"></view>
+    <view class=" text-gray">搜索</view>
+  </view>
+  <view class="action" bindtap="mallLink">
+    <view class="cuIcon-shop text-gray"></view>
+    <view class=" text-gray">商城</view>
+  </view>
+  <!-- <view class="action" hidden="{{!floorstatus}}" bindtap="goTop">
+    <view class="cuIcon-top text-gray"></view>
+    <view class=" text-gray ">回顶部</view>
+  </view> -->
+</view>

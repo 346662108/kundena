@@ -1,0 +1,47 @@
+<!--pages/my/lottery_winitem/lottery_winitem.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="container">
+  <!--活动商品-->
+  <view class="gorup_md" bindtap="urlOrderitem">
+    <view class="statusicon"></view>
+    <view>
+      <image src="{{teamLuck.PicPath}}" mode="aspectFill"></image>
+    </view>
+    <view class="info">
+      <view class="info_box">
+        <view class="title">{{teamLuck.ProductTitle}}</view>
+        <view class="price">
+          <text>￥{{teamLuck.Team_Price}}</text>
+          <text>￥{{teamLuck.Pro_Price}}</text>
+        </view>
+        <view class="statusbtn">活动结束</view>
+      </view>
+    </view>
+  </view>
+
+  <!--活动名单  -->
+  <view class="app mtop10">
+    <view class="app_title">
+      <image src="../../../images/icon_champion.png"></image>
+      <text wx:if="{{teamLuck.Team_IsLottery==1}}">申请成功名单</text>
+      <text wx:if="{{teamLuck.Team_IsLottery==2}}">试用名单</text>
+    </view>
+    <view class="app_list">
+      <view class="app_li title">
+        <view class="name">幸运儿</view>
+        <view class="num">订单编号</view>
+        <view class="phone">电话</view>
+      </view>
+
+      <view class="app_li" wx:for="{{teamLuck.TeamLotteryLuckyList}}" wx:key="unique">
+        <view class="name">
+          <image src="{{item.BuyerUserHeadImg}}"></image>
+          <view>{{item.BuyerNick}}</view>
+        </view>
+        <view class="num">{{item.TradeNo}}</view>
+        <view class="phone">{{item.ReceiverMobile}}</view>
+      </view>
+
+    </view>
+  </view>
+</view>

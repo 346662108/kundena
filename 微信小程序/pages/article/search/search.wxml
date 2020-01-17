@@ -1,0 +1,19 @@
+<!--pages/article/search/search.wxml-->
+<view class="flex align-center search">
+  <view class="flex flex-sub search-inner">
+    <input class="flex-sub inner-ipt" name="search" type='text' confirm-type="search" bindconfirm="NavChange" focus='{{focus}}' bindinput='bindKeyInput' placeholder="搜你感兴趣的新闻" placeholder-style="color:#bbb">搜你感兴趣的新闻</input>
+    <button class="flex justify-center align-center button inner-btns" bindtap="NavChange">
+      <text class="cuIcon-search"></text>
+    </button>
+  </view>
+</view>
+<view class="findtig">
+  <view class="findtig-inner">
+    <view class="inner-title">热门搜索词</view>
+    <view class="flex flex-wrap inner-tag">
+      <block wx:for="{{searchTag}}">
+        <text class="cu-tag radius label {{item.css}}" bindtap="NavChange" data-tid='{{item.tid}}'>{{item.tag}}</text>
+      </block>
+    </view>
+  </view>
+</view>

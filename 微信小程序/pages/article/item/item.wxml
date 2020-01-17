@@ -1,0 +1,82 @@
+<!--pages/article/item/item.wxml-->
+<!-- 文章内容 -->
+
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view hidden="{{!hiddenLoading}}">
+  <view class="article-inner">
+    <block wx:if="{{article!=null}}">
+      <view class="inner-title">
+        {{article.title}}
+      </view>
+      <view class="flex justify-between inner-info mt-40">
+        <view class="flex align-center cuIcon-time date">{{article.date}}</view>
+        <view class="flex align-center cuIcon-attention rea">{{article.read}}</view>
+      </view>
+      <block wx:if="{{article.description}}">
+        <view class="flex justify-center align-center inner-summary mt-50">
+          <view class="txtover-2">
+            {{article.description}}
+          </view>
+        </view>
+      </block>
+      <view class="inner-content  mt-60">
+        <view class="flex justify-center" wx:if="{{article.IsVideo}}">
+          <video src='{{videoUrl}}' binderror></video>
+        </view>
+        <view wx:else>
+          <rich-text nodes="{{article.content}}"></rich-text>
+        </view>
+      </view>
+    </block>
+    <view class="inner-prompt">
+      声明：本站所发布部分文章与图片信息来源于互联网，仅供参考学习使用，版权归属于原作者。所转载文章言论不代表本站观点，如有侵犯原作者的权利请发邮件联系站长（contact@homebi.com），我们收到后立即删除。
+    </view>
+    <block wx:for="{{advertList}}">
+      <view class="inner-ad mt-40">
+        <image src="{{item.pic}}" mode="widthFix" data-url='{{item.link}}'></image>
+      </view>
+    </block>
+    <view class="flex flex-wrap inner-tag mt-50">
+
+      <block wx:if="{{tagList.length>0}}">
+        <block wx:for="{{tagList}}">
+          <text class="cu-tag radius line-gray tag" bindtap="NavChange" data-tid='{{item.tid}}'>{{item.tag}}</text>
+        </block>
+      </block>
+    </view>
+  </view>
+
+  <!-- 相关推荐 -->
+  <view class="article-recommend mt-20">
+    <view class="recommend-title">相关推荐</view>
+    <view class="recommend-list">
+      <block wx:for="{{articleList}}">
+        <view class="flex align-center solid-bottom ar-items" bindtap="articleLink" data-tid='{{item.tid}}'>
+          <view class="flex-sub items-desc">
+            <view class="title">
+              <text class="txtover-2">{{item.title}}</text>
+            </view>
+            <view class="tag">
+              <text class="cuIcon-time tag-date">{{item.date}}</text>
+              <text class="cuIcon-attention tag-read">{{item.read}}</text>
+            </view>
+          </view>
+          <view class="items-pic">
+            <image src="{{item.pic}}"></image>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 服务 -->
+  <view class="flex online">
+    <view class="cuIcon-homefill flex justify-center align-center flex-sub home" bindtap="homeChange"></view>
+    <button class="cuIcon-forwardfill flex justify-center align-center flex-sub button share" open-type="share"></button>
+    <view class="flex justify-center align-center flex-sub like" bindtap='favorclick' data-id='{{article.iid}}' data-islike="{{is_like}}" data-dex="{{index}}" data-userid="{{item.user_id}}">
+      <text class="like-num {{is_like? 'text-fuchsia': ''}} ">{{CommentGoods}}</text>
+      <view class="cuIcon-appreciatefill {{is_like? 'text-fuchsia': ''}}"></view>
+    </view>
+    <view class="cuIcon-top flex justify-center align-center flex-sub topping" bindtap="goTop"></view>
+  </view>
+</view>

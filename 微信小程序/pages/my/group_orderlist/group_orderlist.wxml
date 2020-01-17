@@ -1,0 +1,63 @@
+<!--pages/my/group_orderlist/group_orderlist.wxml-->
+<view class="container">
+  <!--订单列表导航-->
+  <view class="nav_top">
+    <block wx:for="{{navTopItems}}" wx:key="item.tid">
+      <view class="nav_top_items {{tid == item.tid ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}" data-tid="{{item.tid}}">
+        <text>{{item.title}}</text>
+      </view>
+    </block>
+  </view>
+  <!--订单列表内容-->
+  <view class="nav_section" wx:if="{{onInitLoading}}">
+    <view wx:if="{{pageTeamOrderList.length>0}}">
+      <!--拼团中-->
+      <view class="nav_section_items" wx:for="{{pageTeamOrderList}}" wx:key="{{Id}}">
+        <view class="confirm_list">
+          <view class="gorup_md" data-toid="{{item.Team_Sign}}" bindtap="{{item.Team_Status>0?'gateGroupitem':'gateOrderitem'}}">
+            <view>
+              <image src="{{item.PicPath}}" mode="aspectFill"></image>
+            </view>
+            <view class="info">
+              <view class="info_box">
+                <view class="title">{{item.ProductTitle}}</view>
+                <view class="btmtxt">
+                  <view class="num">{{item.Team_Num}}人团</view>
+                  <view class="price">￥{{item.Price}}</view>
+                  <view class="status">{{item.Team_StatusStr}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="gorup_dd">
+          <view class="btn auxi" data-toid="{{item.Id}}" bindtap="gateOrderitem">查看订单详情</view>
+          <view class="btn main" data-toid="{{item.Id}}" wx:if="{{item.Team_Status==1}}" bindtap="gateGroupitem">邀请好友参团</view>
+          <view class="btn auxi" data-toid="{{item.Id}}" wx:if="{{item.Team_Status>1}}" bindtap="gateGroupitem">查看团详情</view>
+          <view class="btn auxi" data-toid="{{item.Id}}" wx:if="{{item.Team_Status==0&&item.PayStatus==0}}" bindtap="closeOrder">取消订单</view>
+          <form bindsubmit="gotoPayment" data-toid="{{item.Id}}" report-submit="true">
+            <button class="btn main" form-type="submit" wx:if="{{item.Team_Status==0&&item.PayStatus==0}}">去支付</button>
+          </form>
+        </view>
+      </view>
+
+
+      <view class="nothing" hidden="{{hiddenbuttomMsg}}">亲，没有更多喽~</view>
+      <view class="loading" hidden="{{hiddenLoading}}">
+        <view class="loader"></view>
+        <text>加载中</text>
+      </view>
+    </view>
+    <view wx:else class="nan">
+      <image src="../../../images/NaN.png"></image>
+      <text>哎呀, 你现在还没订单哦~</text>
+    </view>
+
+  </view>
+  <view class="loadingbox" wx:else>
+    <view class="loading">
+      <view class="loader"></view>
+      <text>数据加载中</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,46 @@
+<!--pages/my/user/user.wxml-->
+<loading hidden="{{hiddenLoading}}">上传中..</loading>
+<view class='avatar form-group-sm bg-white flex align-center justify-between padding-lr solid-top' bindtap="ChooseImage">
+	<view class="title">头像</view>
+	<view class="content flex-sub flex  align-center justify-end margin-left">
+		<image class="cu-avatar lg round text-center {{imgList.length==0?'no-avatar':''}}" src='{{imgList[0]}}' mode='aspectFill'></image>
+		<text class="cuIcon-right gray font-size16"></text>
+	</view>
+</view>
+<view class="form-group-sm bg-white flex align-center justify-between padding-lr solid-top" bindtap="editLink" data-type='1'>
+	<view class="title">昵称</view>
+	<view class="content flex-sub flex  align-center justify-end margin-left">
+		<text class="gray">{{userInfo.UserNick.length>0?userInfo.UserNick:"未设置昵称"}}</text>
+		<text class="cuIcon-right gray font-size16"></text>
+	</view>
+</view>
+<view class="form-group-sm bg-white flex align-center justify-between padding-lr solid-top">
+	<view class="title">性别</view>
+	<picker class="content flex-sub flex  align-center justify-end margin-left" bindchange="GenderChange" value="{{index}}" range="{{picker}}">
+		<text class="picker gray">{{index?picker[index]:'未设置性别'}}</text>
+		<text class="cuIcon-right gray font-size16"></text>
+	</picker>
+</view>
+<block wx:if="{{userInfo.Mobile}}">
+	<view class="form-group-sm bg-white flex align-center justify-between padding-lr margin-top-sm" bindtap="editLink" data-type='0'>
+		<view class="title">手机号</view>
+		<view class="content flex-sub flex  align-center justify-end margin-left">
+			<text class="gray">{{userInfo.Mobile?userInfo.Mobile:"未绑定手机号"}}</text>
+			<text class="cuIcon-right gray font-size16"></text>
+		</view>
+	</view>
+	<view class="form-group-sm bg-white flex align-center justify-between padding-lr margin-top-sm" bindtap="editLink" data-type='2'>
+		<view class="title">登录密码</view>
+		<view class="content flex-sub flex  align-center justify-end margin-left">
+			<text class="gray">{{userInfo.Password.length>0?userInfo.Password:"设置PC等终端登录密码"}}</text>
+			<text class="cuIcon-right gray font-size16"></text>
+		</view>
+	</view>
+</block>
+<view class="form-group-sm bg-white flex align-center justify-between padding-lr margin-top-sm " bindtap="gotoaddresslist">
+	<view class="title">地址簿</view>
+	<view class="content flex-sub flex  align-center justify-end margin-left">
+		<text class="gray">收货地址管理</text>
+		<text class="cuIcon-right gray font-size16"></text>
+	</view>
+</view>

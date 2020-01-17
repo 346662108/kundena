@@ -1,0 +1,39 @@
+<!--pages/article/home/home.wxml-->
+<!--轮播图-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view hidden="{{!hiddenLoading}}">
+  <view class='ar-banner'>
+    <swiper autoplay="auto" interval="5000" duration="500" bindchange="swiperChange" class="banner-swiper">
+      <swiper-item wx:for="{{banner}}" wx:key='{{index}}'>
+        <navigator url='{{item.link}}' class="banner-navigator">
+          <image class="pic" src="{{item.pic}}" mode="aspectFill"></image>
+          <view class="flex justify-center align-center title">
+            <text class="text-cut">{{item.title}}</text>
+          </view>
+        </navigator>
+      </swiper-item>
+    </swiper>
+    <view class="banner-dot">{{current+1}}/{{banner.length}}</view>
+  </view>
+  <!-- 推荐文章列表 -->
+  <view class="ar-list {{isIphoneX?'pb-198':''}}">
+    <block wx:for="{{articleList}}" wx:key="itemkey">
+      <view class="flex align-center solid-bottom ar-items" bindtap="articleLink" data-tid='{{item.tid}}'>
+        <view class="flex-sub items-desc">
+          <view class="title">
+            <text class="txtover-2">{{item.title}}</text>
+          </view>
+          <view class="tag">
+            <text class="cuIcon-time tag-date">{{item.date}}</text>
+            <text class="cuIcon-attention tag-read">{{item.read}}</text>
+            <text class="cuIcon-appreciate">{{item.CommentGoods}}</text>
+          </view>
+        </view>
+        <view class="items-pic">
+          <image src="{{item.pic}}"></image>
+        </view>
+      </view>
+    </block>
+    <view class="flex justify-center align-center page-end">duang 到底啦~~</view>
+  </view>
+</view>

@@ -1,0 +1,89 @@
+<!--pages/cart/group_order/group_order.wxml-->
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<block wx:if="{{hiddenLoading}}">
+  <view class="container">
+    <!--主体开始-->
+    <view class="confirm">
+      <!--选择地址-->
+      <view class="address icon" bindtap="onaddresslist" wx:if="{{address}}">
+        <view class="info">
+          <view class="name">{{address.Receiver}} {{address.Tel}}</view>
+          <view class="text">{{address.RegionPath}} {{address.Address}}</view>
+        </view>
+        <image class="line" src="../../../images/icon1.jpg"></image>
+      </view>
+      <view class="address icon" bindtap="onaddressadd" wx:else>
+        <view class="info add">
+          <view class="add_icon">+</view>
+          <text>新增收货地址</text>
+        </view>
+        <image class="line" src="../../../images/icon1.jpg"></image>
+      </view>
+      <!--订单列表-->
+      <block wx:for="{{carts}}" wx:key="skuid">
+        <view class="confirm_list mtop10">
+          <view class="section_md">
+            <view>
+              <image src="{{item.img}}" mode="aspectFill"></image>
+            </view>
+            <view class="info">
+              <view class="title">{{item.h1}}</view>
+              <view class="color">{{item.h2}}</view>
+              <view class="btmtxt">
+                <text class="price">￥{{item.price}}</text>
+                <!-- <view class="num">×{{item.num}}</view> -->
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="confirm_msg">
+          <view class="confirm_msg_txt linetop1">
+            <text class="confirm_msg_h1">购买数量</text>
+            <view class="confirm_msg_r">
+              <view class="attr_num_set">
+                <text class="less {{item.minbtn}} " data-index="{{index}}" bindtap="bindMinus">-</text>
+                <input type="number" bindchange="bindManual" data-index="{{index}}" value="{{item.num}}" onkeyup="this.value=this.value.replace(/\D/g, '')" />
+                <text class="plus {{item.maxbtn}}" data-index="{{index}}" bindtap="bindPlus">+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <view class="select__offer mtop10" wx:if="{{canCoupon||canMjs}}">
+        <view class="select__offer__li arrow12 {{tid==1?'select':''}}" data-tid="1" bindtap="navigateCoupon" wx:if="{{canCoupon}}">
+          <view class="name">优惠券</view>
+          <view class="price" wx:if="{{selCoupon.CouponPrice>0}}">-￥{{selCoupon.CouponPrice}}</view>
+          <view class="price" wx:elif="{{selCoupon.IsFreePost}}">免邮</view>
+          <view class="price" wx:else>去使用</view>
+        </view>
+      </view>
+
+      <view class="confirm_msg total mtop10">
+        <view class="confirm_msg_txt">
+          <text class="confirm_msg_h1">商品金额</text>
+          <view class="confirm_msg_r">￥{{totalpro}}</view>
+        </view>
+        <view class="confirm_msg_txt">
+          <text class="confirm_msg_h1">+ 运费</text>
+          <view class="confirm_msg_r">￥{{postfee}}</view>
+        </view>
+        <view class="confirm_msg_txt" wx:if="{{tid==1||tid==2}}">
+          <text class="confirm_msg_h1">- 优惠</text>
+          <view class="confirm_msg_r">￥{{couponPrice}}</view>
+        </view>
+        <view class="confirm_msg_h3 linetop1">
+          实付金额：
+          <text>￥{{totalall}}</text>
+        </view>
+        <form bindsubmit="saveMyCarts" report-submit="true">
+          <view class="paybtn">
+            <loading hidden="{{hiddenSaveLoading}}">正在保存订单并支付</loading>
+            <button form-type="submit" class="big_button mainbtn">微信支付</button>
+          </view>
+        </form>
+      </view>
+    </view>
+    <!--主体结束-->
+  </view>
+</block>

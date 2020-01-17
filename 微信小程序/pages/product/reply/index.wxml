@@ -1,0 +1,73 @@
+<!--pages/product/reply/index.wxml-->
+<!-- <loading hidden="{{hiddenLoading}}">正在加载</loading> -->
+<view class="container">
+  <view class="reply-problem">
+    <view class="reply-items">
+      <view class="items-Q">
+        <block wx:if="{{queslist.length>0}}">
+          <block wx:for="{{queslist}}" wx:key="id">
+              <view class="items-Q-body" >
+                  <view class="text">{{item.content}}</view>
+                </view>
+                <view class="items-Q-header">
+                  <text class="date">{{item.time}}</text>
+                  <text class="date">{{item.name}}</text>
+                  <!-- <text class="operating icon" bindtap="btnsReply" data-reply="1">回复此问题</text> -->
+                </view>
+            </block>
+        </block>
+      </view>
+    </view>
+  </view>
+  <view class="reply-list">
+    <view class="list-title">
+      <text>回复列表</text>
+      <text class="num">共{{replylist.length}}个回复</text>
+    </view>
+
+      <block wx:if="{{replylist.length>0}}">
+        <block wx:for="{{replylist}}" wx:key="id">
+          <view class="reply-items">
+            <view class="items-A">
+              <view class="items-A-header">
+                <view class="text">{{item.content}}</view>
+              </view>
+              <view class="items-A-body">
+                <text class="date">{{item.time}}</text>
+                <text class="date">{{item.name}}</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </block>
+   <block wx:else>
+      <view>
+         暂无回答
+      </view>
+   </block>
+
+  </view>
+  <view class="reply-btns-fixed" bindtap="btnsReply" data-reply="1"  data-qid="{{qid}}">
+    <text class="desc">我要</text>
+    <text>回复</text>
+  </view>
+  <!-- 问题回复弹窗 -->
+  <view class="black_layer" animation="{{animationBlack}}" bindtap="btnsReply" data-reply="0" wx:if="{{showReply}}" catchtouchmove="true"></view>
+  <view class="layer-mini" wx:if="{{showReply}}" catchtouchmove="true">
+    <!-- <icon class="close_icon" bindtap="btnsReply" data-reply="0" type="cancel" size="23" color="#bec5cc" /> -->
+    <view class="reply-main">
+      <view class="main-problem">
+        <view class="text txtover-2">{{text}}</view>
+      </view>
+      <view class="main-textarea" scroll-y='true'>
+        <form bindsubmit="bindFormSubmit">
+          <textarea placeholder="请输入回复内容，限制200个字以内" name="textarea" maxlength="200" placeholder-style="color:rgba(0, 0, 0, 0.35)" fixed="true" cursor-spacing="180" auto-focus />
+          <view class="reply-btns">
+            <button bindtap="btnsReply" data-reply="0">取消</button>
+            <button form-type="submit" class="blue">提交</button>
+          </view>
+        </form>
+      </view>
+    </view>
+  </view>
+</view>
